@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Nova Sprout",
+  "description": "A bright solar-yellow robot with a sun visor and a sprout antenna, growing light wherever it walks. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Uncommon.",
+  "image": "https://voltagent.site/images/2936.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Uncommon"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Solar Yellow"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Sun Visor"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-2936"
+    }
+  ]
+}

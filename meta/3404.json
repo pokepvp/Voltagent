@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Lunar Pilot",
+  "description": "A lunar-silver pilot robot with a crescent moon antenna and a starlit visor, flying the night circuits. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Epic.",
+  "image": "https://voltagent.site/images/3404.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Lunar Silver"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Moon Antenna"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-3404"
+    }
+  ]
+}

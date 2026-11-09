@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Pixel Ranger",
+  "description": "A moss-green ranger robot patrolling the circuit forest, leaf antenna glowing and chest core online. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Common.",
+  "image": "https://voltagent.site/images/2503.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Moss Green"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Ranger Hat"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-2503"
+    }
+  ]
+}

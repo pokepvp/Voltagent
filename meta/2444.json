@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Genesis Overlord",
+  "description": "The mythic overlord of the agents, black and crimson armour with a golden halo and a burning red core. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Mythic.",
+  "image": "https://voltagent.site/images/2444.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Crimson Core"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Halo Ring"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-2444"
+    }
+  ]
+}

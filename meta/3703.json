@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Turbo Wrench",
+  "description": "A rust-red robot with a wrench-shaped arm and a gear antenna, always ready to fix the network. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Common.",
+  "image": "https://voltagent.site/images/3703.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Rust Red"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Wrench Arm"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-3703"
+    }
+  ]
+}

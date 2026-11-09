@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Dust Runner",
+  "description": "A dusty tan robot AI agent built for the long run, propeller hat spinning and eyes warm. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Common.",
+  "image": "https://voltagent.site/images/2080.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Desert Tan"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Propeller Hat"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-2080"
+    }
+  ]
+}

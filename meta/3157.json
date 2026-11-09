@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Iron Guardian",
+  "description": "A heavy iron-blue guardian robot with a glowing shield core on its chest, standing watch over the network. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Rare.",
+  "image": "https://voltagent.site/images/3157.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Iron Blue"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Shield Core"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-3157"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Crystal Mind",
+  "description": "A crystal-pink robot with a glowing gem on its head and a crystal antenna, thinking in light. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Uncommon.",
+  "image": "https://voltagent.site/images/3765.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Uncommon"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Crystal Pink"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Gem Head"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-3765"
+    }
+  ]
+}
