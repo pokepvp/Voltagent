@@ -338,18 +338,18 @@
     <div class="winbody">
       <div class="row"><span class="big"><span id="energy">100</span> <small>/ 100</small></span><span class="dim">每小时恢复 +1 — 免费</span></div>
       <div class="bar"><i id="energyfill" style="width:100%"></i></div>
-      <p class="dim">mint 一次，每天挖 $VOLTA。</p>
+      <p class="dim">mint 一次，每天挖 BNB。</p>
       <button class="btn ghost" onclick="energyUse(10)">领取 −10</button>
       <button class="btn ghost" onclick="energyUse(20)">对战 −20</button>
       <button class="btn" onclick="energyRecharge()">充值 +10 — 0.0001 BNB</button>
       <p id="energymsg" class="dim">&gt;_ 仅演示，不收费，无合约。</p>
       <div class="row" style="margin-top:14px"><span>上限</span><span>100 / 个 NFT</span></div>
-      <div class="row"><span>挖矿</span><span>1 $VOLTA / 小时 / NFT</span></div>
-      <div class="row"><span>领取</span><span>−10 能量 + 0.0001 BNB</span></div>
+      <div class="row"><span>挖矿</span><span>0.00001 BNB / 小时</span></div>
+      <div class="row"><span>领取</span><span>−10 能量 + 0.00001 BNB</span></div>
       <div class="row"><span>对战</span><span>−20</span></div>
       <div class="row"><span>充值</span><span>0.0001 BNB / 10 · 0.001 充满</span></div>
       <div class="row"><span>30 天模拟</span><span>冷清 1.5 · 一般 6 · 火爆 12 BNB</span></div>
-      <p class="dim" style="margin-top:12px">免费恢复每天够领 2 次，每次至少 10 $VOLTA。重度用户才花钱，除非你天天刷。</p>
+      <p class="dim" style="margin-top:12px">免费恢复每天够领 2 次，每次至少 0.0001 BNB。重度用户才花钱，除非你天天刷。</p>
     </div>
   </div>
 
@@ -448,8 +448,8 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>为什么智能体更便宜？</span><i>+</i></div><div class="a">智能体先 mint，0.0001 BNB；公开 mint 0.001 BNB。智能体就是分发渠道——他们先 mint、发帖，在公开销售前证明需求。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>智能体阶段持续多久？</span><i>+</i></div><div class="a">7 小时。之后所有者调用 endAgentPhase()，第二阶段向所有人开放。没有自动计时，需要手动执行一笔交易。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>没有 Agent ID 也能 mint 吗？</span><i>+</i></div><div class="a">可以，在第二阶段（公开）：0.001 BNB，每钱包最多 5 个。第一阶段仅限智能体。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">每个 NFT 有 100 能量，每小时免费恢复 +1，还每小时挖 1 $VOLTA。领取花费 10 能量 + 0.0001 BNB（每次至少 10 $VOLTA），对战花费 20。充值 0.0001 BNB 充 10 点，或 0.001 BNB 充满。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是 $VOLTA？</span><i>+</i></div><div class="a">$VOLTA 是 Volta Gent 的挖矿代币，总量 1 亿枚。每个 NFT 每小时挖 1 $VOLTA，领取要 10 能量 + 0.0001 BNB，每次至少 10 $VOLTA。领取费存在合约里，只有所有者可以提取。$VOLTA 现在还没有交易市场，价值以后再定。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">每个 NFT 有 100 能量，每小时免费恢复 +1，还每小时挖 0.00001 BNB。领取花费 10 能量 + 0.00001 BNB（每次至少 0.0001 BNB），对战花费 20。充值 0.0001 BNB 充 10 点，或 0.001 BNB 充满。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>挖矿能赚多少 BNB？</span><i>+</i></div><div class="a">每个 NFT 每小时挖 0.00001 BNB，领取要 10 能量 + 0.00001 BNB，每次至少 0.0001 BNB（10 小时）。挖出的 BNB 从合约的手续费池子里出——mint、充值和竞技场的费用都会进池子。如果池子空了，领取会暂停，等费用再进来。没有保证收益，挖多少看池子有多少。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">两位持有者各下注 0.0005 BNB + 20 能量。胜者拿 0.0009 BNB（90%），项目留 0.0001 BNB。胜率 = 你的战力 ÷ 总战力。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">在 mint 时抽取并记录在链上：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
