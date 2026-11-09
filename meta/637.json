@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Nebula Core",
+  "description": "A violet robot AI agent carrying a star in its chest, cloaked in nebula clouds. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Epic.",
+  "image": "https://voltagent.site/images/637.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Nebula Violet"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Star Core Cape"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-0637"
+    }
+  ]
+}

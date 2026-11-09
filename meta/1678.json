@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Crown Prime",
+  "description": "A golden robot AI agent crowned prime of the agents, star emblem shining on its chest. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Legendary.",
+  "image": "https://voltagent.site/images/1678.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Royal Gold"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Golden Crown"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-1678"
+    }
+  ]
+}

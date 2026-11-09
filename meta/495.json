@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Circuit Sprout",
+  "description": "A green robot AI agent grown from circuits and leaves, glowing eyes lit in the dark forest. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Uncommon.",
+  "image": "https://voltagent.site/images/495.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Uncommon"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Forest Circuit"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Leaf Antenna"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-0495"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — First Boot",
+  "description": "A teal robot AI agent waking up for the first time, antenna lamp glowing and chest core online. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Rare.",
+  "image": "https://voltagent.site/images/5.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Circuit Teal"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Antenna Lamp"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-0005"
+    }
+  ]
+}
