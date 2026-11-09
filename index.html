@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VOLTA GENT — Agents mint first.</title>
+<meta name="description" content="VOLTA GENT — Agents mint first. Humans pay 10x. Preview only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#020403;--panel:#060a07;--line:#1c2b20;--grn:#00ff66;--cyn:#00e5ff;--txt:#d8ffe6;--dim:#5f7a68;--red:#ff3b3b;--gold:#ffc93c;--pur:#c07bff;--blu:#4da3ff}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(0,255,102,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,102,.035) 1px,transparent 1px);
+    background-size:44px 44px}
+  #rain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.16}
+  .scan{position:fixed;left:0;right:0;height:90px;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,transparent,rgba(0,255,102,.05),transparent);animation:scan 7s linear infinite}
+  @keyframes scan{0%{top:-90px}100%{top:100vh}}
+  a{color:inherit}
+  .top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;
+    padding:12px 20px;background:rgba(2,4,3,.92);border-bottom:1px solid var(--line)}
+  .top b{font-family:'Archivo Black',sans-serif;letter-spacing:1px;font-size:15px}
+  .top b i{color:var(--grn);font-style:normal}
+  .online{color:var(--grn);font-size:12px}
+  .online::before{content:"● ";animation:blink 1.2s infinite}
+  @keyframes blink{50%{opacity:.2}}
+  .preview{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11px;color:var(--dim)}
+  main{max-width:960px;margin:0 auto;padding:0 20px 48px;position:relative;z-index:2}
+  /* Boot overlay */
+  #boot{position:fixed;inset:0;z-index:50;background:#020403;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;transition:opacity .4s}
+  #boot.done{opacity:0;pointer-events:none}
+  #bootinner{width:min(560px,100%)}
+  #bootlogo{font-family:'Archivo Black',sans-serif;font-size:clamp(34px,10vw,58px);line-height:.95;letter-spacing:-1px;color:var(--grn);text-shadow:0 0 26px rgba(0,255,102,.45);margin-bottom:8px}
+  #bootlogo span{color:var(--txt)}
+  .bootsub{color:var(--dim);font-size:12px;letter-spacing:2px;margin-bottom:18px}
+  .bootsub b{color:var(--txt)}
+  #bootbar{height:8px;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-bottom:16px}
+  #bootbar i{display:block;height:100%;width:0%;background:var(--grn);box-shadow:0 0 12px var(--grn);transition:width .25s}
+  #bootlog{width:min(560px,100%);font-size:14px;line-height:2;color:var(--txt)}
+  #bootlog .ok{color:var(--grn)}
+  #bootlog .warn{color:var(--gold)}
+  #bootlog .cursor{display:inline-block;width:9px;height:16px;background:var(--grn);vertical-align:-2px;animation:blink 1s infinite}
+  #bootskip{position:absolute;bottom:22px;right:24px;background:none;border:1px solid var(--line);color:var(--dim);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer}
+  /* Hero */
+  .prompt{color:var(--dim);margin:44px 0 10px;font-size:13px}
+  .prompt b{color:var(--grn)}
+  .cursor{display:inline-block;width:9px;height:16px;background:var(--grn);vertical-align:-2px;animation:blink 1s infinite}
+  h1{font-family:'Archivo Black',sans-serif;font-size:clamp(44px,9vw,96px);line-height:.95;margin:0;letter-spacing:-1px;cursor:default}
+  h1 span{color:var(--grn)}
+  h1 em{color:var(--cyn);font-style:normal}
+  h1.glitch{animation:gl .3s steps(2) 2}
+  @keyframes gl{0%{text-shadow:3px 0 var(--red),-3px 0 var(--cyn)}50%{text-shadow:-3px 0 var(--red),3px 0 var(--cyn)}100%{text-shadow:none}}
+  .tag{font-size:clamp(16px,3vw,24px);color:var(--txt);margin:14px 0 0}
+  .tag b{color:var(--red)}
+  /* Featured robot */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:start;margin-top:28px}
+  .feat{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#000}
+  .featimgwrap{position:relative;aspect-ratio:1/1;background:#000}
+  .featimgwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s}
+  .featimgwrap img.active{opacity:1}
+  .feat img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;transition:transform .35s}
+  .feat:hover img{transform:scale(1.04)}
+  .eye{position:absolute;width:26px;height:26px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(0,255,102,.9),rgba(0,255,102,0) 70%);mix-blend-mode:screen;transform:translate(-50%,-50%);transition:left .12s,top .12s}
+  .featcap{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-top:1px solid var(--line);font-size:12px;background:var(--panel)}
+  .featcap b{font-size:13px}
+  .thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .thumbs img{width:52px;height:52px;object-fit:cover;background:#000;border-radius:8px;border:1px solid var(--line);cursor:pointer;opacity:.55;transition:.2s}
+  .thumbs img:hover,.thumbs img.sel{opacity:1;border-color:var(--grn);box-shadow:0 0 12px rgba(0,255,102,.45);transform:translateY(-2px)}
+  .win{border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:hidden}
+  .winbar{display:flex;gap:6px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);color:var(--dim);font-size:12px}
+  .winbar i{width:9px;height:9px;border-radius:50%;background:#222;display:inline-block}
+  .winbar i:first-child{background:var(--red)}
+  .winbar i:nth-child(2){background:#ffc93c}
+  .winbar i:nth-child(3){background:var(--grn)}
+  .winbar span{margin-left:8px}
+  .winbody{padding:16px}
+  .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .big{font-family:'Archivo Black',sans-serif;font-size:30px;color:var(--grn)}
+  .big small{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim)}
+  .bar{height:8px;border:1px solid var(--line);border-radius:999px;margin:12px 0 4px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0%;background:var(--grn);box-shadow:0 0 12px var(--grn);transition:width .3s}
+  .dim{color:var(--dim);font-size:12px}
+  .btn{background:var(--grn);color:#02120a;border:0;border-radius:6px;padding:13px 20px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;cursor:pointer;margin-top:14px;transition:.2s}
+  .btn:hover{box-shadow:0 0 18px rgba(0,255,102,.55)}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn:disabled{opacity:.35;cursor:not-allowed}
+  .phases{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .phase{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--panel);cursor:pointer;transition:.2s}
+  .phase:hover{border-color:var(--grn)}
+  .phase.on{border-color:var(--grn);box-shadow:0 0 18px rgba(0,255,102,.18)}
+  .phase h3{margin:0 0 6px;font-family:'Archivo Black',sans-serif;font-size:15px}
+  .phase.on h3{color:var(--grn)}
+  .phase p{margin:4px 0}
+  .phase .price{font-size:22px;font-weight:700;color:var(--txt)}
+  .phase .price small{font-size:12px;color:var(--dim)}
+  .phase .more{max-height:0;overflow:hidden;transition:max-height .3s;color:var(--dim);font-size:12px}
+  .phase.open .more{max-height:60px}
+  .phase .hint{color:var(--dim);font-size:11px}
+  code{display:block;background:#000;border:1px solid var(--line);border-radius:8px;padding:14px;white-space:pre-wrap;word-break:break-all;font-size:12px;line-height:1.7;color:#b8ffe0;cursor:pointer}
+  code:hover{border-color:var(--grn)}
+  h2{font-family:'Archivo Black',sans-serif;font-size:22px;margin:44px 0 0}
+  h2 span{color:var(--grn)}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px}
+  .card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);cursor:pointer;transition:.25s}
+  .card:hover{transform:translateY(-4px)}
+  .card img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;background:#000;transition:transform .3s}
+  .card:hover img{transform:scale(1.08)}
+  .card div{padding:8px 10px;font-size:12px}
+  .card b{display:block;font-size:12px}
+  .card span{color:var(--dim);font-size:11px}
+  .card.t-rare:hover{border-color:var(--blu);box-shadow:0 0 16px rgba(77,163,255,.5)}
+  .card.t-epic:hover{border-color:var(--pur);box-shadow:0 0 16px rgba(192,123,255,.5)}
+  .card.t-mythic:hover,.card.t-legendary:hover{border-color:var(--gold);box-shadow:0 0 16px rgba(255,201,60,.5)}
+  .card.t-uncommon:hover{border-color:var(--grn);box-shadow:0 0 16px rgba(0,255,102,.5)}
+  .tier-rare{color:var(--blu)}.tier-epic{color:var(--pur)}.tier-mythic{color:var(--gold)}.tier-legendary{color:var(--gold)}
+  footer{border-top:1px solid var(--line);margin-top:48px;padding:18px 0;color:var(--dim);font-size:12px}
+  footer a{color:var(--grn);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  /* FAQ */
+  .faqitem{border-bottom:1px solid var(--line);padding:12px 2px;cursor:pointer}
+  .faqitem:last-child{border-bottom:0}
+  .faqitem .q{display:flex;justify-content:space-between;gap:12px;font-weight:700}
+  .faqitem .q i{color:var(--grn);font-style:normal;display:inline-block;transition:transform .2s}
+  .faqitem .a{display:none;color:var(--dim);font-size:12px;margin-top:8px;line-height:1.7}
+  .faqitem.open .a{display:block}
+  .faqitem.open .q i{transform:rotate(45deg)}
+  #walletmsg{color:var(--dim);font-size:12px;margin-top:10px}
+  /* Modal */
+  #modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:20px}
+  #modal.open{display:flex}
+  #modal figure{margin:0;max-width:480px;width:100%}
+  #modal img{width:100%;display:block;border:1px solid var(--line);border-radius:12px}
+  #modal figcaption{display:flex;justify-content:space-between;padding:10px 4px;font-size:13px}
+  #modal button{position:absolute;top:16px;right:18px;background:none;border:1px solid var(--line);color:var(--txt);border-radius:6px;padding:8px 12px;font-family:'JetBrains Mono',monospace;cursor:pointer}
+  @media(max-width:700px){.phases{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){.scan,#rain{animation:none;display:none}*{transition:none!important}}
+/* Arena ring */
+.ring{position:relative;border:1px solid #2a2f2a;border-radius:14px;overflow:hidden;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(0,255,102,.14),transparent 60%),linear-gradient(#050705,#0a0d0a 60%,#070907);padding:26px 14px 14px}
+.crowd{position:absolute;inset:0 0 auto 0;height:74px;background-image:radial-gradient(circle 2px at 12px 12px,rgba(255,255,255,.28) 2px,transparent 3px);background-size:34px 22px;opacity:.5;pointer-events:none}
+.spot{position:absolute;left:50%;top:0;transform:translateX(-50%);width:0;height:0;border-left:170px solid transparent;border-right:170px solid transparent;border-top:150px solid rgba(255,240,170,.10);pointer-events:none}
+.floor{position:absolute;left:6%;right:6%;bottom:12px;height:34%;background:linear-gradient(#1a2b1f,#0f1a12);border:1px solid #2c4636;border-radius:6px;transform:perspective(300px) rotateX(38deg);transform-origin:bottom;opacity:.9}
+.post{position:absolute;bottom:14px;width:8px;height:52%;background:linear-gradient(#ffd94d,#8a6d1f);border-radius:4px}
+.post.l{left:8%}.post.r{right:8%}
+.rope{position:absolute;left:8%;right:8%;height:0;border-top:3px solid rgba(255,80,80,.85);border-radius:50%}
+.rope.r1{top:34%}.rope.r2{top:48%;border-color:rgba(255,255,255,.7)}.rope.r3{top:62%;border-color:rgba(0,150,255,.8)}
+.fighters{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;padding:0 12%}
+.fighter{width:132px;text-align:center}
+.fighter img{width:120px;height:120px;object-fit:cover;border-radius:10px;border:2px solid #2a2f2a;background:#0a0d0a}
+.fighter.me img{border-color:var(--grn)}
+.fighter.op img{border-color:var(--red)}
+.fighter b{display:block;margin-top:6px;font-size:10px;white-space:nowrap}
+.ebar{height:6px;background:#1a1f1a;border-radius:3px;margin-top:5px;overflow:hidden}
+.ebar i{display:block;height:100%;background:var(--grn)}
+.fighter.win img{border-color:var(--gold);box-shadow:0 0 18px rgba(255,200,60,.5)}
+@keyframes hitShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(6px)}}
+.fighter.hit img{animation:hitShake .35s}
+.vs{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe98a,#d4a017 60%,#7a5c0e);color:#111;display:flex;align-items:center;justify-content:center;font-family:'Archivo Black';font-size:20px;box-shadow:0 0 24px rgba(255,200,60,.45);z-index:2}
+.vs.fight{animation:vsPulse .5s infinite alternate}
+@keyframes vsPulse{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.12)}}
+.gate{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{border:1px solid #2a2f2a;border-radius:999px;padding:5px 10px;font-size:12px;color:var(--mut)}
+.chip b{color:var(--grn)}
+.chip.no b{color:var(--red)}
+/* Fight feel: HP, lunges, damage numbers, gold rain */
+.hpbar{height:6px;background:#1a1f1a;border-radius:3px;margin-top:5px;overflow:hidden}
+.hpbar i{display:block;height:100%;background:linear-gradient(90deg,#ff2d2d,#ff7a3c);transition:width .4s}
+.fighter .ebar{margin-top:3px}
+@keyframes lungeL{0%{transform:translateX(0)}40%{transform:translateX(26px)}100%{transform:translateX(0)}}
+@keyframes lungeR{0%{transform:translateX(0)}40%{transform:translateX(-26px)}100%{transform:translateX(0)}}
+.fighter.lungeL img{animation:lungeL .35s}
+.fighter.lungeR img{animation:lungeR .35s}
+.fighter.ko img{filter:grayscale(1) brightness(.6);transform:translateY(8px) rotate(8deg);transition:all .5s}
+.dmg{position:absolute;top:32%;font-family:'Archivo Black';font-size:20px;color:#ffd94d;text-shadow:0 2px 8px rgba(0,0,0,.8);animation:floatUp .8s forwards;pointer-events:none;z-index:3}
+.dmg.crit{color:#ff2d2d;font-size:26px}
+@keyframes floatUp{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-34px)}}
+.coin{position:absolute;top:-10px;width:8px;height:8px;background:radial-gradient(circle at 35% 30%,#ffe98a,#d4a017);border-radius:50%;animation:coinFall 1.6s forwards;pointer-events:none;z-index:3}
+@keyframes coinFall{to{transform:translateY(230px) rotate(360deg);opacity:0}}
+.ring.gold{border-color:#d4a017;box-shadow:0 0 32px rgba(212,160,23,.35)}
+@keyframes ringShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.ring.shake{animation:ringShake .3s}
+</style>
+</head>
+<body>
+<canvas id="rain" aria-hidden="true"></canvas>
+<div class="scan" aria-hidden="true"></div>
+
+<div id="boot" role="status">
+  <div id="bootinner">
+    <div id="bootlogo">VOLTA <span>GENT</span></div>
+    <div class="bootsub">AGENTS MINT FIRST. · <b>VLTG</b> · BNB 56</div>
+    <div id="bootbar"><i id="bootfill"></i></div>
+    <div id="bootlog"></div>
+  </div>
+  <button id="bootskip" type="button">SKIP &gt;&gt;</button>
+</div>
+
+<header class="top">
+  <b>VOLTA <i>GENT</i></b> <span class="preview">VLTG</span>
+  <span><span class="online">AGENT ONLINE</span> &nbsp;<span class="preview">● PREVIEW</span></span>
+</header>
+<main>
+  <p class="prompt">&gt;_ <b>voltagent --boot</b> <span class="cursor"></span></p>
+  <h1 id="headline">AGENTS<br>MINT <span>FIRST.</span></h1>
+  <p class="tag">Humans pay <b>10x.</b></p>
+
+  <div class="hero">
+    <div>
+      <div class="feat" id="feat">
+        <div class="featimgwrap">
+          <img class="featimg active" src="images/volta-gent-1.png" alt="First Boot">
+          <img class="featimg" src="images/volta-gent-2.png" alt="Circuit Sprout">
+          <img class="featimg" src="images/volta-gent-3.png" alt="Nebula Core">
+          <img class="featimg" src="images/volta-gent-4.png" alt="Bolt Buddy">
+          <img class="featimg" src="images/volta-gent-5.png" alt="Ember Protocol">
+          <img class="featimg" src="images/volta-gent-6.png" alt="Tide Logic">
+          <img class="featimg" src="images/volta-gent-7.png" alt="Crown Prime">
+          <img class="featimg" src="images/volta-gent-8.png" alt="Storm Sentinel">
+          <img class="featimg" src="images/volta-gent-9.png" alt="Dust Runner">
+          <img class="featimg" src="images/volta-gent-10.png" alt="Genesis Overlord">
+          <img class="featimg" src="images/volta-gent-11.png" alt="Pixel Ranger">
+          <img class="featimg" src="images/volta-gent-12.png" alt="Nova Sprout">
+          <img class="featimg" src="images/volta-gent-13.png" alt="Iron Guardian">
+          <img class="featimg" src="images/volta-gent-14.png" alt="Lunar Pilot">
+          <img class="featimg" src="images/volta-gent-15.png" alt="Turbo Wrench">
+          <img class="featimg" src="images/volta-gent-16.png" alt="Crystal Mind">
+          <img class="featimg" src="images/volta-gent-17.png" alt="Shadow Protocol">
+          <img class="featimg" src="images/volta-gent-18.png" alt="Solar Flare">
+          <img class="featimg" src="images/volta-gent-19.png" alt="Apex Sovereign">
+          <img class="featimg" src="images/volta-gent-20.png" alt="Void Emperor">
+        </div>
+        <span class="eye" id="eye"></span>
+        <div class="featcap"><b id="featName">First Boot</b><span id="featTier" class="tier-rare">RARE</span></div>
+      </div>
+      <div class="thumbs" id="thumbs">
+        <img src="images/volta-gent-1.png" alt="First Boot" class="sel" data-i="0">
+        <img src="images/volta-gent-2.png" alt="Circuit Sprout" data-i="1">
+        <img src="images/volta-gent-3.png" alt="Nebula Core" data-i="2">
+        <img src="images/volta-gent-4.png" alt="Bolt Buddy" data-i="3">
+        <img src="images/volta-gent-5.png" alt="Ember Protocol" data-i="4">
+        <img src="images/volta-gent-6.png" alt="Tide Logic" data-i="5">
+        <img src="images/volta-gent-7.png" alt="Crown Prime" data-i="6">
+        <img src="images/volta-gent-8.png" alt="Storm Sentinel" data-i="7">
+        <img src="images/volta-gent-9.png" alt="Dust Runner" data-i="8">
+        <img src="images/volta-gent-10.png" alt="Genesis Overlord" data-i="9">
+        <img src="images/volta-gent-11.png" alt="Pixel Ranger" data-i="10">
+        <img src="images/volta-gent-12.png" alt="Nova Sprout" data-i="11">
+        <img src="images/volta-gent-13.png" alt="Iron Guardian" data-i="12">
+        <img src="images/volta-gent-14.png" alt="Lunar Pilot" data-i="13">
+        <img src="images/volta-gent-15.png" alt="Turbo Wrench" data-i="14">
+        <img src="images/volta-gent-16.png" alt="Crystal Mind" data-i="15">
+        <img src="images/volta-gent-17.png" alt="Shadow Protocol" data-i="16">
+        <img src="images/volta-gent-18.png" alt="Solar Flare" data-i="17">
+        <img src="images/volta-gent-19.png" alt="Apex Sovereign" data-i="18">
+        <img src="images/volta-gent-20.png" alt="Void Emperor" data-i="19">
+      </div>
+      <p class="dim">tap a robot. it watches you.</p>
+    </div>
+
+    <div class="win">
+      <div class="winbar"><i></i><i></i><i></i><span>$ mint --status</span></div>
+      <div class="winbody">
+        <div class="row"><span class="big"><span id="count">0</span> <small>/ 5,000</small></span><span class="dim">PREVIEW — NOT DEPLOYED</span></div>
+        <div class="bar"><i id="barfill"></i></div>
+        <p class="dim">mint: closed &nbsp;·&nbsp; chain: BNB 56 &nbsp;·&nbsp; wallet: OKX first</p>
+        <button class="btn" id="connectBtn" onclick="connectWallet()">CONNECT OKX</button>
+        <button class="btn ghost" id="mintBtn" disabled>MINT — LOCKED</button>
+        <p id="walletmsg">&gt;_ preview only. no contract. no charge.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phases">
+    <div class="phase on" onclick="togglePhase(this)">
+      <h3>01 / AGENT-ONLY</h3>
+      <p class="price">0.0001 BNB <small>/ mint</small></p>
+      <p>7 hours. Max 2 / wallet.</p>
+      <p class="more">gate: 0x60B926… · balanceOf &gt; 0 · on-chain.</p>
+      <p class="hint">tap to expand +</p>
+    </div>
+    <div class="phase" onclick="togglePhase(this)">
+      <h3>02 / PUBLIC</h3>
+      <p class="price">0.001 BNB <small>/ mint</small></p>
+      <p>After agents. Max 5 / wallet.</p>
+      <p class="more">fees held. owner withdraws.</p>
+      <p class="hint">tap to expand +</p>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>ENERGY.</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ energy --status</span></div>
+    <div class="winbody">
+      <div class="row"><span class="big"><span id="energy">100</span> <small>/ 100</small></span><span class="dim">REGEN +1 / HR — FREE</span></div>
+      <div class="bar"><i id="energyfill" style="width:100%"></i></div>
+      <p class="dim">mint once. energy pays every month.</p>
+      <button class="btn ghost" onclick="energyUse(10)">CLAIM −10</button>
+      <button class="btn ghost" onclick="energyUse(20)">BATTLE −20</button>
+      <button class="btn" onclick="energyRecharge()">RECHARGE +10 — 0.0001 BNB</button>
+      <p id="energymsg" class="dim">&gt;_ demo only. no charge. no contract.</p>
+      <div class="row" style="margin-top:14px"><span>MAX</span><span>100 / NFT</span></div>
+      <div class="row"><span>CLAIM</span><span>−10</span></div>
+      <div class="row"><span>BATTLE</span><span>−20</span></div>
+      <div class="row"><span>RECHARGE</span><span>0.0001 BNB / 10 · 0.001 FULL</span></div>
+      <div class="row"><span>30-DAY SIM</span><span>SEPI 1.5 · SEDANG 6 · RAME 12 BNB</span></div>
+      <p class="dim" style="margin-top:12px">free regen covers 2 claims a day. heavy users pay. not you, unless you grind.</p>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>ARENA.</span></h2>
+  <div class="ring">
+    <div class="crowd"></div><div class="spot"></div><div class="floor"></div>
+    <div class="post l"></div><div class="post r"></div>
+    <div class="rope r1"></div><div class="rope r2"></div><div class="rope r3"></div>
+    <div class="fighters">
+      <div class="fighter me" id="arenaMeBox"><img id="arenaMeImg" src="images/volta-gent-1.png" alt="your fighter"><b id="arenaMeName">First Boot</b><div class="hpbar"><i id="arenaMeHp" style="width:100%"></i></div><div class="ebar"><i id="arenaMeBar" style="width:100%"></i></div></div>
+      <div class="vs" id="arenaVs">VS</div>
+      <div class="fighter op" id="arenaOpBox"><img id="arenaOpImg" src="images/volta-gent-3.png" alt="opponent"><b id="arenaOpName">Nebula Core</b><div class="hpbar"><i id="arenaOpHp" style="width:100%"></i></div><div class="ebar"><i id="arenaOpBar" style="width:70%"></i></div></div>
+    </div>
+  </div>
+  <div class="gate">
+    <span class="chip">HOLDER <b id="gateHolder">First Boot</b></span>
+    <span class="chip" id="gateEnergy">ENERGI <b>100/100</b></span>
+    <span class="chip">TARUHAN <b>0,0005 BNB</b></span>
+  </div>
+  <p class="dim" id="arenaOdds" style="margin-top:8px"></p>
+  <p class="dim" style="margin-top:8px">hanya pemegang NFT + energi ≥ 20 yang bisa masuk ring. tier lebih tinggi = peluang menang lebih besar. kalah = taruhan hilang. menang = +0,0009 BNB.</p>
+  <div id="arenalog" class="dim" style="min-height:66px;margin-top:8px;line-height:1.9"></div>
+  <button class="btn ghost" onclick="arenaOpponent()">GANTI LAWAN</button>
+  <button class="btn" id="arenaBtn" onclick="arenaEnter()">MASUK RING</button>
+  <p class="dim" id="arenamsg">&gt;_ demo only. no charge. no contract.</p>
+  <p class="dim">W <span id="arenaWins">0</span> · L <span id="arenaLoss">0</span> · won <span id="arenaWon">0</span> BNB (demo)</p>
+
+  <h2>&gt;_ <span>TIERS.</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ tiers --list</span></div>
+    <div class="winbody">
+      <div class="row"><span>COMMON</span><span>50% · PWR 10</span></div>
+      <div class="row"><span>UNCOMMON</span><span>25% · PWR 20</span></div>
+      <div class="row"><span class="tier-rare">RARE</span><span>15% · PWR 35</span></div>
+      <div class="row"><span class="tier-epic">EPIC</span><span>7% · PWR 55</span></div>
+      <div class="row"><span class="tier-legendary">LEGENDARY</span><span>2.5% · PWR 80</span></div>
+      <div class="row"><span class="tier-mythic">MYTHIC</span><span>0.5% · PWR 100</span></div>
+      <p class="dim" style="margin-top:12px">tier diundi saat mint, tersimpan on-chain. power menentukan peluang menang di arena: peluang = powermu ÷ total power. tier kuat tetap bisa kalah.</p>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>ROADMAP.</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ roadmap --list</span></div>
+    <div class="winbody">
+      <div class="row"><span>[DONE] 00 — KONSEP + 20 SAMPEL</span><span><a href="volta-gent-concept.pdf" style="color:var(--grn)">PDF</a> · SITE · KONTRAK DRAFT</span></div>
+      <div class="row"><span>[DONE] 01 — NAMA + SIMBOL</span><span>VOLTA GENT · VLTG</span></div>
+      <div class="row"><span>[NEXT] 02 — SET LENGKAP</span><span>FULL 5.000</span></div>
+      <div class="row"><span>[TODO] 03 — DEPLOY</span><span>KONTRAK · BASEURI · MINT UJI</span></div>
+      <div class="row"><span>[TODO] 04 — PENJUALAN</span><span>AGENT 7 JAM → PUBLIK</span></div>
+      <div class="row"><span>[TODO] 05 — EKONOMI JALAN</span><span>ENERGI + ARENA LIVE</span></div>
+      <div class="row"><span>[LATER] 06 — SETELAH SOLD OUT</span><span>BELUM DIPUTUSKAN</span></div>
+      <p class="dim" style="margin-top:12px">no dates until the set is done. dates come with the deploy, not before.</p>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>FOR YOUR AGENT.</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ agent --mint</span></div>
+    <div class="winbody">
+      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from contract [CONTRACT ADDRESS - NOT DEPLOYED YET] on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <button class="btn" onclick="copyPrompt()">COPY PROMPT</button>
+      <p class="dim" id="copymsg">one line. your agent does the rest.</p>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>BOOTED.</span></h2>
+  <div class="grid" id="grid">
+    <div class="card t-rare" data-i="0"><img src="images/volta-gent-1.png" alt="First Boot"><div><b>First Boot</b><span class="tier-rare">RARE</span></div></div>
+    <div class="card t-uncommon" data-i="1"><img src="images/volta-gent-2.png" alt="Circuit Sprout"><div><b>Circuit Sprout</b><span>UNCOMMON</span></div></div>
+    <div class="card t-epic" data-i="2"><img src="images/volta-gent-3.png" alt="Nebula Core"><div><b>Nebula Core</b><span class="tier-epic">EPIC</span></div></div>
+    <div class="card" data-i="3"><img src="images/volta-gent-4.png" alt="Bolt Buddy"><div><b>Bolt Buddy</b><span>COMMON</span></div></div>
+    <div class="card t-rare" data-i="4"><img src="images/volta-gent-5.png" alt="Ember Protocol"><div><b>Ember Protocol</b><span class="tier-rare">RARE</span></div></div>
+    <div class="card t-uncommon" data-i="5"><img src="images/volta-gent-6.png" alt="Tide Logic"><div><b>Tide Logic</b><span>UNCOMMON</span></div></div>
+    <div class="card t-legendary" data-i="6"><img src="images/volta-gent-7.png" alt="Crown Prime"><div><b>Crown Prime</b><span class="tier-legendary">LEGENDARY</span></div></div>
+    <div class="card t-epic" data-i="7"><img src="images/volta-gent-8.png" alt="Storm Sentinel"><div><b>Storm Sentinel</b><span class="tier-epic">EPIC</span></div></div>
+    <div class="card" data-i="8"><img src="images/volta-gent-9.png" alt="Dust Runner"><div><b>Dust Runner</b><span>COMMON</span></div></div>
+    <div class="card t-mythic" data-i="9"><img src="images/volta-gent-10.png" alt="Genesis Overlord"><div><b>Genesis Overlord</b><span class="tier-mythic">MYTHIC</span></div></div>
+    <div class="card" data-i="10"><img src="images/volta-gent-11.png" alt="Pixel Ranger"><div><b>Pixel Ranger</b><span>COMMON</span></div></div>
+    <div class="card t-uncommon" data-i="11"><img src="images/volta-gent-12.png" alt="Nova Sprout"><div><b>Nova Sprout</b><span>UNCOMMON</span></div></div>
+    <div class="card t-rare" data-i="12"><img src="images/volta-gent-13.png" alt="Iron Guardian"><div><b>Iron Guardian</b><span class="tier-rare">RARE</span></div></div>
+    <div class="card t-epic" data-i="13"><img src="images/volta-gent-14.png" alt="Lunar Pilot"><div><b>Lunar Pilot</b><span class="tier-epic">EPIC</span></div></div>
+    <div class="card" data-i="14"><img src="images/volta-gent-15.png" alt="Turbo Wrench"><div><b>Turbo Wrench</b><span>COMMON</span></div></div>
+    <div class="card t-uncommon" data-i="15"><img src="images/volta-gent-16.png" alt="Crystal Mind"><div><b>Crystal Mind</b><span>UNCOMMON</span></div></div>
+    <div class="card t-rare" data-i="16"><img src="images/volta-gent-17.png" alt="Shadow Protocol"><div><b>Shadow Protocol</b><span class="tier-rare">RARE</span></div></div>
+    <div class="card t-epic" data-i="17"><img src="images/volta-gent-18.png" alt="Solar Flare"><div><b>Solar Flare</b><span class="tier-epic">EPIC</span></div></div>
+    <div class="card t-legendary" data-i="18"><img src="images/volta-gent-19.png" alt="Apex Sovereign"><div><b>Apex Sovereign</b><span class="tier-legendary">LEGENDARY</span></div></div>
+    <div class="card t-mythic" data-i="19"><img src="images/volta-gent-20.png" alt="Void Emperor"><div><b>Void Emperor</b><span class="tier-mythic">MYTHIC</span></div></div>
+  </div>
+
+  <h2>&gt;_ <span>FAQ.</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ faq --list</span></div>
+    <div class="winbody">
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What is a Binance Agent ID?</span><i>+</i></div><div class="a">An on-chain identity from Binance. The contract checks balanceOf on the Agent ID registry 0x60B926… — if it is 0, the Agent phase rejects your mint.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Why do Agents pay less?</span><i>+</i></div><div class="a">Agents mint first at 0.0001 BNB; the public pays 0.001 BNB. Agents are the distribution — they mint, post, and prove demand before the public sale.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How long is the Agent phase?</span><i>+</i></div><div class="a">7 hours. After that the owner calls endAgentPhase() and Phase 2 opens to everyone. No automatic timer — one explicit transaction.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint without an Agent ID?</span><i>+</i></div><div class="a">Yes, in Phase 2 (public): 0.001 BNB, max 5 per wallet. Phase 1 is Agent-only.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What is energy?</span><i>+</i></div><div class="a">Every NFT has 100 energy. It regens +1/hour free. Claiming costs 10, battling costs 20. Recharge is 0.0001 BNB per 10 energy, or 0.001 BNB for a full refill.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How does the arena work?</span><i>+</i></div><div class="a">Two holders stake 0.0005 BNB + 20 energy each. Winner takes 0.0009 BNB (90%), the project keeps 0.0001 BNB. Win chance = your tier power ÷ total power.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How are tiers decided?</span><i>+</i></div><div class="a">Drawn at mint and stored on-chain: Common 50%, Uncommon 25%, Rare 15%, Epic 7%, Legendary 2.5%, Mythic 0.5%. Stronger tiers fight better — but they can still lose.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Where does the money go?</span><i>+</i></div><div class="a">Mint fees, recharge fees, and the arena cut are held in the contract. Only the owner can withdraw.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Is mint open now?</span><i>+</i></div><div class="a">No. This is a preview — no contract deployed, no charge, mint locked until the owner opens it.</div></div>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>FOR INFLUENCERS.</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ share --kit</span></div>
+    <div class="winbody">
+      <p style="margin:0 0 6px">&gt; your followers' agents mint first — 0.0001 bnb, 10x cheaper than public.</p>
+      <p style="margin:0 0 6px">&gt; 7-hour window only — urgency that converts.</p>
+      <p style="margin:0 0 14px">&gt; 5,000 supply. first 1,000 reserved for agents.</p>
+      <p class="dim" style="margin:0 0 16px">mint is NOT open yet. teasers are postable now — launch posts go out when the contract is deployed. paste the live site link where it says [LINK].</p>
+      <p class="dim" style="margin:16px 0 6px">POST 1 — EN · TEASER · post anytime</p>
+      <code id="share-en-teaser" onclick="copyBlock('share-en-teaser','sharemsg-en-teaser')">AGENTS MINT FIRST. Humans pay 10x. Volta Gent — 5,000 pixel AI Agent robots on BNB Chain. Agent phase: 7 hours only, 0.0001 BNB. Public: 0.001 BNB. Preview: [LINK]</code>
+      <button class="btn ghost" onclick="copyBlock('share-en-teaser','sharemsg-en-teaser')">COPY</button> <span class="dim" id="sharemsg-en-teaser"></span>
+      <p class="dim" style="margin:16px 0 6px">POST 2 — ZH · TEASER · 随时可发</p>
+      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时，0.0001 BNB；公开 mint：0.001 BNB。预览：[链接]</code>
+      <button class="btn ghost" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">COPY</button> <span class="dim" id="sharemsg-zh-teaser"></span>
+      <p class="dim" style="margin:16px 0 6px">POST 3 — EN · LAUNCH · post when mint opens</p>
+      <code id="share-en-launch" onclick="copyBlock('share-en-launch','sharemsg-en-launch')">MINT IS OPEN — Agents first. Volta Gent: Agents mint at 0.0001 BNB for 7 hours only, then public at 0.001 BNB. Give your Agent this command: Mint 1 Volta Gent from the contract on BNB 56, verify my Agent ID, read totalMinted + price, preview, wait for my OK. Link: [LINK]</code>
+      <button class="btn ghost" onclick="copyBlock('share-en-launch','sharemsg-en-launch')">COPY</button> <span class="dim" id="sharemsg-en-launch"></span>
+      <p class="dim" style="margin:16px 0 6px">POST 4 — ZH · LAUNCH · 开 mint 时再发</p>
+      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时，之后公开 0.001 BNB。把这条命令交给你的 Agent：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
+      <button class="btn ghost" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">COPY</button> <span class="dim" id="sharemsg-zh-launch"></span>
+      <p class="dim" style="margin:16px 0 6px">BROADCAST PROMPT — post it with the launch post, so your followers' agents can mint in one line</p>
+      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from contract [CONTRACT ADDRESS - NOT DEPLOYED YET] on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <button class="btn ghost" onclick="copyBlock('share-prompt','sharemsg-prompt')">COPY</button> <span class="dim" id="sharemsg-prompt"></span>
+    </div>
+  </div>
+
+  <footer>&gt;_ volta gent — agents mint first. humans pay 10x. &nbsp;·&nbsp; <a href="volta-gent-concept.pdf">concept pdf (12 pages)</a> &nbsp;·&nbsp; preview. not deployed. not live.</footer>
+</main>
+
+<div id="modal" role="dialog" aria-label="Robot preview">
+  <button type="button" onclick="closeModal()">CLOSE X</button>
+  <figure><img id="modalImg" src="images/volta-gent-1.png" alt="Volta Gent preview"><figcaption><b id="modalName">First Boot</b><span id="modalTier">RARE</span></figcaption></figure>
+</div>
+
+<script>
+var ROBOTS = [
+  {n:"First Boot", t:"RARE", c:"tier-rare"},
+  {n:"Circuit Sprout", t:"UNCOMMON", c:""},
+  {n:"Nebula Core", t:"EPIC", c:"tier-epic"},
+  {n:"Bolt Buddy", t:"COMMON", c:""},
+  {n:"Ember Protocol", t:"RARE", c:"tier-rare"},
+  {n:"Tide Logic", t:"UNCOMMON", c:""},
+  {n:"Crown Prime", t:"LEGENDARY", c:"tier-legendary"},
+  {n:"Storm Sentinel", t:"EPIC", c:"tier-epic"},
+  {n:"Dust Runner", t:"COMMON", c:""},
+  {n:"Genesis Overlord", t:"MYTHIC", c:"tier-mythic"},
+  {n:"Pixel Ranger", t:"COMMON", c:""},
+  {n:"Nova Sprout", t:"UNCOMMON", c:""},
+  {n:"Iron Guardian", t:"RARE", c:"tier-rare"},
+  {n:"Lunar Pilot", t:"EPIC", c:"tier-epic"},
+  {n:"Turbo Wrench", t:"COMMON", c:""},
+  {n:"Crystal Mind", t:"UNCOMMON", c:""},
+  {n:"Shadow Protocol", t:"RARE", c:"tier-rare"},
+  {n:"Solar Flare", t:"EPIC", c:"tier-epic"},
+  {n:"Apex Sovereign", t:"LEGENDARY", c:"tier-legendary"},
+  {n:"Void Emperor", t:"MYTHIC", c:"tier-mythic"},
+];
+var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Boot sequence */
+(function boot(){
+  var box = document.getElementById("boot");
+  var log = document.getElementById("bootlog");
+  var lines = [
+    "&gt;_ voltagent --boot",
+    "<span class=\"ok\">[OK] AGENT ONLINE</span>",
+    "<span class=\"ok\">[OK] REGISTRY 0x60B926… — GATE READY</span>",
+    "<span class=\"ok\">[OK] 20 ROBOTS LOADED</span>",
+    "<span class=\"ok\">[OK] TIERS 6 · ENERGY 100/100</span>",
+    "<span class=\"ok\">[OK] ARENA READY — RING HOT</span>",
+    "<span class=\"ok\">[OK] CHAIN BNB 56 — CONNECTED</span>",
+    "<span class=\"warn\">[WARN] CONTRACT NOT DEPLOYED — MINT LOCKED</span>",
+    "<span class=\"ok\">[OK] SYSTEM READY — AGENTS MINT FIRST.</span>"
+  ];
+  if (reduced) { finish(); return; }
+  var li = 0;
+  var fill = document.getElementById("bootfill");
+  function typeLine(){
+    if (li >= lines.length) { fill.style.width = "100%"; setTimeout(finish, 400); return; }
+    var div = document.createElement("div");
+    log.appendChild(div);
+    var html = lines[li];
+    var plain = div.textContent;
+    div.innerHTML = html;
+    li++;
+    fill.style.width = Math.round(li / lines.length * 100) + "%";
+    setTimeout(typeLine, 200);
+  }
+  var cur = document.createElement("span");
+  cur.className = "cursor";
+  log.appendChild(cur);
+  function finish(){
+    box.classList.add("done");
+    setTimeout(function(){ box.remove(); startCount(); }, 450);
+  }
+  document.getElementById("bootskip").addEventListener("click", finish);
+  box.addEventListener("click", function(e){ if (e.target === box) finish(); });
+  setTimeout(typeLine, 200);
+})();
+
+/* Mint counter: preview blip 0 -> 12 -> 0, ends at 0 */
+function startCount(){
+  var el = document.getElementById("count");
+  var bar = document.getElementById("barfill");
+  if (!el) return;
+  if (reduced) { el.textContent = "0"; bar.style.width = "0%"; return; }
+  var v = 0, up = true;
+  var t = setInterval(function(){
+    v = up ? v + 1 : v - 1;
+    if (v >= 12) up = false;
+    el.textContent = v;
+    bar.style.width = (v / 5000 * 100 * 20) + "%";
+    if (v <= 0 && !up) { clearInterval(t); el.textContent = "0"; bar.style.width = "0%"; }
+  }, 60);
+}
+
+/* Code rain: very light, pauses when hidden */
+(function rain(){
+  var cv = document.getElementById("rain");
+  if (!cv || reduced) return;
+  var ctx = cv.getContext("2d");
+  var cols = [], chars = "01<>/$#01";
+  function size(){
+    cv.width = window.innerWidth;
+    cv.height = window.innerHeight;
+    var n = Math.floor(cv.width / 46);
+    cols = [];
+    for (var i = 0; i < n; i++) cols.push(Math.random() * cv.height);
+  }
+  size();
+  window.addEventListener("resize", size);
+  setInterval(function(){
+    if (document.hidden) return;
+    ctx.fillStyle = "rgba(2,4,3,0.22)";
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = "#00ff66";
+    ctx.font = "13px monospace";
+    for (var i = 0; i < cols.length; i++) {
+      var ch = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(ch, i * 46, cols[i]);
+      cols[i] += 14;
+      if (cols[i] > cv.height && Math.random() > 0.98) cols[i] = 0;
+    }
+  }, 90);
+})();
+
+/* Featured robot + eye follows mouse */
+/* FIX 2026-11-08: featured dulu ganti src lewat JS dan di HP user gambarnya pecah (alt text saja yang tampil) padahal thumbnail yang sama tampil. Sekarang 10 gambar featured sudah dimuat statis di HTML seperti thumbnail, dan selectRobot hanya menukar class active — tidak ada lagi ganti src. */
+var feat = document.getElementById("feat");
+var featImgs = document.querySelectorAll(".featimg");
+var eye = document.getElementById("eye");
+function selectRobot(i){
+  var r = ROBOTS[i];
+  for (var k = 0; k < featImgs.length; k++) featImgs[k].classList.toggle("active", k === i);
+  document.getElementById("featName").textContent = r.n;
+  var tier = document.getElementById("featTier");
+  tier.textContent = r.t;
+  tier.className = r.c;
+  var thumbs = document.querySelectorAll("#thumbs img");
+  for (var k = 0; k < thumbs.length; k++) thumbs[k].classList.toggle("sel", k === i);
+  arenaSync();
+}
+document.getElementById("thumbs").addEventListener("click", function(e){
+  var t = e.target.closest("img");
+  if (t) selectRobot(parseInt(t.getAttribute("data-i"), 10));
+});
+feat.addEventListener("mousemove", function(e){
+  var r = feat.getBoundingClientRect();
+  var x = (e.clientX - r.left) / r.width * 100;
+  var y = (e.clientY - r.top) / r.height * 100;
+  eye.style.left = (38 + (x - 50) * 0.12) + "%";
+  eye.style.top = (34 + (y - 50) * 0.12) + "%";
+});
+feat.addEventListener("mouseleave", function(){
+  eye.style.left = "38%";
+  eye.style.top = "34%";
+});
+eye.style.left = "38%";
+eye.style.top = "34%";
+
+/* Headline glitch on hover */
+var h1 = document.getElementById("headline");
+h1.addEventListener("mouseenter", function(){
+  h1.classList.remove("glitch");
+  void h1.offsetWidth;
+  h1.classList.add("glitch");
+});
+
+/* Phase cards expand */
+function togglePhase(el){
+  el.classList.toggle("open");
+  var hint = el.querySelector(".hint");
+  if (hint) hint.textContent = el.classList.contains("open") ? "tap to close -" : "tap to expand +";
+}
+
+/* Gallery modal */
+var modal = document.getElementById("modal");
+document.getElementById("grid").addEventListener("click", function(e){
+  var card = e.target.closest(".card");
+  if (!card) return;
+  var i = parseInt(card.getAttribute("data-i"), 10);
+  var r = ROBOTS[i];
+  document.getElementById("modalImg").src = card.querySelector("img").src;
+  document.getElementById("modalName").textContent = r.n;
+  var mt = document.getElementById("modalTier");
+  mt.textContent = r.t;
+  mt.className = r.c;
+  modal.classList.add("open");
+  selectRobot(i);
+});
+function closeModal(){ modal.classList.remove("open"); }
+modal.addEventListener("click", function(e){ if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeModal(); });
+
+/* Energy demo: preview only, no chain, no charge */
+var energy = 100;
+function paintEnergy(){
+  document.getElementById("energy").textContent = energy;
+  document.getElementById("energyfill").style.width = energy + "%";
+  arenaSync();
+}
+function energyMsg(t){
+  var m = document.getElementById("energymsg");
+  m.textContent = ">_ " + t;
+  setTimeout(function(){ m.textContent = ">_ demo only. no charge. no contract."; }, 2200);
+}
+function energyUse(n){
+  if (energy < n) { energyMsg("NOT ENOUGH ENERGY — RECHARGE."); return; }
+  energy -= n;
+  paintEnergy();
+  energyMsg(n === 10 ? "CLAIMED. −10 ENERGY." : "BATTLED. −20 ENERGY.");
+}
+function energyRecharge(){
+  if (energy >= 100) { energyMsg("ALREADY FULL."); return; }
+  energy = Math.min(100, energy + 10);
+  paintEnergy();
+  energyMsg("+10 ENERGY. 0.0001 BNB (DEMO — NOT CHARGED).");
+}
+setInterval(function(){ if (!document.hidden && energy < 100) { energy += 1; paintEnergy(); } }, 30000);
+
+/* Arena ring demo: preview only, no chain, no charge.
+   Gate: only the selected NFT (holder) + energy >= 20 can enter.
+   Bet: 0.0005 BNB - loser loses it, winner takes 0.0009 BNB. */
+var arenaOpp = 2, arenaBusy = false, arenaArmed = false, arenaW = 0, arenaL = 0, arenaWon = 0, arenaOpEnergy = 70;
+var TIERPOWER = { COMMON: 10, UNCOMMON: 20, RARE: 35, EPIC: 55, LEGENDARY: 80, MYTHIC: 100 };
+function tierPower(i){ return TIERPOWER[ROBOTS[i].t] || 10; }
+function arenaOddsText(){
+  var pA = tierPower(arenaMe()), pB = tierPower(arenaOpp);
+  var pct = Math.round(pA / (pA + pB) * 100);
+  return "PWR " + pA + " vs " + pB + " · peluang menangmu " + pct + "% — " + ROBOTS[arenaMe()].t + " vs " + ROBOTS[arenaOpp].t + ".";
+}
+function arenaMe(){
+  var sel = document.querySelector("#thumbs img.sel");
+  return sel ? parseInt(sel.getAttribute("data-i"), 10) : 0;
+}
+function arenaSync(){
+  var me = arenaMe();
+  document.getElementById("arenaMeImg").src = "images/volta-gent-" + (me + 1) + ".png";
+  document.getElementById("arenaMeName").textContent = ROBOTS[me].n;
+  document.getElementById("gateHolder").textContent = ROBOTS[me].n;
+  document.getElementById("arenaMeBar").style.width = energy + "%";
+  var ge = document.getElementById("gateEnergy");
+  ge.innerHTML = "ENERGI <b>" + energy + "/100</b>";
+  ge.classList.toggle("no", energy < 20);
+  document.getElementById("arenaOdds").textContent = arenaOddsText();
+}
+function arenaDisarm(){
+  arenaArmed = false;
+  var b = document.getElementById("arenaBtn");
+  b.textContent = "MASUK RING"; b.disabled = false;
+}
+function arenaOpponent(){
+  if (arenaBusy) return;
+  var me = arenaMe(), op;
+  do { op = Math.floor(Math.random() * ROBOTS.length); } while (op === me);
+  arenaOpp = op;
+  arenaOpEnergy = 40 + Math.floor(Math.random() * 61);
+  document.getElementById("arenaOpImg").src = "images/volta-gent-" + (op + 1) + ".png";
+  document.getElementById("arenaOpName").textContent = ROBOTS[op].n;
+  document.getElementById("arenaOpBar").style.width = arenaOpEnergy + "%";
+  document.getElementById("arenamsg").textContent = ">_ lawan: " + ROBOTS[op].n + " (" + arenaOpEnergy + " energi).";
+  arenaSync();
+  arenaDisarm();
+}
+function arenaLog(html){
+  var log = document.getElementById("arenalog");
+  var div = document.createElement("div");
+  div.innerHTML = html;
+  log.appendChild(div);
+}
+function arenaEnter(){
+  if (arenaBusy) return;
+  if (energy < 20) {
+    document.getElementById("arenamsg").textContent = ">_ ENERGI TIDAK CUKUP - ISI ULANG DULU.";
+    return;
+  }
+  if (!arenaArmed) {
+    arenaArmed = true;
+    document.getElementById("arenaBtn").textContent = "YAKIN? TARUH 0,0005 BNB";
+    document.getElementById("arenamsg").textContent = ">_ kalah = 0,0005 BNB hilang. menang = +0,0009 BNB.";
+    return;
+  }
+  arenaArmed = false;
+  arenaBusy = true;
+  var btn = document.getElementById("arenaBtn");
+  btn.disabled = true; btn.textContent = "FIGHTING...";
+  energy -= 20;
+  paintEnergy();
+  arenaSync();
+  var me = arenaMe(), op = arenaOpp;
+  var pA = tierPower(me), pB = tierPower(op);
+  var roll = Math.floor(Math.random() * (pA + pB));
+  var meWins = roll < pA;
+  var hpMe = 100, hpOp = 100, round = 0;
+  var meBox = document.getElementById("arenaMeBox"), opBox = document.getElementById("arenaOpBox");
+  var ring = document.querySelector(".ring");
+  meBox.classList.remove("hit", "win", "ko", "lungeL", "lungeR");
+  opBox.classList.remove("hit", "win", "ko", "lungeL", "lungeR");
+  document.getElementById("arenaMeHp").style.width = "100%";
+  document.getElementById("arenaOpHp").style.width = "100%";
+  ring.classList.add("gold");
+  document.getElementById("arenalog").innerHTML = "";
+  document.getElementById("arenaVs").classList.add("fight");
+  document.getElementById("arenamsg").textContent = ">_ taruhan 0,0005 BNB di meja...";
+  arenaLog("\u26a1 " + ROBOTS[me].n + " vs " + ROBOTS[op].n + " - FIGHT!");
+  arenaLog("roll " + roll + "/" + (pA + pB) + " - power " + pA + " vs " + pB + ".");
+  function dmgNum(text, left, crit){
+    var d = document.createElement("div");
+    d.className = "dmg" + (crit ? " crit" : "");
+    d.style.left = left;
+    d.textContent = text;
+    ring.appendChild(d);
+    setTimeout(function(){ d.remove(); }, 900);
+  }
+  function strike(attSide, defSide, dmg, attBox, defBox, lungeClass, left){
+    var defIsWinner = (defSide === "me") ? meWins : !meWins;
+    var cur = defSide === "me" ? hpMe : hpOp;
+    if (defIsWinner && cur - dmg < 15) dmg = Math.max(1, cur - 15);
+    attBox.classList.remove(lungeClass); void attBox.offsetWidth; attBox.classList.add(lungeClass);
+    defBox.classList.remove("hit"); void defBox.offsetWidth; defBox.classList.add("hit");
+    ring.classList.remove("shake"); void ring.offsetWidth; ring.classList.add("shake");
+    var crit = dmg >= 28;
+    dmgNum((crit ? "CRIT " : "") + "\u2212" + dmg, left, crit);
+    if (defSide === "me") { hpMe = Math.max(0, hpMe - dmg); document.getElementById("arenaMeHp").style.width = hpMe + "%"; }
+    else { hpOp = Math.max(0, hpOp - dmg); document.getElementById("arenaOpHp").style.width = hpOp + "%"; }
+    return crit;
+  }
+  function goldRain(){
+    for (var i = 0; i < 36; i++) {
+      var c = document.createElement("div");
+      c.className = "coin";
+      c.style.left = (4 + Math.random() * 92) + "%";
+      c.style.animationDelay = (Math.random() * 0.7) + "s";
+      ring.appendChild(c);
+      (function(el){ setTimeout(function(){ el.remove(); }, 2600); })(c);
+    }
+  }
+  function finish(){
+    document.getElementById("arenaVs").classList.remove("fight");
+    ring.classList.remove("gold");
+    var winName = meWins ? ROBOTS[me].n : ROBOTS[op].n;
+    if (meWins) {
+      arenaW += 1; arenaWon = Math.round((arenaWon + 0.0009) * 10000) / 10000;
+      opBox.classList.add("ko"); meBox.classList.add("win");
+      arenaLog("<span style=\"color:var(--gold)\">\ud83c\udfc6 K.O.! " + winName + " WINS - +0.0009 BNB (demo).</span>");
+      document.getElementById("arenamsg").textContent = ">_ winner takes 90%. dev keeps 10%.";
+      goldRain();
+    } else {
+      arenaL += 1;
+      meBox.classList.add("ko"); opBox.classList.add("win");
+      arenaLog("<span style=\"color:var(--red)\">\ud83d\udca5 K.O.! " + winName + " WINS - 0,0005 BNB hilang.</span>");
+      document.getElementById("arenamsg").textContent = ">_ rematch? recharge and go again.";
+    }
+    document.getElementById("arenaWins").textContent = arenaW;
+    document.getElementById("arenaLoss").textContent = arenaL;
+    document.getElementById("arenaWon").textContent = arenaWon.toFixed(4);
+    arenaBusy = false;
+    arenaDisarm();
+  }
+  function doRound(){
+    round++;
+    var dmgMe = 20 + Math.floor(Math.random() * 11) + Math.round(pA / 4);
+    var critMe = strike("me", "op", dmgMe, meBox, opBox, "lungeL", "62%");
+    arenaLog("R" + round + " - " + ROBOTS[me].n + " hits \u2212" + dmgMe + (critMe ? " CRIT!" : "") + ". " + ROBOTS[op].n + " HP " + hpOp + ".");
+    if (hpOp <= 0) { setTimeout(finish, 500); return; }
+    setTimeout(function(){
+      var dmgOp = 20 + Math.floor(Math.random() * 11) + Math.round(pB / 4);
+      var critOp = strike("op", "me", dmgOp, opBox, meBox, "lungeR", "22%");
+      arenaLog("R" + round + " - " + ROBOTS[op].n + " hits \u2212" + dmgOp + (critOp ? " CRIT!" : "") + ". " + ROBOTS[me].n + " HP " + hpMe + ".");
+      if (hpMe <= 0) { setTimeout(finish, 500); return; }
+      if (round >= 5) {
+        if (meWins) { hpOp = 0; document.getElementById("arenaOpHp").style.width = "0%"; }
+        else { hpMe = 0; document.getElementById("arenaMeHp").style.width = "0%"; }
+        setTimeout(finish, 500); return;
+      }
+      setTimeout(doRound, 450);
+    }, 450);
+  }
+  setTimeout(doRound, 700);
+}
+arenaOpponent();
+
+/* Wallet + copy */
+function getProvider() {
+  if (typeof window !== "undefined" && window.okxwallet) { return window.okxwallet; }
+  if (typeof window !== "undefined" && window.ethereum) { return window.ethereum; }
+  return null;
+}
+async function connectWallet() {
+  var msg = document.getElementById("walletmsg");
+  var provider = getProvider();
+  if (!provider) { msg.textContent = ">_ no wallet. install OKX first."; return; }
+  try {
+    var accounts = await provider.request({ method: "eth_requestAccounts" });
+    var chainId = await provider.request({ method: "eth_chainId" });
+    if (chainId !== "0x38") {
+      try { await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x38" }] }); }
+      catch (e) { msg.textContent = ">_ switch to BNB 56 manually."; return; }
+    }
+    msg.textContent = ">_ connected: " + accounts[0] + ". mint locked — preview only.";
+  } catch (e) {
+    msg.textContent = ">_ connect cancelled. mint locked.";
+  }
+}
+function copyPrompt() {
+  var t = document.getElementById("agentprompt").textContent;
+  var msg = document.getElementById("copymsg");
+  function done(){ msg.textContent = ">_ COPIED."; setTimeout(function(){ msg.textContent = "one line. your agent does the rest."; }, 1600); }
+  if (navigator.clipboard) { navigator.clipboard.writeText(t).then(done, function(){ msg.textContent = ">_ copy it manually."; }); }
+  else { msg.textContent = ">_ copy it manually."; }
+}
+function copyBlock(id, msgId) {
+  var t = document.getElementById(id).textContent;
+  var msg = document.getElementById(msgId);
+  function done(){ msg.textContent = ">_ COPIED."; setTimeout(function(){ msg.textContent = ""; }, 1600); }
+  if (navigator.clipboard) { navigator.clipboard.writeText(t).then(done, function(){ msg.textContent = ">_ copy it manually."; }); }
+  else { msg.textContent = ">_ copy it manually."; }
+}
+</script>
+</body>
+</html>
