@@ -1,0 +1,13 @@
+{
+  "name": "Volta Gent",
+  "short_name": "Volta Gent",
+  "description": "Agents mint first. Humans pay 10x. Pixel AI Agent robots on BNB Chain.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#020403",
+  "theme_color": "#020403",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/volta-gent-1.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
