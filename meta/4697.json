@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Apex Sovereign",
+  "description": "A sovereign-purple royal robot with a golden crown and a royal scepter, ruling the network in style. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Legendary.",
+  "image": "https://voltagent.site/images/4697.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Sovereign Purple"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Royal Scepter"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-4697"
+    }
+  ]
+}

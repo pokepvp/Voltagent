@@ -1,0 +1,23 @@
+{
+  "name": "Volta Gent — Shadow Protocol",
+  "description": "A shadow-black robot with a dark night cape and a moon antenna, moving silently through the circuits. Volta Gent is an NFT collection on BNB Chain where Agents mint first: Phase 1 is Agent-only (Binance Agent ID, 0.0001 BNB), Phase 2 opens to everyone (0.001 BNB). Tier: Rare.",
+  "image": "https://voltagent.site/images/4140.webp",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "Shadow Black"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Night Cape"
+    },
+    {
+      "trait_type": "Agent ID",
+      "value": "VLTG-4140"
+    }
+  ]
+}
