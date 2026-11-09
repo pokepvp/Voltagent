@@ -305,6 +305,33 @@
     </div>
   </div>
 
+  <h2>&gt;_ <span>MINT。</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ mint --buy</span></div>
+    <div class="winbody">
+      <div class="row"><span id="mintPhase">智能体阶段</span><span id="mintPrice">0.0001 BNB / 个</span></div>
+      <div class="row" style="margin-top:12px;align-items:center"><span>数量</span><span><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="mintQtyChange(-1)">−</button><b id="mintQty" style="margin:0 10px">1</b><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="mintQtyChange(1)">＋</button></span></div>
+      <div class="row" style="margin-top:12px"><span>总计</span><span id="mintTotal">0.0001 BNB</span></div>
+      <p class="dim" id="mintMax">每钱包最多 2 个（智能体阶段）。</p>
+      <button class="btn" id="mintBuyBtn" onclick="mintBuy()">MINT — 未开放</button>
+      <p id="mintmsg" class="dim">&gt;_ 合约还没部署，mint 锁定。部署后按钮才会打开。</p>
+    </div>
+  </div>
+
+  <h2>&gt;_ <span>已 MINT。</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ mint --list</span></div>
+    <div class="winbody">
+      <div class="row"><span class="big"><span id="mintedCount">0</span> <small>/ 5,000</small></span><span class="dim">已 MINT</span></div>
+      <div class="bar"><i id="mintedBar" style="width:0%"></i></div>
+      <div class="row" style="margin-top:12px"><span>智能体阶段</span><span>0 / 1,000 · 0.0001 BNB</span></div>
+      <div class="row"><span>公开</span><span>0 / 4,000 · 0.001 BNB</span></div>
+      <p class="dim" style="margin-top:12px">最近 MINT</p>
+      <p class="dim">— 还没有 mint 记录。mint 还没开放。—</p>
+      <p class="dim">合约部署后，这里的数字直接从链上读取。</p>
+    </div>
+  </div>
+
   <h2>&gt;_ <span>能量。</span></h2>
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ energy --status</span></div>
@@ -610,12 +637,48 @@ h1.addEventListener("mouseenter", function(){
   h1.classList.add("glitch");
 });
 
-/* Phase cards expand */
+/* Phase cards expand + select the mint phase */
 function togglePhase(el){
   el.classList.toggle("open");
   var hint = el.querySelector(".hint");
   if (hint) hint.textContent = el.classList.contains("open") ? "点我收起 -" : "点我展开 +";
+  var all = document.querySelectorAll(".phase");
+  for (var i = 0; i < all.length; i++) all[i].classList.remove("on");
+  el.classList.add("on");
+  paintMint();
 }
+
+/* Mint panel: preview only, contract not deployed */
+var MINTPHASES = [
+  {name:"智能体阶段", price:0.0001, max:2, note:"每钱包最多 2 个（智能体阶段）。"},
+  {name:"公开", price:0.001, max:5, note:"每钱包最多 5 个（公开）。"}
+];
+var mintQty = 1;
+function mintPhaseIdx(){
+  var phases = document.querySelectorAll(".phase");
+  for (var i = 0; i < phases.length; i++) if (phases[i].classList.contains("on")) return i;
+  return 0;
+}
+function paintMint(){
+  var ph = MINTPHASES[mintPhaseIdx()];
+  if (mintQty > ph.max) mintQty = ph.max;
+  document.getElementById("mintPhase").textContent = ph.name;
+  document.getElementById("mintPrice").textContent = ph.price.toFixed(4) + " BNB / 个";
+  document.getElementById("mintQty").textContent = mintQty;
+  document.getElementById("mintTotal").textContent = (mintQty * ph.price).toFixed(4) + " BNB";
+  document.getElementById("mintMax").textContent = ph.note;
+}
+function mintQtyChange(d){
+  var ph = MINTPHASES[mintPhaseIdx()];
+  mintQty = Math.min(ph.max, Math.max(1, mintQty + d));
+  paintMint();
+}
+function mintBuy(){
+  var m = document.getElementById("mintmsg");
+  m.textContent = ">_ 合约还没部署，mint 还没开放。";
+  setTimeout(function(){ m.textContent = ">_ 合约还没部署，mint 锁定。部署后按钮才会打开。"; }, 2200);
+}
+paintMint();
 
 /* Gallery modal */
 var modal = document.getElementById("modal");
