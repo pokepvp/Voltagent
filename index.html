@@ -318,6 +318,15 @@
     </div>
   </div>
 
+  <h2>&gt;_ <span>我的 NFT。</span></h2>
+  <div class="win">
+    <div class="winbar"><i></i><i></i><i></i><span>$ wallet --nfts</span></div>
+    <div class="winbody">
+      <p id="myNftsMsg" class="dim">&gt;_ 连接钱包后，这里显示你持有的 Volta Gent。</p>
+      <div id="myNfts" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-top:12px"></div>
+    </div>
+  </div>
+
   <h2>&gt;_ <span>已 MINT。</span></h2>
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ mint --list</span></div>
@@ -328,6 +337,7 @@
       <div class="row"><span>公开</span><span id="phasePublicLine">0 / 4,000 · 0.001 BNB</span></div>
       <p class="dim" style="margin-top:12px">最近 MINT</p>
       <p class="dim" id="recentLine">— 还没有 mint 记录。—</p>
+      <div id="recentList"></div>
       <p class="dim">这里的数字直接从链上读取（合约 0x43cf…c5b1）。</p>
     </div>
   </div>
@@ -662,6 +672,75 @@ async function rpcCall(data){
   }
   throw new Error("rpc");
 }
+var OWNEROF_SEL = "0x6352211e", BALANCEOF_SEL = "0x70a08231";
+async function rpcBatch(datas){
+  for (var i = 0; i < RPCS.length; i++){
+    try {
+      var payload = datas.map(function(d, idx){ return { jsonrpc:"2.0", id: idx + 1, method:"eth_call", params:[{ to:CONTRACT, data:d }, "latest"] }; });
+      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload) });
+      var j = await r.json();
+      if (Array.isArray(j)) {
+        var out = [];
+        for (var k = 0; k < datas.length; k++) {
+          var hit = null;
+          for (var m = 0; m < j.length; m++) if (j[m].id === k + 1) hit = j[m];
+          out.push(hit && hit.result ? hit.result : null);
+        }
+        return out;
+      }
+    } catch(e){}
+  }
+  return datas.map(function(){ return null; });
+}
+function shortAddr(a){ return a.slice(0, 6) + "…" + a.slice(-4); }
+function tokenLabel(id){ var x = "0000" + id; return "#" + x.slice(-4); }
+var lastRecentMinted = -1;
+async function loadRecent(){
+  var box = document.getElementById("recentList");
+  if (!box || !chain.loaded || chain.minted === lastRecentMinted) return;
+  lastRecentMinted = chain.minted;
+  var n = chain.minted;
+  if (n === 0) { box.innerHTML = ""; return; }
+  var ids = [];
+  for (var t = n; t >= Math.max(1, n - 5); t--) ids.push(t);
+  var res = await rpcBatch(ids.map(function(id){ return OWNEROF_SEL + padU256(id); }));
+  var html = "";
+  ids.forEach(function(id, idx){
+    var owner = res[idx] ? "0x" + res[idx].slice(26) : "";
+    html += '<div class="row" style="margin-top:8px;align-items:center"><span><img src="images/' + id + '.webp" alt="' + tokenLabel(id) + '" style="width:34px;height:34px;vertical-align:middle;margin-right:10px;border:1px solid var(--line)">' + tokenLabel(id) + '</span><span class="dim">' + (owner ? '<a href="https://bscscan.com/address/' + owner + '">' + shortAddr(owner) + '</a>' : "—") + ' · <a href="https://bscscan.com/nft/' + CONTRACT + '/' + id + '">BscScan</a></span></div>';
+  });
+  box.innerHTML = html;
+}
+var myNftsLoading = false, myNftsStamp = "";
+async function loadMyNfts(){
+  var msg = document.getElementById("myNftsMsg"), grid = document.getElementById("myNfts");
+  if (!msg || !grid) return;
+  if (!walletAddr) { msg.textContent = ">_ 连接钱包后，这里显示你持有的 Volta Gent。"; grid.innerHTML = ""; myNftsStamp = ""; return; }
+  var stamp = walletAddr.toLowerCase() + ":" + chain.minted;
+  if (myNftsLoading || myNftsStamp === stamp) return;
+  myNftsLoading = true;
+  msg.textContent = ">_ 正在链上读取你的 NFT…";
+  try {
+    var bal = u256(await rpcCall(BALANCEOF_SEL + padAddr(walletAddr)));
+    if (bal === 0) {
+      msg.textContent = ">_ 这个钱包还没有 Volta Gent — 去上面的面板 mint 一个。";
+      grid.innerHTML = "";
+    } else {
+      var n = chain.minted, lo = Math.max(1, n - 599), ids = [], mine = [];
+      for (var t = n; t >= lo; t--) ids.push(t);
+      for (var b = 0; b < ids.length; b += 100) {
+        var chunk = ids.slice(b, b + 100);
+        var res = await rpcBatch(chunk.map(function(id){ return OWNEROF_SEL + padU256(id); }));
+        chunk.forEach(function(id, idx){ if (res[idx] && ("0x" + res[idx].slice(26)).toLowerCase() === walletAddr.toLowerCase()) mine.push(id); });
+      }
+      mine.sort(function(a, b2){ return a - b2; });
+      msg.textContent = ">_ " + shortAddr(walletAddr) + " 持有 " + mine.length + " 个 Volta Gent" + (n > 600 ? "（仅扫描最近 600 个 token）" : "") + "：";
+      grid.innerHTML = mine.map(function(id){ return '<a href="https://bscscan.com/nft/' + CONTRACT + '/' + id + '" style="display:block;text-align:center"><img src="images/' + id + '.webp" alt="' + tokenLabel(id) + '" style="width:100%;border:1px solid var(--line)"><span class="dim">' + tokenLabel(id) + '</span></a>'; }).join("");
+    }
+    myNftsStamp = stamp;
+  } catch(e) { msg.textContent = ">_ 读取失败，稍后自动重试。"; }
+  myNftsLoading = false;
+}
 async function rpcReceipt(tx){
   for (var i = 0; i < RPCS.length; i++){
     try {
@@ -731,6 +810,7 @@ async function refreshChain(){
     chain.agent = u256(await rpcCall(SEL.agentPhase)) === 1;
     chain.loaded = true;
     paintLive();
+    loadRecent();
     if (walletAddr) refreshWallet();
   } catch(e){}
 }
@@ -746,6 +826,7 @@ async function refreshWallet(){
     if (chain.agent) msg.textContent = has ? ">_ 已连接：" + walletAddr + "。Agent ID ✔ — 智能体阶段已 mint " + am + "/2。" : ">_ 已连接：" + walletAddr + "。没有 Agent ID — 智能体阶段不能 mint，等公开阶段。";
     else msg.textContent = ">_ 已连接：" + walletAddr + "。本钱包已 mint " + mb + "/5。";
     paintMint();
+    loadMyNfts();
   } catch(e){}
 }
 function mintQtyChange(d){
