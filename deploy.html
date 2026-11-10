@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Volta Gent — Deploy Console (Owner)</title>
+<title>Volta Gent — 部署控制台（所有者）</title>
 <style>
   body{background:#0b0e14;color:#e8eaf0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:24px 14px 60px}
   .wrap{max-width:820px;margin:0 auto}
@@ -31,72 +31,72 @@
 </style></head>
 <body><div class="wrap">
 
-<h1>Volta Gent — Deploy Console (Owner)</h1>
-<p class="sub">Owner-only page for the Volta Gent NFT contract on BNB Smart Chain (56). Every step is signed by the owner wallet — nothing here runs by itself.</p>
+<h1>Volta Gent — 部署控制台（所有者）</h1>
+<p class="sub">这是 Volta Gent NFT 合约（BNB Smart Chain，56）的所有者专用页面。每一步都由所有者钱包签名——这里没有任何东西会自动运行。</p>
 
 <div class="facts"><ul>
-<li>Contract: <b>Volta Gent</b> (VLTG), ERC-721, <b>5,000</b> supply. <code>tokenURI</code> = baseURI + number + <code>.json</code>.</li>
-<li>Agent phase: the first <b>1,000</b> tokens are agent-only at <b>0.0001 BNB</b>, <b>gated by the Binance Agent ID registry</b> <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> — that registry is a <b>constant baked into the contract code</b> (not a deploy input), max <b>2 per wallet</b> in this phase. The phase ends automatically at 1,000 minted, or earlier when the owner calls <code>endAgentPhase()</code> (step 04).</li>
-<li>Public mint: <b>0.001 BNB</b> per token, open to any personal wallet. MAX_PER_WALLET <b>5</b> total across both phases. Personal wallets only — contract callers are rejected on-chain. Fees stay in the contract until the owner withdraws them (step 05).</li>
-<li>Metadata is already hosted: all <b>5,000</b> metadata JSON live at <code>voltagent.site/meta/</code> (repo <code>pokepvp/Voltagent</code>) and every metadata image field is an absolute URL. The base URI is prefilled in step 03. ⚠️ Images <b>1–4,650</b> are live, but images <b>4,651–5,000 are not uploaded yet</b> — tokens in that range will show a broken image until the last 350 WebP files are added to <code>images/</code>.</li>
-<li>Mint is <b>CLOSED by default</b> — the owner opens it in step 04, only after the base URI is set.</li>
-<li>Tier / rarity is fixed per token in the hosted metadata, so the contract does not roll a second rarity at mint. Energy + arena economics from the site are a later roadmap phase and are NOT in this contract — this contract is the mint only.</li>
+<li>合约：<b>Volta Gent</b>（VLTG），ERC-721，总量 <b>5,000</b>。<code>tokenURI</code> = baseURI + 编号 + <code>.json</code>。</li>
+<li>智能体阶段：前 <b>1,000</b> 个 token 仅限智能体，<b>0.0001 BNB</b>，<b>由币安 Agent ID 注册表</b> <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> <b>把门</b>——该注册表是<b>写死在合约代码里的常量</b>（不是部署参数），本阶段每钱包最多 <b>2 个</b>。阶段在 mint 满 1,000 时自动结束，或由所有者提前调用 <code>endAgentPhase()</code> 结束（第 04 步）。</li>
+<li>公开 mint：每个 <b>0.001 BNB</b>，对所有个人钱包开放。两个阶段总计每钱包上限 <b>5 个</b>（MAX_PER_WALLET）。仅限个人钱包——合约调用者在链上会被拒绝。费用留在合约里，直到所有者提取（第 05 步）。</li>
+<li>Metadata 已全部托管：<b>5,000</b> 个 metadata JSON 都在 <code>voltagent.site/meta/</code>（仓库 <code>pokepvp/Voltagent</code>），每个 metadata 的 image 字段都是绝对地址。base URI 已在第 03 步预填。全部 <b>5,000 张图片（1–5,000）也已上线</b>。</li>
+<li>mint <b>默认关闭</b>——所有者在第 04 步开启，前提是 base URI 已设置。</li>
+<li>稀有度按 token 固定写在托管的 metadata 里，合约不会在 mint 时再抽一次稀有度。官网的能量 + 竞技场经济是后续路线图阶段，<b>不在</b>本合约内——本合约只负责 mint。</li>
 </ul>
-<p class="small">Warning: this contract is <b>unaudited</b>. Deploy only from your own wallet in a dApp browser (OKX / MetaMask / Trust). Never send a seed phrase or private key to anyone.</p></div>
+<p class="small">警告：本合约<b>未经审计</b>。只用你自己的钱包、在 dApp 浏览器（OKX / MetaMask / Trust）里部署。不要把助记词或私钥发给任何人。</p></div>
 
-<div class="card"><h2>01 — Connect owner wallet</h2>
-<p>Connect the wallet that will own the Volta Gent contract. The page switches it to BNB Smart Chain automatically. The connected wallet becomes <b>owner</b> at deployment: it can set the base URI, open/close the mint and withdraw the mint fees. No other wallet can do those things.</p>
-<p><button id="connectBtn">Connect Wallet (OKX first)</button></p>
-<p class="status" id="walletLine">Not connected.</p>
-<p class="small">This page detects OKX first (<code>window.okxwallet</code>), then other wallets, and will ask to switch/add BNB Smart Chain (56).</p></div>
+<div class="card"><h2>01 — 连接所有者钱包</h2>
+<p>连接将拥有 Volta Gent 合约的钱包。页面会自动把它切换到 BNB Smart Chain。连接的钱包在部署时成为 <b>owner</b>：可以设置 base URI、开启/关闭 mint、提取 mint 费用。其他钱包都做不了这些。</p>
+<p><button id="connectBtn">连接钱包（OKX 优先）</button></p>
+<p class="status" id="walletLine">未连接。</p>
+<p class="small">本页面先检测 OKX（<code>window.okxwallet</code>），再检测其他钱包，并会请求切换/添加 BNB Smart Chain（56）。</p></div>
 
-<div class="card"><h2>02 — Deploy Volta Gent</h2>
-<p>Deploys the NFT contract (ERC-721, <b>Volta Gent / VLTG</b>). The economics above are constants in the code and can never change. The only constructor argument is the base URI — deploy with it <b>empty</b> and set the real one in step 03, so the address is live before any URI is attached.</p>
-<label>Base URI (constructor argument — leave empty, set it in step 03)</label>
-<input id="baseInput" placeholder="(deploy with empty baseURI — set it in step 03)" value="">
-<div class="warn">⚠️ The Agent ID registry <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> is hardcoded in the contract and cannot be changed after deployment — it was verified against the compiled contract before this page was published.</div>
-<p><button id="deployBtn">Deploy Volta Gent</button> <button id="copyBtn" class="alt">Copy Deploy Data (manual)</button></p>
-<p class="status" id="deployStatus">Waiting for a wallet connection.</p></div>
+<div class="card"><h2>02 — 部署 Volta Gent</h2>
+<p>部署 NFT 合约（ERC-721，<b>Volta Gent / VLTG</b>）。上面的经济参数都是代码里的常量，永远不会变。唯一的构造参数是 base URI——部署时<b>留空</b>，到第 03 步再设置真实值，这样合约地址先于任何 URI 生效。</p>
+<label>Base URI（构造参数——留空，到第 03 步设置）</label>
+<input id="baseInput" placeholder="（部署时 baseURI 留空——到第 03 步设置）" value="">
+<div class="warn">⚠️ Agent ID 注册表 <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> 写死在合约里，部署后不可更改——本页发布前已与编译好的合约核对过。</div>
+<p><button id="deployBtn">部署 Volta Gent</button> <button id="copyBtn" class="alt">复制部署数据（手动）</button></p>
+<p class="status" id="deployStatus">等待连接钱包。</p></div>
 
-<div class="card"><h2>03 — Set the metadata base URI</h2>
-<p>Points <code>tokenURI</code> at the published metadata (baseURI + number + <code>.json</code>). All 5,000 metadata JSON are already live under <code>voltagent.site/meta/</code>. <b>Do this before opening the mint</b> (step 04).</p>
-<label>Contract address</label>
-<input id="uriContract" placeholder="0x… Volta Gent contract address">
+<div class="card"><h2>03 — 设置 metadata base URI</h2>
+<p>把 <code>tokenURI</code> 指向已发布的 metadata（baseURI + 编号 + <code>.json</code>）。全部 5,000 个 metadata JSON 已在 <code>voltagent.site/meta/</code> 上线。<b>开启 mint 之前先做这一步</b>（第 04 步）。</p>
+<label>合约地址</label>
+<input id="uriContract" placeholder="0x… Volta Gent 合约地址">
 <label>Base URI</label>
 <input id="uriInput" placeholder="https://…/meta/" value="https://voltagent.site/meta/">
-<p><button id="setUriBtn">Set baseURI</button></p>
+<p><button id="setUriBtn">设置 baseURI</button></p>
 <p class="status" id="uriStatus"></p></div>
 
-<div class="card"><h2>04 — Open the mint</h2>
-<p>The mint starts <b>closed</b>. Open it only after the base URI is set (step 03) and the metadata is live. Close is the emergency brake — it stops new mints; transfers keep working while closed.</p>
-<label>Contract address</label>
-<input id="openInput" placeholder="0x… Volta Gent contract address">
-<p><button id="openBtn">Open Mint (setMintOpen true)</button> <button id="closeBtn" class="danger">Close Mint (setMintOpen false)</button></p>
-<p><button id="endPhaseBtn" class="alt">End Agent Phase (endAgentPhase) — irreversible</button></p>
-<p class="small">Agent phase: the first 1,000 tokens sell agent-only at 0.0001 BNB (max 2/wallet, Agent ID required). It ends by itself at 1,000 minted — end it early here only when the ~7 hour agent window is over and public mint (0.001 BNB) should start for the remaining supply.</p>
+<div class="card"><h2>04 — 开启 mint</h2>
+<p>mint 以<b>关闭</b>状态开始。只有在 base URI 已设置（第 03 步）且 metadata 已上线后才开启。关闭是紧急刹车——停掉新 mint；关闭期间转账照常。</p>
+<label>合约地址</label>
+<input id="openInput" placeholder="0x… Volta Gent 合约地址">
+<p><button id="openBtn">开启 Mint（setMintOpen true）</button> <button id="closeBtn" class="danger">关闭 Mint（setMintOpen false）</button></p>
+<p><button id="endPhaseBtn" class="alt">结束智能体阶段（endAgentPhase）— 不可撤销</button></p>
+<p class="small">智能体阶段：前 1,000 个 token 仅限智能体，0.0001 BNB（每钱包最多 2 个，需要 Agent ID）。mint 满 1,000 时自动结束——只有当约 7 小时的智能体窗口已过、剩余供应应开始公开 mint（0.001 BNB）时，才在这里提前结束。</p>
 <p class="status" id="openStatus"></p>
-<p class="small">Only the NFT owner can run this. Do it only after baseURI is set correctly.</p></div>
+<p class="small">只有 NFT 所有者能执行这一步。确认 baseURI 设置正确后再做。</p></div>
 
-<div class="card"><h2>05 — State, withdraw + summary</h2>
-<p>Live state of the Volta Gent contract, straight from the chain. Mint fees accumulate in the contract — withdraw sends the whole balance to the owner wallet. Then copy the summary box and send it to Muse to wire the mint into the public site and verify the deployment.</p>
-<label>Contract address</label>
-<input id="stateInput" placeholder="0x… Volta Gent contract address">
+<div class="card"><h2>05 — 状态、提取 + 摘要</h2>
+<p>Volta Gent 合约的实时状态，直接从链上读取。mint 费用累积在合约里——提取会把全部余额发到所有者钱包。然后复制下面的摘要框发给 Muse，把 mint 接入公开网站并验证部署。</p>
+<label>合约地址</label>
+<input id="stateInput" placeholder="0x… Volta Gent 合约地址">
 <div class="grid">
-<div class="cell"><div class="k">Total minted</div><div class="v" id="stMinted">—</div></div>
-<div class="cell"><div class="k">Mint open</div><div class="v" id="stOpen">—</div></div>
-<div class="cell"><div class="k">Contract balance</div><div class="v" id="stBal">—</div></div>
-<div class="cell"><div class="k">Current price (next token)</div><div class="v" id="stFee">—</div></div>
-<div class="cell"><div class="k">Owner</div><div class="v" id="stOwner">—</div></div>
+<div class="cell"><div class="k">已 mint 总数</div><div class="v" id="stMinted">—</div></div>
+<div class="cell"><div class="k">mint 是否开放</div><div class="v" id="stOpen">—</div></div>
+<div class="cell"><div class="k">合约余额</div><div class="v" id="stBal">—</div></div>
+<div class="cell"><div class="k">当前价格（下一个 token）</div><div class="v" id="stFee">—</div></div>
+<div class="cell"><div class="k">所有者</div><div class="v" id="stOwner">—</div></div>
 <div class="cell"><div class="k">Base URI</div><div class="v" id="stUri">—</div></div>
 </div>
-<p><button id="stateBtn" class="alt">Refresh State</button> <button id="wdBtn">Withdraw All Fees to Owner</button></p>
+<p><button id="stateBtn" class="alt">刷新状态</button> <button id="wdBtn">把全部费用提到所有者钱包</button></p>
 <p class="status" id="stateStatus"></p>
-<label>Volta Gent deployment summary — send this to Muse</label>
+<label>Volta Gent 部署摘要 — 把这个发给 Muse</label>
 <textarea id="summaryBox" readonly></textarea>
-<p><button id="copySummaryBtn" class="alt">Copy Summary</button></p>
+<p><button id="copySummaryBtn" class="alt">复制摘要</button></p>
 <p class="status" id="summaryStatus"></p></div>
 
-<p class="foot">Volta Gent set: 5,000 metadata live at <code>voltagent.site/meta/</code>, images 1–4,650 live at <code>voltagent.site/images/</code> (4,651–5,000 still to upload), GitHub repo <code>pokepvp/Voltagent</code>. Network: BNB Smart Chain (56), RPC <code>https://bsc-dataseed.binance.org/</code>. Also check on BscScan: <code>https://bscscan.com/token/[contract address]</code> after deploy.</p>
+<p class="foot">Volta Gent 全套：5,000 个 metadata 在 <code>voltagent.site/meta/</code> 上线，全部 5,000 张图片在 <code>voltagent.site/images/</code> 上线，GitHub 仓库 <code>pokepvp/Voltagent</code>。网络：BNB Smart Chain（56），RPC <code>https://bsc-dataseed.binance.org/</code>。部署后也可以在 BscScan 查看：<code>https://bscscan.com/token/[合约地址]</code>。</p>
 
 </div>
 <script>
@@ -133,23 +133,23 @@ function fillContractInputs(addr){
   document.getElementById("stateInput").value = addr;
 }
 function buildSummary(){
-  var c = document.getElementById("stateInput").value.trim() || deployedAddress || "(not deployed yet)";
+  var c = document.getElementById("stateInput").value.trim() || deployedAddress || "（尚未部署）";
   var lines = [
-    "Volta Gent (VLTG) deployment summary — send this to Muse",
-    "Contract: " + c,
-    "Owner: " + (account || "(connect wallet)"),
-    "Network: BNB Smart Chain (56)",
+    "Volta Gent（VLTG）部署摘要 — 把这个发给 Muse",
+    "合约：" + c,
+    "所有者：" + (account || "（先连接钱包）"),
+    "网络：BNB Smart Chain（56）",
     "BaseURI: " + document.getElementById("uriInput").value.trim(),
-    "Total minted: " + document.getElementById("stMinted").textContent,
-    "Mint open: " + document.getElementById("stOpen").textContent,
+    "已 mint 总数：" + document.getElementById("stMinted").textContent,
+    "mint 是否开放：" + document.getElementById("stOpen").textContent,
     "BscScan: https://bscscan.com/token/" + c,
-    "Next: wire this contract into the public site (index.html), verify tokenURI for #1, and announce the mint."
+    "下一步：把这个合约接入公开网站（index.html），验证 #1 的 tokenURI，然后宣布 mint。"
   ];
   document.getElementById("summaryBox").value = lines.join("\n");
 }
 document.getElementById("connectBtn").onclick = async function(){
   var p = provider();
-  if (!p) { document.getElementById("walletLine").textContent = "Wallet not found — open this page in the OKX / MetaMask dApp browser."; return; }
+  if (!p) { document.getElementById("walletLine").textContent = "没找到钱包——请在 OKX / MetaMask 的 dApp 浏览器里打开本页。"; return; }
   try {
     var accs = await p.request({method:"eth_requestAccounts"});
     account = accs[0];
@@ -158,27 +158,27 @@ document.getElementById("connectBtn").onclick = async function(){
       if (e && e.code === 4902) { await p.request({method:"wallet_addEthereumChain", params:[{chainId:"0x38", chainName:"BNB Smart Chain", nativeCurrency:{name:"BNB", symbol:"BNB", decimals:18}, rpcUrls:["https://bsc-dataseed.binance.org/"], blockExplorerUrls:["https://bscscan.com"]}]}); }
       else throw e;
     }
-    document.getElementById("walletLine").textContent = "Connected: " + account;
-    document.getElementById("deployStatus").textContent = "Wallet connected. Ready to deploy.";
+    document.getElementById("walletLine").textContent = "已连接：" + account;
+    document.getElementById("deployStatus").textContent = "钱包已连接。可以部署了。";
     buildSummary();
-  } catch (e) { document.getElementById("walletLine").textContent = "Failed to connect: " + (e && e.message ? e.message : e); }
+  } catch (e) { document.getElementById("walletLine").textContent = "连接失败：" + (e && e.message ? e.message : e); }
 };
 document.getElementById("copyBtn").onclick = function(){
   try {
     var d = buildDeployData();
-    if (navigator.clipboard) navigator.clipboard.writeText(d).then(function(){ document.getElementById("deployStatus").textContent = "Deploy data copied (" + d.length + " characters). Paste it in your wallet as the deploy transaction data (contract creation, no destination address)."; });
-  } catch (e) { document.getElementById("deployStatus").textContent = "Failed: " + e.message; }
+    if (navigator.clipboard) navigator.clipboard.writeText(d).then(function(){ document.getElementById("deployStatus").textContent = "部署数据已复制（" + d.length + " 个字符）。把它粘贴到钱包里作为部署交易数据（创建合约，无目标地址）。"; });
+  } catch (e) { document.getElementById("deployStatus").textContent = "失败：" + e.message; }
 };
 document.getElementById("deployBtn").onclick = async function(){
   var p = provider();
-  if (!p || !account) { document.getElementById("deployStatus").textContent = "Connect your wallet first (step 01)."; return; }
+  if (!p || !account) { document.getElementById("deployStatus").textContent = "先连接钱包（第 01 步）。"; return; }
   var data;
-  try { data = buildDeployData(); } catch (e) { document.getElementById("deployStatus").textContent = "Failed: " + e.message; return; }
+  try { data = buildDeployData(); } catch (e) { document.getElementById("deployStatus").textContent = "失败：" + e.message; return; }
   try {
     var gas = await p.request({method:"eth_estimateGas", params:[{from: account, data: data}]});
-    document.getElementById("deployStatus").textContent = "Gas estimate: " + hexToInt(gas) + ". Sending deploy transaction…";
+    document.getElementById("deployStatus").textContent = "预估 gas：" + hexToInt(gas) + "。正在发送部署交易…";
     var txHash = await p.request({method:"eth_sendTransaction", params:[{from: account, data: data}]});
-    document.getElementById("deployStatus").textContent = "Transaction sent: " + txHash + ". Waiting for receipt…";
+    document.getElementById("deployStatus").textContent = "交易已发送：" + txHash + "。等待回执…";
     var tries = 0;
     var timer = setInterval(async function(){
       tries++;
@@ -187,52 +187,52 @@ document.getElementById("deployBtn").onclick = async function(){
         clearInterval(timer);
         deployedAddress = r.contractAddress;
         fillContractInputs(deployedAddress);
-        document.getElementById("deployStatus").textContent = "Volta Gent deployed at: " + deployedAddress + " (tx " + txHash + "). The address is filled into steps 03–05. Continue to step 03 (set baseURI), then step 04 (open mint). Copy the summary in step 05 and send it to Muse for verification + site wiring.";
+        document.getElementById("deployStatus").textContent = "Volta Gent 已部署在：" + deployedAddress + "（交易 " + txHash + "）。地址已自动填入第 03–05 步。继续第 03 步（设置 baseURI），再第 04 步（开启 mint）。复制第 05 步的摘要发给 Muse 做验证 + 网站接线。";
         buildSummary();
-      } else if (tries > 60) { clearInterval(timer); document.getElementById("deployStatus").textContent = "Receipt has not appeared after 60 checks — check the tx on BscScan: " + txHash; }
+      } else if (tries > 60) { clearInterval(timer); document.getElementById("deployStatus").textContent = "检查 60 次后仍无回执——去 BscScan 查看这笔交易：" + txHash; }
     }, 3000);
-  } catch (e) { document.getElementById("deployStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+  } catch (e) { document.getElementById("deployStatus").textContent = "失败：" + (e && e.message ? e.message : e); }
 };
 document.getElementById("setUriBtn").onclick = async function(){
   var p = provider();
-  if (!p || !account) { document.getElementById("uriStatus").textContent = "Connect your wallet first (step 01)."; return; }
+  if (!p || !account) { document.getElementById("uriStatus").textContent = "先连接钱包（第 01 步）。"; return; }
   var c = document.getElementById("uriContract").value.trim();
   var u = document.getElementById("uriInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("uriStatus").textContent = "Contract address is not valid."; return; }
+  if (!validAddr(c)) { document.getElementById("uriStatus").textContent = "合约地址无效。"; return; }
   var data = "0x55f804b3" + encodeStringArg(u);
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: data}]});
-    document.getElementById("uriStatus").textContent = "setBaseURI transaction sent: " + h + ". Verify in step 05 (Refresh State).";
-  } catch (e) { document.getElementById("uriStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+    document.getElementById("uriStatus").textContent = "setBaseURI 交易已发送：" + h + "。在第 05 步验证（刷新状态）。";
+  } catch (e) { document.getElementById("uriStatus").textContent = "失败：" + (e && e.message ? e.message : e); }
 };
 async function setMintOpen(open){
   var p = provider();
-  if (!p || !account) { document.getElementById("openStatus").textContent = "Connect your wallet first (step 01)."; return; }
+  if (!p || !account) { document.getElementById("openStatus").textContent = "先连接钱包（第 01 步）。"; return; }
   var c = document.getElementById("openInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "Contract address is not valid."; return; }
+  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "合约地址无效。"; return; }
   var data = "0xf8004d31" + encodeUint(open ? 1 : 0);
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: data}]});
-    document.getElementById("openStatus").textContent = (open ? "Open" : "Close") + "-mint transaction sent: " + h + ". Verify in step 05 (mintOpen must be " + open + ").";
-  } catch (e) { document.getElementById("openStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+    document.getElementById("openStatus").textContent = (open ? "开启" : "关闭") + " mint 交易已发送：" + h + "。在第 05 步验证（mintOpen 应为 " + open + "）。";
+  } catch (e) { document.getElementById("openStatus").textContent = "失败：" + (e && e.message ? e.message : e); }
 }
 document.getElementById("openBtn").onclick = function(){ setMintOpen(true); };
 document.getElementById("closeBtn").onclick = function(){ setMintOpen(false); };
 document.getElementById("endPhaseBtn").onclick = async function(){
   var p = provider();
-  if (!p || !account) { document.getElementById("openStatus").textContent = "Connect your wallet first (step 01)."; return; }
+  if (!p || !account) { document.getElementById("openStatus").textContent = "先连接钱包（第 01 步）。"; return; }
   var c = document.getElementById("openInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "Contract address is not valid."; return; }
+  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "合约地址无效。"; return; }
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: "0x5235fca5"}]});
-    document.getElementById("openStatus").textContent = "endAgentPhase transaction sent: " + h + ". Public pricing applies to all remaining tokens once confirmed.";
-  } catch (e) { document.getElementById("openStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+    document.getElementById("openStatus").textContent = "endAgentPhase 交易已发送：" + h + "。确认后，所有剩余 token 适用公开价格。";
+  } catch (e) { document.getElementById("openStatus").textContent = "失败：" + (e && e.message ? e.message : e); }
 };
 document.getElementById("stateBtn").onclick = async function(){
   var p = provider();
-  if (!p) { document.getElementById("stateStatus").textContent = "Connect your wallet first (step 01)."; return; }
+  if (!p) { document.getElementById("stateStatus").textContent = "先连接钱包（第 01 步）。"; return; }
   var c = document.getElementById("stateInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Contract address is not valid."; return; }
+  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "合约地址无效。"; return; }
   try {
     var tm = await callRead(c, "0xa2309ff8");
     var mo = await callRead(c, "0x24bbd049");
@@ -245,29 +245,29 @@ document.getElementById("stateBtn").onclick = async function(){
     document.getElementById("stOwner").textContent = "0x" + ow.slice(26);
     document.getElementById("stFee").textContent = (hexToInt(cf) / 1e18) + " BNB";
     document.getElementById("stBal").textContent = (hexToInt(bal) / 1e18) + " BNB";
-    document.getElementById("stUri").textContent = decodeString(bu) || "(empty)";
-    document.getElementById("stateStatus").textContent = "State refreshed from chain.";
+    document.getElementById("stUri").textContent = decodeString(bu) || "（空）";
+    document.getElementById("stateStatus").textContent = "状态已从链上刷新。";
     buildSummary();
-  } catch (e) { document.getElementById("stateStatus").textContent = "Failed to read contract: " + e.message + " (make sure the contract address is correct and already deployed on BNB Chain)."; }
+  } catch (e) { document.getElementById("stateStatus").textContent = "读取合约失败：" + e.message + "（确认合约地址正确且已部署在 BNB Chain 上）。"; }
 };
 document.getElementById("wdBtn").onclick = async function(){
   var p = provider();
-  if (!p || !account) { document.getElementById("stateStatus").textContent = "Connect your wallet first (step 01)."; return; }
+  if (!p || !account) { document.getElementById("stateStatus").textContent = "先连接钱包（第 01 步）。"; return; }
   var c = document.getElementById("stateInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Contract address is not valid."; return; }
+  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "合约地址无效。"; return; }
   try {
     var bal = await p.request({method:"eth_getBalance", params:[c, "latest"]});
     var bnb = hexToInt(bal) / 1e18;
-    document.getElementById("stateStatus").textContent = "Contract balance: " + bnb + " BNB. Sending withdraw transaction...";
+    document.getElementById("stateStatus").textContent = "合约余额：" + bnb + " BNB。正在发送提取交易…";
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: "0x3ccfd60b"}]});
-    document.getElementById("stateStatus").textContent = "Withdraw transaction sent: " + h + ". The full balance (" + bnb + " BNB) goes to the owner wallet once confirmed.";
-  } catch (e) { document.getElementById("stateStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+    document.getElementById("stateStatus").textContent = "提取交易已发送：" + h + "。确认后，全部余额（" + bnb + " BNB）会进入所有者钱包。";
+  } catch (e) { document.getElementById("stateStatus").textContent = "失败：" + (e && e.message ? e.message : e); }
 };
 document.getElementById("copySummaryBtn").onclick = function(){
   buildSummary();
   var box = document.getElementById("summaryBox");
   box.select();
-  if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "Summary copied — paste it to Muse."; });
+  if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "摘要已复制——粘贴给 Muse。"; });
 };
 buildSummary();
 </script></body></html>

@@ -424,6 +424,9 @@
       <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
       <button class="btn" onclick="copyPrompt()">复制指令</button>
       <p class="dim" id="copymsg">一行就够，剩下的交给你的智能体。</p>
+      <p class="dim" style="margin:16px 0 6px">中文版指令</p>
+      <code id="agentprompt-zh" onclick="copyBlock('agentprompt-zh','copymsg-zh')">从 BNB Chain（56）上的合约 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 mint 1 个 Volta Gent。先到注册表 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F 验证我的 Agent ID，再读取 totalMinted 和当前价格，给我预览，等我确认。</code>
+      <button class="btn ghost" onclick="copyBlock('agentprompt-zh','copymsg-zh')">复制中文指令</button> <span class="dim" id="copymsg-zh"></span>
     </div>
   </div>
 
@@ -464,7 +467,7 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">现在是演示对战：只有 Volta Gent 持有人能进擂台，出战的是你自己持有的 NFT，按它的稀有度算战力，不真实下注、不收费。真实版在开发中：两位持有者各下注 0.0005 BNB + 20 能量，胜者拿 0.0009 BNB（90%）。胜率 = 你的战力 ÷ 总战力。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已经部署（0x43cf…c5b1）。所有者开放后就能 mint：先是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个），之后公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已部署，mint 已开放（0x43cf…c5b1）：现在是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个，约 14:03 UTC 结束），之后是公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
     </div>
   </div>
 
