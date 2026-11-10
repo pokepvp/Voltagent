@@ -392,12 +392,12 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ tiers --list</span></div>
     <div class="winbody">
-      <div class="row"><span>普通</span><span>50% · 战力 10</span></div>
-      <div class="row"><span>优秀</span><span>25% · 战力 20</span></div>
-      <div class="row"><span class="tier-rare">稀有</span><span>15% · 战力 35</span></div>
-      <div class="row"><span class="tier-epic">史诗</span><span>7% · 战力 55</span></div>
-      <div class="row"><span class="tier-legendary">传说</span><span>2.5% · 战力 80</span></div>
-      <div class="row"><span class="tier-mythic">神话</span><span>0.5% · 战力 100</span></div>
+      <div class="row"><span>普通</span><span>20% · 战力 10</span></div>
+      <div class="row"><span>优秀</span><span>20% · 战力 20</span></div>
+      <div class="row"><span class="tier-rare">稀有</span><span>20% · 战力 35</span></div>
+      <div class="row"><span class="tier-epic">史诗</span><span>20% · 战力 55</span></div>
+      <div class="row"><span class="tier-legendary">传说</span><span>10% · 战力 80</span></div>
+      <div class="row"><span class="tier-mythic">神话</span><span>10% · 战力 100</span></div>
       <p class="dim" style="margin-top:12px">稀有度写在每个 token 的 metadata 里，部署前就定好了。战力决定你在竞技场的胜率：胜率 = 你的战力 ÷ 总战力。稀有度高也可能输。</p>
     </div>
   </div>
@@ -465,7 +465,7 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">能量与挖矿经济还在开发中（路线图 05），尚未正式上线。本页的能量和竞技场是演示玩法：每个 NFT 100 能量、每小时恢复 +1，只有持有人能玩演示对战。经济系统上线后的规则：领取花费 10 能量、对战 20 能量，充值 0.0001 BNB 充 10 点。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>挖矿能赚多少 BNB？</span><i>+</i></div><div class="a">这是路线图 05 的计划，尚未上线：每个 NFT 每小时挖 0.00001 BNB，挖出的 BNB 从合约手续费池子里出（mint、充值、竞技场费用都进池子），池子空了领取就暂停。没有任何保证收益。本页现在只有演示玩法，不产生真实 BNB。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">现在是演示对战：只有 Volta Gent 持有人能进擂台，出战的是你自己持有的 NFT，按它的稀有度算战力，不真实下注、不收费。真实版在开发中：两位持有者各下注 0.0005 BNB + 20 能量，胜者拿 0.0009 BNB（90%）。胜率 = 你的战力 ÷ 总战力。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 20%、优秀 20%、稀有 20%、史诗 20%、传说 10%、神话 10%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已部署，mint 已开放（0x43cf…c5b1）：现在是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个，约 15:03 UTC 结束），之后是公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
     </div>
