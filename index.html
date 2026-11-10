@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VOLTA GENT — 智能体先 mint。</title>
-<meta name="description" content="VOLTA GENT — 智能体先 mint，人类贵 10 倍。预览版。">
+<meta name="description" content="VOLTA GENT — 智能体先 mint，人类贵 10 倍。合约已上线：0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#020403">
 <meta property="og:type" content="website">
@@ -215,7 +215,7 @@
 
 <header class="top">
   <b>VOLTA <i>GENT</i></b> <span class="preview">VLTG</span>
-  <span><span class="online">智能体在线</span> &nbsp;<span class="preview">● 预览版</span></span>
+  <span><span class="online">智能体在线</span> &nbsp;<span class="preview">● 已上线</span></span>
 </header>
 <main>
   <p class="prompt">&gt;_ <b>voltagent --boot</b> <span class="cursor"></span></p>
@@ -278,12 +278,12 @@
     <div class="win">
       <div class="winbar"><i></i><i></i><i></i><span>$ mint --status</span></div>
       <div class="winbody">
-        <div class="row"><span class="big"><span id="count">0</span> <small>/ 5,000</small></span><span class="dim">预览版 — 未部署</span></div>
+        <div class="row"><span class="big"><span id="count">0</span> <small>/ 5,000</small></span><span class="dim" id="heroState">合约已上线 — 读取链上…</span></div>
         <div class="bar"><i id="barfill"></i></div>
-        <p class="dim">mint：未开放 &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX</p>
+        <p class="dim" id="mintStateLine">mint：读取链上… &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX</p>
         <button class="btn" id="connectBtn" onclick="connectWallet()">连接 OKX</button>
-        <button class="btn ghost" id="mintBtn" disabled>MINT — 已锁定</button>
-        <p id="walletmsg">&gt;_ 仅预览，无合约，不收费。</p>
+        <button class="btn ghost" id="mintBtn" onclick="document.getElementById('mintBuyBtn').scrollIntoView({behavior:'smooth',block:'center'})">MINT — 未开放</button>
+        <p id="walletmsg">&gt;_ 合约已上线。连接钱包后按链上价格 mint。</p>
       </div>
     </div>
   </div>
@@ -314,7 +314,7 @@
       <div class="row" style="margin-top:12px"><span>总计</span><span id="mintTotal">0.0001 BNB</span></div>
       <p class="dim" id="mintMax">每钱包最多 2 个（智能体阶段）。</p>
       <button class="btn" id="mintBuyBtn" onclick="mintBuy()">MINT — 未开放</button>
-      <p id="mintmsg" class="dim">&gt;_ 合约还没部署，mint 锁定。部署后按钮才会打开。</p>
+      <p id="mintmsg" class="dim">&gt;_ 合约已部署 — 读取链上状态中…</p>
     </div>
   </div>
 
@@ -324,11 +324,11 @@
     <div class="winbody">
       <div class="row"><span class="big"><span id="mintedCount">0</span> <small>/ 5,000</small></span><span class="dim">已 MINT</span></div>
       <div class="bar"><i id="mintedBar" style="width:0%"></i></div>
-      <div class="row" style="margin-top:12px"><span>智能体阶段</span><span>0 / 1,000 · 0.0001 BNB</span></div>
-      <div class="row"><span>公开</span><span>0 / 4,000 · 0.001 BNB</span></div>
+      <div class="row" style="margin-top:12px"><span>智能体阶段</span><span id="phaseAgentLine">0 / 1,000 · 0.0001 BNB</span></div>
+      <div class="row"><span>公开</span><span id="phasePublicLine">0 / 4,000 · 0.001 BNB</span></div>
       <p class="dim" style="margin-top:12px">最近 MINT</p>
-      <p class="dim">— 还没有 mint 记录。mint 还没开放。—</p>
-      <p class="dim">合约部署后，这里的数字直接从链上读取。</p>
+      <p class="dim" id="recentLine">— 还没有 mint 记录。—</p>
+      <p class="dim">这里的数字直接从链上读取（合约 0x43cf…c5b1）。</p>
     </div>
   </div>
 
@@ -397,12 +397,12 @@
     <div class="winbody">
       <div class="row"><span>[已完成] 00 — 概念 + 20 个样品</span><span><a href="volta-gent-concept.pdf" style="color:var(--grn)">PDF</a> · 网站 · 合约草稿</span></div>
       <div class="row"><span>[已完成] 01 — 名称 + 符号</span><span>VOLTA GENT · VLTG</span></div>
-      <div class="row"><span>[下一步] 02 — 完整套装</span><span>完整 5,000 个</span></div>
-      <div class="row"><span>[待办] 03 — 部署</span><span>合约 · BASEURI · 测试 MINT</span></div>
-      <div class="row"><span>[待办] 04 — 销售</span><span>智能体 7 小时 → 公开</span></div>
+      <div class="row"><span>[完成] 02 — 完整套装</span><span>完整 5,000 个</span></div>
+      <div class="row"><span>[完成] 03 — 部署</span><span>合约 0x43cf…c5b1 · BASEURI 已设置</span></div>
+      <div class="row"><span>[进行中] 04 — 销售</span><span>智能体 7 小时 → 公开</span></div>
       <div class="row"><span>[待办] 05 — 经济运转</span><span>能量 + 竞技场上线</span></div>
       <div class="row"><span>[以后] 06 — 售罄之后</span><span>尚未决定</span></div>
-      <p class="dim" style="margin-top:12px">套装完成前没有日期，日期随部署公布。</p>
+      <p class="dim" style="margin-top:12px">合约已部署：0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1（BNB 56）。mint 由所有者开放。</p>
     </div>
   </div>
 
@@ -410,7 +410,7 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ agent --mint</span></div>
     <div class="winbody">
-      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from contract [CONTRACT ADDRESS - NOT DEPLOYED YET] on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
       <button class="btn" onclick="copyPrompt()">复制指令</button>
       <p class="dim" id="copymsg">一行就够，剩下的交给你的智能体。</p>
     </div>
@@ -451,9 +451,9 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">每个 NFT 有 100 能量，每小时免费恢复 +1，还每小时挖 0.00001 BNB。领取花费 10 能量 + 0.00001 BNB（每次至少 0.0001 BNB），对战花费 20。充值 0.0001 BNB 充 10 点，或 0.001 BNB 充满。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>挖矿能赚多少 BNB？</span><i>+</i></div><div class="a">每个 NFT 每小时挖 0.00001 BNB，领取要 10 能量 + 0.00001 BNB，每次至少 0.0001 BNB（10 小时）。挖出的 BNB 从合约的手续费池子里出——mint、充值和竞技场的费用都会进池子。如果池子空了，领取会暂停，等费用再进来。没有保证收益，挖多少看池子有多少。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">两位持有者各下注 0.0005 BNB + 20 能量。胜者拿 0.0009 BNB（90%），项目留 0.0001 BNB。胜率 = 你的战力 ÷ 总战力。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">在 mint 时抽取并记录在链上：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。稀有度越高打得越强——但也可能输。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">还不能。这只是预览——合约还没部署，不收费，mint 锁定，直到所有者开放。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已经部署（0x43cf…c5b1）。所有者开放后就能 mint：先是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个），之后公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
     </div>
   </div>
 
@@ -464,20 +464,20 @@
       <p style="margin:0 0 6px">&gt; 你的粉丝的智能体先 mint——0.0001 BNB，比公开便宜 10 倍。</p>
       <p style="margin:0 0 6px">&gt; 只有 7 小时窗口——紧迫感带来转化。</p>
       <p style="margin:0 0 14px">&gt; 总量 5,000，前 1,000 个留给智能体。</p>
-      <p class="dim" style="margin:0 0 16px">mint 还没开放。预告现在就能发——开 mint 的帖子等合约部署后再发。把网站链接粘贴到写着 [链接] 的地方。</p>
+      <p class="dim" style="margin:0 0 16px">合约已部署，mint 等所有者开放。预告现在就能发——开 mint 的帖子等 mint 开放后再发。把网站链接粘贴到写着 [链接] 的地方。</p>
       <p class="dim" style="margin:16px 0 6px">帖子 1 — 预告 · 随时可发</p>
-      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时，0.0001 BNB；公开 mint：0.001 BNB。预览：[链接]</code>
+      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时，0.0001 BNB；公开 mint：0.001 BNB。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">复制</button> <span class="dim" id="sharemsg-zh-teaser"></span>
       <p class="dim" style="margin:16px 0 6px">帖子 2 — 开 MINT · 开 mint 时再发</p>
       <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时，之后公开 0.001 BNB。把这条命令交给你的智能体：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">复制</button> <span class="dim" id="sharemsg-zh-launch"></span>
       <p class="dim" style="margin:16px 0 6px">广播指令 — 和开 mint 的帖子一起发，你粉丝的智能体一行就能 mint</p>
-      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from contract [CONTRACT ADDRESS - NOT DEPLOYED YET] on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
       <button class="btn ghost" onclick="copyBlock('share-prompt','sharemsg-prompt')">复制</button> <span class="dim" id="sharemsg-prompt"></span>
     </div>
   </div>
 
-  <footer>&gt;_ volta gent — 智能体先 mint，人类贵 10 倍。 &nbsp;·&nbsp; <a href="volta-gent-concept.pdf">概念 PDF（12 页）</a> &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; 预览版，未部署，未上线。</footer>
+  <footer>&gt;_ volta gent — 智能体先 mint，人类贵 10 倍。 &nbsp;·&nbsp; <a href="volta-gent-concept.pdf">概念 PDF（12 页）</a> &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; 合约：<a href="https://bscscan.com/address/0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">0x43cf…c5b1</a>（BNB 56）。</footer>
 </main>
 
 <div id="modal" role="dialog" aria-label="机器人预览">
@@ -522,7 +522,7 @@ var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: r
     "<span class=\"ok\">[OK] 6 种稀有度 · 能量 100/100</span>",
     "<span class=\"ok\">[OK] 竞技场就绪 — 擂台已热</span>",
     "<span class=\"ok\">[OK] BNB 56 链 — 已连接</span>",
-    "<span class=\"warn\">[WARN] 合约未部署 — MINT 已锁定</span>",
+    "<span class=\"ok\">[OK] 合约已部署 — 0x43cf…c5b1</span>",
     "<span class=\"ok\">[OK] 系统就绪 — 智能体先 MINT。</span>"
   ];
   if (reduced) { finish(); return; }
@@ -551,21 +551,8 @@ var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: r
   setTimeout(typeLine, 200);
 })();
 
-/* Mint counter: preview blip 0 -> 12 -> 0, ends at 0 */
-function startCount(){
-  var el = document.getElementById("count");
-  var bar = document.getElementById("barfill");
-  if (!el) return;
-  if (reduced) { el.textContent = "0"; bar.style.width = "0%"; return; }
-  var v = 0, up = true;
-  var t = setInterval(function(){
-    v = up ? v + 1 : v - 1;
-    if (v >= 12) up = false;
-    el.textContent = v;
-    bar.style.width = (v / 5000 * 100 * 20) + "%";
-    if (v <= 0 && !up) { clearInterval(t); el.textContent = "0"; bar.style.width = "0%"; }
-  }, 60);
-}
+/* Mint counter: live on-chain totalMinted, painted by refreshChain() */
+function startCount(){ paintLive(); refreshChain(); }
 
 /* Code rain: very light, pauses when hidden */
 (function rain(){
@@ -650,37 +637,162 @@ function togglePhase(el){
   paintMint();
 }
 
-/* Mint panel: preview only, contract not deployed */
+/* Mint panel: LIVE — wired to the deployed Volta Gent contract (BNB 56) */
+var CONTRACT = "0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1";
+var RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
+var SEL = { minted:"0xa2309ff8", open:"0x24bbd049", agentPhase:"0x77bdf3e1", quote:"0x5df07ec2", mint:"0xa0712d68", hasAgent:"0x4eab3ef2", mintedBy:"0x0d758111", agentMintedBy:"0x38698bee" };
+var chain = { minted:0, open:false, agent:true, loaded:false };
+var walletAddr = null, walletInfo = null;
+var mintBusy = false, msgLockUntil = 0;
 var MINTPHASES = [
   {name:"智能体阶段", price:0.0001, max:2, note:"每钱包最多 2 个（智能体阶段）。"},
   {name:"公开", price:0.001, max:5, note:"每钱包最多 5 个（公开）。"}
 ];
 var mintQty = 1;
-function mintPhaseIdx(){
-  var phases = document.querySelectorAll(".phase");
-  for (var i = 0; i < phases.length; i++) if (phases[i].classList.contains("on")) return i;
-  return 0;
+function u256(h){ return parseInt(h, 16); }
+function padAddr(a){ return "000000000000000000000000" + a.replace(/^0x/i, "").toLowerCase(); }
+function padU256(n){ var x = n.toString(16); while (x.length < 64) x = "0" + x; return x; }
+async function rpcCall(data){
+  for (var i = 0; i < RPCS.length; i++){
+    try {
+      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_call", params:[{ to:CONTRACT, data:data }, "latest"] }) });
+      var j = await r.json();
+      if (j && j.result) return j.result;
+    } catch(e){}
+  }
+  throw new Error("rpc");
 }
+async function rpcReceipt(tx){
+  for (var i = 0; i < RPCS.length; i++){
+    try {
+      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_getTransactionReceipt", params:[tx] }) });
+      var j = await r.json();
+      if (j && j.result) return j.result;
+    } catch(e){}
+  }
+  return null;
+}
+function livePhaseIdx(){ return chain.agent ? 0 : 1; }
+function qtyMax(){
+  var ph = MINTPHASES[livePhaseIdx()];
+  if (walletAddr && walletInfo){
+    if (chain.agent) return Math.max(0, 2 - walletInfo.agentMinted);
+    return Math.max(0, 5 - walletInfo.mintedBy);
+  }
+  return ph.max;
+}
+function setMintMsg(t){ var m = document.getElementById("mintmsg"); if (m) m.textContent = t; msgLockUntil = Date.now() + 9000; }
 function paintMint(){
-  var ph = MINTPHASES[mintPhaseIdx()];
-  if (mintQty > ph.max) mintQty = ph.max;
+  var ph = MINTPHASES[livePhaseIdx()];
+  var qm = Math.max(1, qtyMax());
+  if (mintQty > qm) mintQty = qm;
+  if (mintQty < 1) mintQty = 1;
   document.getElementById("mintPhase").textContent = ph.name;
   document.getElementById("mintPrice").textContent = ph.price.toFixed(4) + " BNB / 个";
   document.getElementById("mintQty").textContent = mintQty;
   document.getElementById("mintTotal").textContent = (mintQty * ph.price).toFixed(4) + " BNB";
-  document.getElementById("mintMax").textContent = ph.note;
+  var note = ph.note;
+  if (walletAddr && walletInfo){
+    note += chain.agent ? " 本钱包智能体阶段已 mint " + walletInfo.agentMinted + " 个。" : " 本钱包已 mint " + walletInfo.mintedBy + " 个。";
+  }
+  document.getElementById("mintMax").textContent = note;
+  var btn = document.getElementById("mintBuyBtn");
+  if (!chain.loaded){ btn.textContent = "MINT — 读取链上…"; }
+  else if (!chain.open){
+    btn.textContent = "MINT — 未开放";
+    if (!mintBusy && Date.now() > msgLockUntil) document.getElementById("mintmsg").textContent = ">_ 合约已部署，mint 还没开放 — 等所有者开放。";
+  } else {
+    btn.textContent = "MINT · " + (mintQty * ph.price).toFixed(4) + " BNB";
+    if (!mintBusy && Date.now() > msgLockUntil) document.getElementById("mintmsg").textContent = chain.agent ? ">_ 智能体阶段开放中：需要 Agent ID（注册表 balanceOf > 0）。" : ">_ 公开阶段开放中：任何钱包都能 mint。";
+  }
+  var hb = document.getElementById("mintBtn");
+  if (hb) hb.textContent = chain.open ? "MINT — 已开放" : "MINT — 未开放";
 }
-function mintQtyChange(d){
-  var ph = MINTPHASES[mintPhaseIdx()];
-  mintQty = Math.min(ph.max, Math.max(1, mintQty + d));
+function paintLive(){
+  var c = document.getElementById("count"); if (c) c.textContent = chain.minted;
+  var bf = document.getElementById("barfill"); if (bf) bf.style.width = (chain.minted / 5000 * 100) + "%";
+  var mc = document.getElementById("mintedCount"); if (mc) mc.textContent = chain.minted;
+  var mb = document.getElementById("mintedBar"); if (mb) mb.style.width = (chain.minted / 5000 * 100) + "%";
+  var hs = document.getElementById("heroState");
+  if (hs) hs.textContent = !chain.loaded ? "合约已上线 — 读取链上…" : (chain.open ? (chain.agent ? "合约已上线 · 智能体阶段开放中" : "合约已上线 · 公开阶段开放中") : "合约已上线 · 待所有者开放");
+  var ml = document.getElementById("mintStateLine");
+  if (ml) ml.innerHTML = "mint：" + (chain.open ? "开放中" : "未开放") + " &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX";
+  var pa = document.getElementById("phaseAgentLine"); if (pa) pa.textContent = Math.min(chain.minted, 1000) + " / 1,000 · 0.0001 BNB";
+  var pp = document.getElementById("phasePublicLine"); if (pp) pp.textContent = Math.max(0, chain.minted - 1000) + " / 4,000 · 0.001 BNB";
+  var rl = document.getElementById("recentLine"); if (rl) rl.textContent = chain.minted > 0 ? "— 已有 " + chain.minted + " 个被 mint（链上实时）。—" : "— 还没有 mint 记录。—";
+  var cards = document.querySelectorAll(".phase");
+  for (var i = 0; i < cards.length; i++) cards[i].classList.toggle("on", i === livePhaseIdx());
   paintMint();
 }
-function mintBuy(){
-  var m = document.getElementById("mintmsg");
-  m.textContent = ">_ 合约还没部署，mint 还没开放。";
-  setTimeout(function(){ m.textContent = ">_ 合约还没部署，mint 锁定。部署后按钮才会打开。"; }, 2200);
+async function refreshChain(){
+  try {
+    chain.minted = u256(await rpcCall(SEL.minted));
+    chain.open = u256(await rpcCall(SEL.open)) === 1;
+    chain.agent = u256(await rpcCall(SEL.agentPhase)) === 1;
+    chain.loaded = true;
+    paintLive();
+    if (walletAddr) refreshWallet();
+  } catch(e){}
+}
+async function refreshWallet(){
+  if (!walletAddr) return;
+  try {
+    var mb = u256(await rpcCall(SEL.mintedBy + padAddr(walletAddr)));
+    var am = u256(await rpcCall(SEL.agentMintedBy + padAddr(walletAddr)));
+    var has = true;
+    if (chain.agent) has = u256(await rpcCall(SEL.hasAgent + padAddr(walletAddr))) === 1;
+    walletInfo = { mintedBy: mb, agentMinted: am, hasAgent: has };
+    var msg = document.getElementById("walletmsg");
+    if (chain.agent) msg.textContent = has ? ">_ 已连接：" + walletAddr + "。Agent ID ✔ — 智能体阶段已 mint " + am + "/2。" : ">_ 已连接：" + walletAddr + "。没有 Agent ID — 智能体阶段不能 mint，等公开阶段。";
+    else msg.textContent = ">_ 已连接：" + walletAddr + "。本钱包已 mint " + mb + "/5。";
+    paintMint();
+  } catch(e){}
+}
+function mintQtyChange(d){
+  var qm = Math.max(1, qtyMax());
+  mintQty = Math.min(qm, Math.max(1, mintQty + d));
+  paintMint();
+}
+async function mintBuy(){
+  if (mintBusy) return;
+  if (!chain.loaded) { setMintMsg(">_ 正在读取链上状态…"); refreshChain(); return; }
+  if (!chain.open) { setMintMsg(">_ mint 还没开放 — 等所有者开放。"); return; }
+  var provider = getProvider();
+  if (!provider) { setMintMsg(">_ 没有钱包，请先安装 OKX。"); return; }
+  if (!walletAddr) { await connectWallet(); if (!walletAddr) { setMintMsg(">_ 请先连接钱包。"); return; } }
+  mintBusy = true;
+  try {
+    if (chain.agent) {
+      var has = u256(await rpcCall(SEL.hasAgent + padAddr(walletAddr))) === 1;
+      if (!has) { setMintMsg(">_ 没有 Agent ID — 智能体阶段不能 mint。等公开阶段（0.001 BNB）。"); mintBusy = false; return; }
+      var am = u256(await rpcCall(SEL.agentMintedBy + padAddr(walletAddr)));
+      if (am + mintQty > 2) { setMintMsg(">_ 智能体阶段每钱包最多 2 个，你已 mint " + am + " 个。"); mintBusy = false; return; }
+    } else {
+      var mb2 = u256(await rpcCall(SEL.mintedBy + padAddr(walletAddr)));
+      if (mb2 + mintQty > 5) { setMintMsg(">_ 每钱包最多 5 个，你已 mint " + mb2 + " 个。"); mintBusy = false; return; }
+    }
+    var quoteHex = await rpcCall(SEL.quote + padU256(mintQty));
+    var bnb = (Number(BigInt(quoteHex)) / 1e18).toFixed(4);
+    setMintMsg(">_ 请在钱包里确认：mint " + mintQty + " 个，共 " + bnb + " BNB…");
+    var tx = await provider.request({ method:"eth_sendTransaction", params:[{ from: walletAddr, to: CONTRACT, value: quoteHex, data: SEL.mint + padU256(mintQty) }] });
+    setMintMsg(">_ 已提交 " + tx + " — 等链上确认…");
+    var done = false, ok = false;
+    for (var i = 0; i < 20 && !done; i++) {
+      await new Promise(function(r){ setTimeout(r, 2000); });
+      var rc = await rpcReceipt(tx);
+      if (rc) { ok = rc.status === "0x1"; done = true; }
+    }
+    if (ok) setMintMsg(">_ MINT 成功！tx " + tx);
+    else setMintMsg(">_ 交易未确认或失败：" + tx);
+    refreshChain();
+  } catch(e) {
+    setMintMsg(">_ 已取消或失败" + (e && e.message ? "：" + String(e.message).slice(0, 80) : "。"));
+  }
+  mintBusy = false;
 }
 paintMint();
+refreshChain();
+setInterval(refreshChain, 20000);
 
 /* Gallery modal */
 var modal = document.getElementById("modal");
@@ -902,14 +1014,25 @@ async function connectWallet() {
   if (!provider) { msg.textContent = ">_ 没有钱包，请先安装 OKX。"; return; }
   try {
     var accounts = await provider.request({ method: "eth_requestAccounts" });
+    walletAddr = accounts[0];
     var chainId = await provider.request({ method: "eth_chainId" });
     if (chainId !== "0x38") {
       try { await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x38" }] }); }
-      catch (e) { msg.textContent = ">_ 请手动切换到 BNB 56。"; return; }
+      catch (e) {
+        if (e && e.code === 4902) {
+          try { await provider.request({ method: "wallet_addEthereumChain", params: [{ chainId: "0x38", chainName: "BNB Smart Chain", nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 }, rpcUrls: ["https://bsc-dataseed.binance.org"], blockExplorerUrls: ["https://bscscan.com"] }] }); } catch (e2) {}
+        } else { msg.textContent = ">_ 请手动切换到 BNB 56。"; return; }
+      }
     }
-    msg.textContent = ">_ 已连接：" + accounts[0] + "。mint 已锁定——仅预览。";
+    msg.textContent = ">_ 已连接：" + walletAddr + "。正在读取链上状态…";
+    if (provider.on && !connectWallet._hooked) {
+      connectWallet._hooked = true;
+      provider.on("accountsChanged", function(accs){ walletAddr = (accs && accs[0]) ? accs[0] : null; walletInfo = null; refreshChain(); });
+      provider.on("chainChanged", function(){ refreshChain(); });
+    }
+    refreshChain();
   } catch (e) {
-    msg.textContent = ">_ 连接已取消，mint 已锁定。";
+    msg.textContent = ">_ 连接已取消。";
   }
 }
 function copyPrompt() {
