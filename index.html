@@ -475,12 +475,12 @@
       <p style="margin:0 0 6px">&gt; 你的粉丝的智能体先 mint——0.0001 BNB，比公开便宜 10 倍。</p>
       <p style="margin:0 0 6px">&gt; 只有 7 小时窗口——紧迫感带来转化。</p>
       <p style="margin:0 0 14px">&gt; 总量 5,000，前 1,000 个留给智能体。</p>
-      <p class="dim" style="margin:0 0 16px">合约已部署，mint 等所有者开放。预告现在就能发——开 mint 的帖子等 mint 开放后再发。把网站链接粘贴到写着 [链接] 的地方。</p>
-      <p class="dim" style="margin:16px 0 6px">帖子 1 — 预告 · 随时可发</p>
-      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时，0.0001 BNB；公开 mint：0.001 BNB。链接：[链接]</code>
+      <p class="dim" style="margin:0 0 16px">mint 已开放，第一阶段进行中，约 14:03 UTC 结束。下面三段现在都能发。把网站链接粘贴到写着 [链接] 的地方。</p>
+      <p class="dim" style="margin:16px 0 6px">帖子 1 — 预告 · 现在就能发</p>
+      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时（08:03–14:03 UTC），0.0001 BNB；公开 mint：0.001 BNB。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">复制</button> <span class="dim" id="sharemsg-zh-teaser"></span>
-      <p class="dim" style="margin:16px 0 6px">帖子 2 — 开 MINT · 开 mint 时再发</p>
-      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时，之后公开 0.001 BNB。把这条命令交给你的智能体：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
+      <p class="dim" style="margin:16px 0 6px">帖子 2 — 开 MINT · 现在就能发</p>
+      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时（约 14:03 UTC 结束），之后公开 0.001 BNB。把这条命令交给你的智能体：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">复制</button> <span class="dim" id="sharemsg-zh-launch"></span>
       <p class="dim" style="margin:16px 0 6px">广播指令 — 和开 mint 的帖子一起发，你粉丝的智能体一行就能 mint</p>
       <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
@@ -830,14 +830,16 @@ function paintLive(){
 var AGENT_END_TS = 1794322980; /* mint opened 2026-11-10 ~15:03 WIB + 7h — approximate; on-chain agentPhaseActive() is the real state */
 function paintCountdown(){
   var left = AGENT_END_TS - Math.floor(Date.now() / 1000);
+  var endD = new Date(AGENT_END_TS * 1000);
+  var endUTC = ("0" + endD.getUTCHours()).slice(-2) + ":" + ("0" + endD.getUTCMinutes()).slice(-2) + " UTC";
   var txt;
   if (!chain.agent) txt = "已结束 — 公开阶段";
   else if (!chain.open) txt = "未开始 — 等所有者开放";
   else if (left <= 0) txt = "窗口时间到 — 等所有者结束智能体阶段";
-  else txt = "剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分 " + (left % 60) + " 秒";
+  else txt = "剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分 " + (left % 60) + " 秒 · 截止 " + endUTC;
   var a = document.getElementById("agentCountdown"); if (a) a.textContent = txt;
   var p = document.getElementById("phaseCountdown");
-  if (p) p.textContent = (chain.agent && chain.open && left > 0) ? "（剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分）" : "";
+  if (p) p.textContent = (chain.agent && chain.open && left > 0) ? "（剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分 · 截止 " + endUTC + "）" : "";
 }
 setInterval(paintCountdown, 1000);
 async function refreshChain(){
