@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volta Gent — 挖矿代币部署控制台（所有者）</title>
+<style>
+  body{background:#0b0e14;color:#e8eaf0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:24px 14px 60px}
+  .wrap{max-width:820px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:#9aa3b5;font-size:14px;margin:0 0 18px}
+  .card{background:#12161f;border:1px solid #232a38;border-radius:14px;padding:18px;margin:14px 0}
+  .card h2{font-size:17px;margin:0 0 10px;color:#f5c542}
+  .card p{font-size:14px;line-height:1.55;color:#c6ccd9}
+  .facts{background:#0e1420;border:1px solid #232a38;border-radius:14px;padding:14px 18px;margin:14px 0}
+  .facts li{font-size:13.5px;line-height:1.6;color:#c6ccd9;margin:3px 0}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:#ffd97a;word-break:break-all}
+  label{display:block;font-size:13px;color:#9aa3b5;margin:12px 0 5px}
+  input,textarea{width:100%;box-sizing:border-box;background:#0b0e14;border:1px solid #2b3446;border-radius:9px;color:#e8eaf0;padding:10px 12px;font-size:14px;font-family:ui-monospace,Menlo,Consolas,monospace}
+  textarea{min-height:150px;font-size:12.5px;line-height:1.5;resize:vertical}
+  button{background:#f5c542;color:#14100a;border:0;border-radius:9px;padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;margin:10px 8px 4px 0}
+  button.alt{background:#232a38;color:#e8eaf0}
+  button:hover{filter:brightness(1.08)}
+  .small{font-size:13px;color:#9aa3b5;line-height:1.5}
+  .status{font-size:13.5px;color:#a7f3c9;min-height:18px;word-break:break-all}
+  .warn{background:#2a2113;border:1px solid #6b5518;border-radius:9px;padding:10px 12px;font-size:13px;color:#ffd97a;line-height:1.5;margin:10px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .cell{background:#0b0e14;border:1px solid #232a38;border-radius:10px;padding:10px 12px}
+  .cell .k{font-size:11.5px;color:#9aa3b5;letter-spacing:.04em}
+  .cell .v{font-size:15px;font-weight:700;margin-top:3px;word-break:break-all}
+  .foot{font-size:12.5px;color:#77808f;line-height:1.6;margin-top:18px}
+</style></head>
+<body><div class="wrap">
+
+<h1>Volta Gent — 挖矿代币部署控制台（所有者）</h1>
+<p class="sub">所有者专用页面：部署 Volta Coin（VOLT）代币与 VoltaMining 挖矿领取合约，让玩家挖矿领取 VOLT 而不是 BNB。每一步都由所有者钱包签名——这里没有任何东西会自动运行。</p>
+
+<div class="facts"><ul>
+<li>背景：已部署的 VoltaArena 不可更改，它的挖矿用 BNB 支付、依赖奖池注资。本包是<b>独立的新合约</b>：VOLT 代币 + VoltaMining 领取合约。NFT 合约与竞技场合约都不做任何改动。</li>
+<li>代币：<b>Volta Coin（VOLT）</b>，总量固定 <b>100,000,000</b> 枚，部署时全部铸给部署钱包，之后没有增发/销毁函数，总量永不变化。</li>
+<li>挖矿：持有者先对每个 token 调用一次 startMining 开始计时（从登记时刻起算，<b>不回溯</b>——新铸造的 token 不会继承部署前的时长）。速率默认 <b>10 VOLT / 小时</b>，最多累计 <b>48 小时</b>；最低领取 <b>10 VOLT</b>；从挖矿合约的 VOLT 储备中支付，储备不足时领取会暂停（累计不清零）。</li>
+<li>第 04 步把 VOLT 转入挖矿合约作为奖励储备（默认 50,000,000 枚）。所有者之后可随时调整速率，或用合约的 withdrawTokens 取回储备。</li>
+<li>NFT 合约（已部署）：<code>0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1</code> — 挖矿合约通过 ownerOf 校验每个 token 的持有人，只有持有人能开始/领取。</li>
+</ul>
+<p class="small">警告：本合约<b>未经审计</b>。只用你自己的钱包、在 dApp 浏览器（OKX / MetaMask / Trust）里操作。不要把助记词或私钥发给任何人。</p></div>
+
+<div class="card"><h2>01 — 连接所有者钱包</h2>
+<p>连接将拥有代币与挖矿合约的钱包（应与 NFT 合约同一个所有者钱包）。页面会自动切换到 BNB Smart Chain。</p>
+<p><button id="connectBtn">连接钱包（OKX 优先）</button></p>
+<p class="status" id="walletLine">未连接。</p>
+<p class="small">本页面先检测 OKX（<code>window.okxwallet</code>），再检测其他钱包，并会请求切换/添加 BNB Smart Chain（56）。</p></div>
+
+<div class="card"><h2>02 — 部署 VOLT 代币</h2>
+<p>部署 Volta Coin（VOLT）ERC-20 代币，无构造参数。部署后 100,000,000 VOLT 全部进入你的钱包，地址会自动填入第 03–05 步。</p>
+<p><button id="deployTokenBtn">部署 Volta Coin（VOLT）</button></p>
+<p class="status" id="tokenStatus">等待连接钱包。</p></div>
+
+<div class="card"><h2>03 — 部署 VoltaMining</h2>
+<p>部署挖矿领取合约。构造参数是 NFT 合约地址（已预填）与 VOLT 代币地址（第 02 步后自动填入，可改）。部署后地址会自动填入第 04–05 步。</p>
+<label>NFT 合约地址（构造参数）</label>
+<input id="mNftInput" value="0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">
+<label>VOLT 代币地址（构造参数）</label>
+<input id="mTokenInput" placeholder="0x… Volta Coin 代币地址">
+<p><button id="deployMiningBtn">部署 VoltaMining</button></p>
+<p class="status" id="miningStatus"></p></div>
+
+<div class="card"><h2>04 — 注入奖励储备</h2>
+<p>把 VOLT 从你的钱包转入挖矿合约，作为玩家领取的奖励储备。玩家领取时从这笔储备里支付；储备不足时领取暂停，等你再注入。</p>
+<label>VOLT 代币地址</label>
+<input id="fTokenInput" placeholder="0x… Volta Coin 代币地址">
+<label>挖矿合约地址</label>
+<input id="fMiningInput" placeholder="0x… VoltaMining 合约地址">
+<label>注入数量（VOLT）</label>
+<input id="fundAmount" value="50000000">
+<p><button id="fundBtn">转入储备</button> <button id="reserveBtn" class="alt">刷新储备</button></p>
+<p class="status" id="fundStatus"></p>
+<p class="small">挖矿合约当前储备：<span id="reserveNow">—</span></p></div>
+
+<div class="card"><h2>05 — 状态 + 部署摘要</h2>
+<p>链上实时状态。复制摘要发给 Muse，把挖矿接入官网（index.html 挖矿面板改为 VOLT 领取）。</p>
+<label>VOLT 代币地址</label>
+<input id="sTokenInput" placeholder="0x… Volta Coin 代币地址">
+<label>挖矿合约地址</label>
+<input id="sMiningInput" placeholder="0x… VoltaMining 合约地址">
+<div class="grid">
+<div class="cell"><div class="k">代币总量</div><div class="v" id="stSupply">—</div></div>
+<div class="cell"><div class="k">挖矿奖励储备</div><div class="v" id="stReserve">—</div></div>
+<div class="cell"><div class="k">当前挖矿速率</div><div class="v" id="stRate">—</div></div>
+<div class="cell"><div class="k">你的 VOLT 余额</div><div class="v" id="stMyBal">—</div></div>
+</div>
+<p><button id="stateBtn" class="alt">刷新状态</button></p>
+<textarea id="summaryBox" readonly></textarea>
+<p><button id="copySummaryBtn" class="alt">复制摘要</button></p>
+<p class="status" id="summaryStatus"></p></div>
+
+<p class="foot">VoltaToken 与 VoltaMining 独立部署，NFT 合约与 VoltaArena 不做任何改动。网络：BNB Smart Chain（56），RPC <code>https://bsc-dataseed.binance.org/</code>。</p>
+
+</div>
+<script>
+var TOKEN_BYTECODE = "0x6080604052348015600e575f80fd5b50335f818152602081815260408083206a52b7d2dcc80cd2e40000009081905590519081527fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a36105f78061006b5f395ff3fe608060405234801561000f575f80fd5b5060043610610090575f3560e01c8063313ce56711610063578063313ce5671461012957806370a082311461014357806395d89b4114610162578063a9059cbb14610185578063dd62ed3e14610198575f80fd5b806306fdde0314610094578063095ea7b3146100d357806318160ddd146100f657806323b872dd14610116575b5f80fd5b6100bd6040518060400160405280600a8152602001692b37b63a309021b7b4b760b11b81525081565b6040516100ca9190610484565b60405180910390f35b6100e66100e13660046104d4565b6101c2565b60405190151581526020016100ca565b6101086a52b7d2dcc80cd2e400000081565b6040519081526020016100ca565b6100e66101243660046104fc565b610274565b610131601281565b60405160ff90911681526020016100ca565b610108610151366004610536565b5f6020819052908152604090205481565b6100bd604051806040016040528060048152602001631593d31560e21b81525081565b6100e66101933660046104d4565b610327565b6101086101a6366004610556565b600160209081525f928352604080842090915290825290205481565b5f6001600160a01b0383166102105760405162461bcd60e51b815260206004820152600f60248201526e7370656e646572206973207a65726f60881b60448201526064015b60405180910390fd5b335f8181526001602090815260408083206001600160a01b03881680855290835292819020869055518581529192917f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925910160405180910390a35060015b92915050565b6001600160a01b0383165f908152600160209081526040808320338452909152812054828110156102db5760405162461bcd60e51b8152602060048201526011602482015270616c6c6f77616e636520746f6f206c6f7760781b6044820152606401610207565b5f198114610311576102ed838261059b565b6001600160a01b0386165f9081526001602090815260408083203384529091529020555b61031c85858561033c565b506001949350505050565b5f61033333848461033c565b50600192915050565b6001600160a01b03821661037f5760405162461bcd60e51b815260206004820152600a602482015269746f206973207a65726f60b01b6044820152606401610207565b6001600160a01b0383165f908152602081905260409020548111156103d85760405162461bcd60e51b815260206004820152600f60248201526e62616c616e636520746f6f206c6f7760881b6044820152606401610207565b6001600160a01b0383165f90815260208190526040812080548392906103ff90849061059b565b90915550506001600160a01b0382165f908152602081905260408120805483929061042b9084906105ae565b92505081905550816001600160a01b0316836001600160a01b03167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8360405161047791815260200190565b60405180910390a3505050565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b80356001600160a01b03811681146104cf575f80fd5b919050565b5f80604083850312156104e5575f80fd5b6104ee836104b9565b946020939093013593505050565b5f805f6060848603121561050e575f80fd5b610517846104b9565b9250610525602085016104b9565b929592945050506040919091013590565b5f60208284031215610546575f80fd5b61054f826104b9565b9392505050565b5f8060408385031215610567575f80fd5b610570836104b9565b915061057e602084016104b9565b90509250929050565b634e487b7160e01b5f52601160045260245ffd5b8181038181111561026e5761026e610587565b8082018082111561026e5761026e61058756fea2646970667358221220e82519d1c3bfbdc38e5b50bcbf2e8435475a9d22a85356303d6f7644ad4de74564736f6c634300081a0033";
+var MINING_BYTECODE = "0x60c0604052678ac7230489e8000060015534801561001b575f80fd5b50604051610cb5380380610cb583398101604081905261003a9161010c565b6001600160a01b0382166100835760405162461bcd60e51b815260206004820152600b60248201526a6e6674206973207a65726f60a81b60448201526064015b60405180910390fd5b6001600160a01b0381166100c95760405162461bcd60e51b815260206004820152600d60248201526c746f6b656e206973207a65726f60981b604482015260640161007a565b5f80546001600160a01b031916331790556001600160a01b039182166080521660a05261013d565b80516001600160a01b0381168114610107575f80fd5b919050565b5f806040838503121561011d575f80fd5b610126836100f1565b9150610134602084016100f1565b90509250929050565b60805160a051610b3b61017a5f395f818161021b015281816103820152818161065201526108cb01525f818161017401526109610152610b3b5ff3fe608060405234801561000f575f80fd5b50600436106100e5575f3560e01c80635c28d98111610088578063b5c8667611610063578063b5c86676146101f2578063cd3293de14610205578063d9f498691461020d578063fc0c546a14610216575f80fd5b80635c28d981146101ae57806386d941df146101cd5780638da5cb5b146101e0575f80fd5b8063379607f5116100c3578063379607f51461012a5780633d3728b51461013d57806347b272c01461015c57806347ccca021461016f575f80fd5b80631cd2a05d146100e95780632a60aa6f1461010b578063315a095d14610115575b5f80fd5b6100f8678ac7230489e8000081565b6040519081526020015b60405180910390f35b6100f86202a30081565b610128610123366004610a15565b61023d565b005b610128610138366004610a15565b61047a565b6100f861014b366004610a15565b60026020525f908152604090205481565b61012861016a366004610a15565b610743565b6101967f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610102565b6100f86101bc366004610a15565b5f9081526002602052604090205490565b6101286101db366004610a15565b6107d6565b5f54610196906001600160a01b031681565b6100f8610200366004610a15565b610856565b6100f86108b4565b6100f860015481565b6101967f000000000000000000000000000000000000000000000000000000000000000081565b5f546001600160a01b031633146102875760405162461bcd60e51b81526020600482015260096024820152683737ba1037bbb732b960b91b60448201526064015b60405180910390fd5b60035460ff16156102c65760405162461bcd60e51b81526020600482015260096024820152681c99595b9d1c985b9d60ba1b604482015260640161027e565b6003805460ff19166001179055806103115760405162461bcd60e51b815260206004820152600e60248201526d616d6f756e74206973207a65726f60901b604482015260640161027e565b6103196108b4565b81111561035a5760405162461bcd60e51b815260206004820152600f60248201526e7265736572766520746f6f206c6f7760881b604482015260640161027e565b5f5460405163a9059cbb60e01b81526001600160a01b039182166004820152602481018390527f00000000000000000000000000000000000000000000000000000000000000009091169063a9059cbb906044016020604051808303815f875af11580156103ca573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906103ee9190610a2c565b61042c5760405162461bcd60e51b815260206004820152600f60248201526e1d1c985b9cd9995c8819985a5b1959608a1b604482015260640161027e565b5f546040518281526001600160a01b03909116907f6352c5382c4a4578e712449ca65e83cdb392d045dfcf1cad9615189db2da244b9060200160405180910390a2506003805460ff19169055565b60035460ff16156104b95760405162461bcd60e51b81526020600482015260096024820152681c99595b9d1c985b9d60ba1b604482015260640161027e565b6003805460ff191660011790556104cf81610941565b5f8181526002602052604081205490036105205760405162461bcd60e51b81526020600482015260126024820152711b5a5b9a5b99c81b9bdd081cdd185c9d195960721b604482015260640161027e565b5f61052a82610856565b9050678ac7230489e800008110156105765760405162461bcd60e51b815260206004820152600f60248201526e62656c6f77206d696e20636c61696d60881b604482015260640161027e565b61057e6108b4565b8111156105c05760405162461bcd60e51b815260206004820152601060248201526f1c995cd95c9d99481a5cc81cda1bdc9d60821b604482015260640161027e565b5f828152600260205260408120546105d89042610a66565b90506202a3008111156105fa575f838152600260205260409020429055610636565b60015461060983610e10610a7f565b6106139190610a96565b5f8481526002602052604081208054909190610630908490610ab5565b90915550505b60405163a9059cbb60e01b8152336004820152602481018390527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a9059cbb906044016020604051808303815f875af11580156106a0573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906106c49190610a2c565b6106fd5760405162461bcd60e51b815260206004820152600a6024820152691c185e4819985a5b195960b21b604482015260640161027e565b604051828152839033907f987d620f307ff6b94d58743cb7a7509f24071586a77759b77c2d4e29f75a2f9a9060200160405180910390a350506003805460ff1916905550565b61074c81610941565b5f81815260026020526040902054156107995760405162461bcd60e51b815260206004820152600f60248201526e185b1c9958591e481cdd185c9d1959608a1b604482015260640161027e565b5f8181526002602052604080822042905551829133917f371d1d217e089d8abb6eb4453f63564ad157fa1e149bfc4f8348d4496d82406a9190a350565b5f546001600160a01b0316331461081b5760405162461bcd60e51b81526020600482015260096024820152683737ba1037bbb732b960b91b604482015260640161027e565b60018190556040518181527fe65c987b2e4668e09ba867026921588005b2b2063607a1e7e7d91683c8f91b7b9060200160405180910390a150565b5f8181526002602052604081205480820361087357505f92915050565b5f61087e8242610a66565b90506202a30081111561089157506202a3005b610e10600154826108a29190610a7f565b6108ac9190610a96565b949350505050565b6040516370a0823160e01b81523060048201525f907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906370a0823190602401602060405180830381865afa158015610918573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061093c9190610ac8565b905090565b6040516331a9108f60e11b81526004810182905233906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690636352211e90602401602060405180830381865afa1580156109a6573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906109ca9190610adf565b6001600160a01b031614610a125760405162461bcd60e51b815260206004820152600f60248201526e3737ba103a37b5b2b71037bbb732b960891b604482015260640161027e565b50565b5f60208284031215610a25575f80fd5b5035919050565b5f60208284031215610a3c575f80fd5b81518015158114610a4b575f80fd5b9392505050565b634e487b7160e01b5f52601160045260245ffd5b81810381811115610a7957610a79610a52565b92915050565b8082028115828204841417610a7957610a79610a52565b5f82610ab057634e487b7160e01b5f52601260045260245ffd5b500490565b80820180821115610a7957610a79610a52565b5f60208284031215610ad8575f80fd5b5051919050565b5f60208284031215610aef575f80fd5b81516001600160a01b0381168114610a4b575f80fdfea2646970667358221220c6ba3380696677c1724f3a1b3d1b73587e5dfbb2a9c23d3c5d33757008328faa64736f6c634300081a0033";
+var NFT_DEFAULT = "0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1";
+var SEL_TRANSFER = "0xa9059cbb", SEL_BALANCEOF = "0x70a08231", SEL_TOTALSUPPLY = "0x18160ddd", SEL_RESERVE = "0xcd3293de", SEL_RATE = "0xd9f49869";
+var account = null;
+var tokenAddress = "";
+var miningAddress = "";
+function provider(){ if (window.okxwallet) return window.okxwallet; if (window.ethereum) return window.ethereum; return null; }
+function hexToInt(h){ return parseInt(h, 16); }
+function padHex(s, len){ while (s.length < len) s = "0" + s; return s; }
+function encodeAddr(a){ return padHex(a.toLowerCase().replace("0x", ""), 64); }
+function encodeUint(weiBig){ return padHex(weiBig.toString(16), 64); }
+function validAddr(a){ return /^0x[0-9a-fA-F]{40}$/.test(a); }
+function voltToWei(str){
+  str = String(str).trim();
+  if (!/^\d+(\.\d+)?$/.test(str)) return null;
+  var parts = str.split(".");
+  var whole = parts[0];
+  var frac = parts.length > 1 ? parts[1] : "";
+  if (frac.length > 18) return null;
+  while (frac.length < 18) frac += "0";
+  return BigInt(whole) * BigInt("1000000000000000000") + BigInt(frac === "" ? "0" : frac);
+}
+function fmtVolt(weiBig){
+  var unit = BigInt("1000000000000000000");
+  var whole = weiBig / unit;
+  var frac = weiBig % unit;
+  var w = whole.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  if (frac === BigInt(0)) return w + " VOLT";
+  var f = frac.toString(); while (f.length < 18) f = "0" + f;
+  f = f.replace(/0+$/, "");
+  return w + "." + f + " VOLT";
+}
+async function callRead(to, data){
+  var p = provider();
+  return p.request({method:"eth_call", params:[{to: to, data: data}, "latest"]});
+}
+async function deployContract(bytecode, extraData, statusId, onDone){
+  var p = provider();
+  if (!p || !account) { document.getElementById(statusId).textContent = "先连接钱包（第 01 步）。"; return; }
+  var data = bytecode + (extraData || "");
+  try {
+    var gas = await p.request({method:"eth_estimateGas", params:[{from: account, data: data}]});
+    document.getElementById(statusId).textContent = "预估 gas：" + hexToInt(gas) + "。正在发送部署交易…";
+    var txHash = await p.request({method:"eth_sendTransaction", params:[{from: account, data: data}]});
+    document.getElementById(statusId).textContent = "交易已发送：" + txHash + "。等待回执…";
+    var tries = 0;
+    var timer = setInterval(async function(){
+      tries++;
+      var r = await p.request({method:"eth_getTransactionReceipt", params:[txHash]});
+      if (r && r.contractAddress) { clearInterval(timer); onDone(r.contractAddress, txHash); }
+      else if (tries > 60) { clearInterval(timer); document.getElementById(statusId).textContent = "检查 60 次后仍无回执——去 BscScan 查看这笔交易：" + txHash; }
+    }, 3000);
+  } catch (e) { document.getElementById(statusId).textContent = "失败：" + (e && e.message ? e.message : e); }
+}
+function buildSummary(){
+  var t = document.getElementById("sTokenInput").value.trim() || tokenAddress || "（尚未部署）";
+  var m = document.getElementById("sMiningInput").value.trim() || miningAddress || "（尚未部署）";
+  var lines = [
+    "VoltaMining 部署摘要 — 把这个发给 Muse",
+    "VOLT 代币合约：" + t,
+    "挖矿合约（VoltaMining）：" + m,
+    "NFT 合约：" + NFT_DEFAULT,
+    "所有者：" + (account || "（先连接钱包）"),
+    "网络：BNB Smart Chain（56）",
+    "奖励储备：" + document.getElementById("stReserve").textContent,
+    "挖矿速率：" + document.getElementById("stRate").textContent,
+    "BscScan 代币: https://bscscan.com/address/" + t,
+    "BscScan 挖矿: https://bscscan.com/address/" + m,
+    "下一步：把挖矿合约地址接入官网 index.html，挖矿面板改为 VOLT 领取（startMining / claim）。"
+  ];
+  document.getElementById("summaryBox").value = lines.join("\n");
+}
+document.getElementById("connectBtn").onclick = async function(){
+  var p = provider();
+  if (!p) { document.getElementById("walletLine").textContent = "没找到钱包——请在 OKX / MetaMask 的 dApp 浏览器里打开本页。"; return; }
+  try {
+    var accs = await p.request({method:"eth_requestAccounts"});
+    account = accs[0];
+    try { await p.request({method:"wallet_switchEthereumChain", params:[{chainId:"0x38"}]}); }
+    catch (e) {
+      if (e && e.code === 4902) { await p.request({method:"wallet_addEthereumChain", params:[{chainId:"0x38", chainName:"BNB Smart Chain", nativeCurrency:{name:"BNB", symbol:"BNB", decimals:18}, rpcUrls:["https://bsc-dataseed.binance.org/"], blockExplorerUrls:["https://bscscan.com"]}]}); }
+      else throw e;
+    }
+    document.getElementById("walletLine").textContent = "已连接：" + account;
+    document.getElementById("tokenStatus").textContent = "钱包已连接。可以部署代币了。";
+    buildSummary();
+  } catch (e) { document.getElementById("walletLine").textContent = "连接失败：" + (e && e.message ? e.message : e); }
+};
+document.getElementById("deployTokenBtn").onclick = function(){
+  deployContract(TOKEN_BYTECODE, "", "tokenStatus", function(addr, txHash){
+    tokenAddress = addr;
+    document.getElementById("mTokenInput").value = addr;
+    document.getElementById("fTokenInput").value = addr;
+    document.getElementById("sTokenInput").value = addr;
+    document.getElementById("tokenStatus").textContent = "Volta Coin（VOLT）已部署在：" + addr + "（交易 " + txHash + "）。100,000,000 VOLT 已全部进入你的钱包。地址已自动填入第 03–05 步，继续部署 VoltaMining。";
+    buildSummary();
+  });
+};
+document.getElementById("deployMiningBtn").onclick = function(){
+  var nftAddr = document.getElementById("mNftInput").value.trim();
+  var tokAddr = document.getElementById("mTokenInput").value.trim();
+  if (!validAddr(nftAddr)) { document.getElementById("miningStatus").textContent = "NFT 合约地址无效。"; return; }
+  if (!validAddr(tokAddr)) { document.getElementById("miningStatus").textContent = "VOLT 代币地址无效——先完成第 02 步。"; return; }
+  deployContract(MINING_BYTECODE, encodeAddr(nftAddr) + encodeAddr(tokAddr), "miningStatus", function(addr, txHash){
+    miningAddress = addr;
+    document.getElementById("fMiningInput").value = addr;
+    document.getElementById("sMiningInput").value = addr;
+    document.getElementById("miningStatus").textContent = "VoltaMining 已部署在：" + addr + "（交易 " + txHash + "）。地址已自动填入第 04–05 步。继续第 04 步注入奖励储备。";
+    buildSummary();
+  });
+};
+async function refreshReserve(){
+  var t = document.getElementById("fTokenInput").value.trim();
+  var m = document.getElementById("fMiningInput").value.trim();
+  if (!validAddr(t) || !validAddr(m)) { document.getElementById("reserveNow").textContent = "先填代币与挖矿合约地址。"; return; }
+  try {
+    var r = await callRead(t, SEL_BALANCEOF + encodeAddr(m));
+    document.getElementById("reserveNow").textContent = fmtVolt(BigInt(r));
+  } catch (e) { document.getElementById("reserveNow").textContent = "读取失败：" + e.message; }
+}
+document.getElementById("reserveBtn").onclick = refreshReserve;
+document.getElementById("fundBtn").onclick = async function(){
+  var p = provider();
+  if (!p || !account) { document.getElementById("fundStatus").textContent = "先连接钱包（第 01 步）。"; return; }
+  var t = document.getElementById("fTokenInput").value.trim();
+  var m = document.getElementById("fMiningInput").value.trim();
+  if (!validAddr(t)) { document.getElementById("fundStatus").textContent = "VOLT 代币地址无效。"; return; }
+  if (!validAddr(m)) { document.getElementById("fundStatus").textContent = "挖矿合约地址无效。"; return; }
+  var wei = voltToWei(document.getElementById("fundAmount").value);
+  if (wei === null || wei <= BigInt(0)) { document.getElementById("fundStatus").textContent = "注入数量无效（填 VOLT 数量，最多 18 位小数）。"; return; }
+  try {
+    var data = SEL_TRANSFER + encodeAddr(m) + encodeUint(wei);
+    var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: t, data: data}]});
+    document.getElementById("fundStatus").textContent = "转入交易已发送：" + h + "（" + fmtVolt(wei) + "）。确认后点“刷新储备”核对。";
+  } catch (e) { document.getElementById("fundStatus").textContent = "失败：" + (e && e.message ? e.message : e); }
+};
+document.getElementById("stateBtn").onclick = async function(){
+  var p = provider();
+  if (!p) { document.getElementById("summaryStatus").textContent = "先连接钱包（第 01 步）。"; return; }
+  var t = document.getElementById("sTokenInput").value.trim();
+  var m = document.getElementById("sMiningInput").value.trim();
+  if (!validAddr(t)) { document.getElementById("summaryStatus").textContent = "VOLT 代币地址无效。"; return; }
+  if (!validAddr(m)) { document.getElementById("summaryStatus").textContent = "挖矿合约地址无效。"; return; }
+  try {
+    var supply = BigInt(await callRead(t, SEL_TOTALSUPPLY));
+    var reserve = BigInt(await callRead(m, SEL_RESERVE));
+    var rate = BigInt(await callRead(m, SEL_RATE));
+    document.getElementById("stSupply").textContent = fmtVolt(supply);
+    document.getElementById("stReserve").textContent = fmtVolt(reserve);
+    document.getElementById("stRate").textContent = fmtVolt(rate) + " / 小时";
+    if (account) {
+      var myBal = BigInt(await callRead(t, SEL_BALANCEOF + encodeAddr(account)));
+      document.getElementById("stMyBal").textContent = fmtVolt(myBal);
+    }
+    document.getElementById("summaryStatus").textContent = "状态已从链上刷新。";
+    buildSummary();
+  } catch (e) { document.getElementById("summaryStatus").textContent = "读取失败：" + e.message + "（确认地址正确且已部署）。"; }
+};
+document.getElementById("copySummaryBtn").onclick = function(){
+  buildSummary();
+  var box = document.getElementById("summaryBox");
+  box.select();
+  if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "摘要已复制——粘贴给 Muse。"; });
+};
+buildSummary();
+</script></body></html>
