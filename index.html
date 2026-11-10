@@ -292,7 +292,7 @@
     <div class="phase on" onclick="togglePhase(this)">
       <h3>01 / 仅限智能体</h3>
       <p class="price">0.0001 BNB <small>/ 个</small></p>
-      <p>7 小时，每钱包最多 2 个。</p>
+      <p>7 小时，每钱包最多 2 个。<span id="phaseCountdown"></span></p>
       <p class="more">门禁：0x60B926… · balanceOf &gt; 0 · 链上验证。</p>
       <p class="hint">点我展开 +</p>
     </div>
@@ -310,6 +310,7 @@
     <div class="winbar"><i></i><i></i><i></i><span>$ mint --buy</span></div>
     <div class="winbody">
       <div class="row"><span id="mintPhase">智能体阶段</span><span id="mintPrice">0.0001 BNB / 个</span></div>
+      <div class="row" style="margin-top:12px"><span>智能体窗口倒计时</span><span id="agentCountdown">—</span></div>
       <div class="row" style="margin-top:12px;align-items:center"><span>数量</span><span><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="mintQtyChange(-1)">−</button><b id="mintQty" style="margin:0 10px">1</b><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="mintQtyChange(1)">＋</button></span></div>
       <div class="row" style="margin-top:12px"><span>总计</span><span id="mintTotal">0.0001 BNB</span></div>
       <p class="dim" id="mintMax">每钱包最多 2 个（智能体阶段）。</p>
@@ -348,7 +349,7 @@
     <div class="winbody">
       <div class="row"><span class="big"><span id="energy">100</span> <small>/ 100</small></span><span class="dim">每小时恢复 +1 — 免费</span></div>
       <div class="bar"><i id="energyfill" style="width:100%"></i></div>
-      <p class="dim">mint 一次，每天挖 BNB。</p>
+      <p class="dim">经济系统开发中（路线图 05）— 本页能量为演示玩法，持有人可玩。</p>
       <button class="btn ghost" onclick="energyUse(10)">领取 −10</button>
       <button class="btn ghost" onclick="energyUse(20)">对战 −20</button>
       <button class="btn" onclick="energyRecharge()">充值 +10 — 0.0001 BNB</button>
@@ -384,7 +385,7 @@
   <div id="arenalog" class="dim" style="min-height:66px;margin-top:8px;line-height:1.9"></div>
   <button class="btn ghost" onclick="arenaOpponent()">换对手</button>
   <button class="btn" id="arenaBtn" onclick="arenaEnter()">进擂台</button>
-  <p class="dim" id="arenamsg">&gt;_ 仅演示，不收费，无合约。</p>
+  <p class="dim" id="arenamsg">&gt;_ 竞技场仅对 Volta Gent 持有人开放 — 连接钱包并持有 NFT 才能玩（演示对战，不真实下注）。</p>
   <p class="dim">胜 <span id="arenaWins">0</span> · 负 <span id="arenaLoss">0</span> · 赢得 <span id="arenaWon">0</span> BNB（演示）</p>
 
   <h2>&gt;_ <span>稀有度。</span></h2>
@@ -397,7 +398,7 @@
       <div class="row"><span class="tier-epic">史诗</span><span>7% · 战力 55</span></div>
       <div class="row"><span class="tier-legendary">传说</span><span>2.5% · 战力 80</span></div>
       <div class="row"><span class="tier-mythic">神话</span><span>0.5% · 战力 100</span></div>
-      <p class="dim" style="margin-top:12px">稀有度在 mint 时抽取，并记录在链上。战力决定你在竞技场的胜率：胜率 = 你的战力 ÷ 总战力。稀有度高也可能输。</p>
+      <p class="dim" style="margin-top:12px">稀有度写在每个 token 的 metadata 里，部署前就定好了。战力决定你在竞技场的胜率：胜率 = 你的战力 ÷ 总战力。稀有度高也可能输。</p>
     </div>
   </div>
 
@@ -458,9 +459,9 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>为什么智能体更便宜？</span><i>+</i></div><div class="a">智能体先 mint，0.0001 BNB；公开 mint 0.001 BNB。智能体就是分发渠道——他们先 mint、发帖，在公开销售前证明需求。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>智能体阶段持续多久？</span><i>+</i></div><div class="a">7 小时。之后所有者调用 endAgentPhase()，第二阶段向所有人开放。没有自动计时，需要手动执行一笔交易。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>没有 Agent ID 也能 mint 吗？</span><i>+</i></div><div class="a">可以，在第二阶段（公开）：0.001 BNB，每钱包最多 5 个。第一阶段仅限智能体。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">每个 NFT 有 100 能量，每小时免费恢复 +1，还每小时挖 0.00001 BNB。领取花费 10 能量 + 0.00001 BNB（每次至少 0.0001 BNB），对战花费 20。充值 0.0001 BNB 充 10 点，或 0.001 BNB 充满。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>挖矿能赚多少 BNB？</span><i>+</i></div><div class="a">每个 NFT 每小时挖 0.00001 BNB，领取要 10 能量 + 0.00001 BNB，每次至少 0.0001 BNB（10 小时）。挖出的 BNB 从合约的手续费池子里出——mint、充值和竞技场的费用都会进池子。如果池子空了，领取会暂停，等费用再进来。没有保证收益，挖多少看池子有多少。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">两位持有者各下注 0.0005 BNB + 20 能量。胜者拿 0.0009 BNB（90%），项目留 0.0001 BNB。胜率 = 你的战力 ÷ 总战力。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">能量与挖矿经济还在开发中（路线图 05），尚未正式上线。本页的能量和竞技场是演示玩法：每个 NFT 100 能量、每小时恢复 +1，只有持有人能玩演示对战。经济系统上线后的规则：领取花费 10 能量、对战 20 能量，充值 0.0001 BNB 充 10 点。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>挖矿能赚多少 BNB？</span><i>+</i></div><div class="a">这是路线图 05 的计划，尚未上线：每个 NFT 每小时挖 0.00001 BNB，挖出的 BNB 从合约手续费池子里出（mint、充值、竞技场费用都进池子），池子空了领取就暂停。没有任何保证收益。本页现在只有演示玩法，不产生真实 BNB。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">现在是演示对战：只有 Volta Gent 持有人能进擂台，出战的是你自己持有的 NFT，按它的稀有度算战力，不真实下注、不收费。真实版在开发中：两位持有者各下注 0.0005 BNB + 20 能量，胜者拿 0.0009 BNB（90%）。胜率 = 你的战力 ÷ 总战力。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已经部署（0x43cf…c5b1）。所有者开放后就能 mint：先是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个），之后公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
@@ -712,10 +713,29 @@ async function loadRecent(){
   box.innerHTML = html;
 }
 var myNftsLoading = false, myNftsStamp = "";
+var myTokens = [], fighter = null;
+async function setFighter(id){
+  fighter = { id: id, name: "Volta Gent " + tokenLabel(id), tier: "COMMON" };
+  try {
+    var r = await fetch("meta/" + id + ".json");
+    var j = await r.json();
+    if (j && j.name) fighter.name = j.name.replace("Volta Gent — ", "");
+    if (j && j.attributes) for (var i = 0; i < j.attributes.length; i++) if (j.attributes[i].trait_type === "Tier") fighter.tier = String(j.attributes[i].value).toUpperCase();
+  } catch(e){}
+  arenaSync();
+  refreshArenaGate();
+}
+function refreshArenaGate(){
+  var b = document.getElementById("arenaBtn");
+  if (!b || arenaBusy) return;
+  if (!walletAddr) { b.disabled = true; b.textContent = "进擂台 — 先连接钱包"; }
+  else if (!fighter) { b.disabled = true; b.textContent = "进擂台 — 先持有 NFT"; }
+  else { b.disabled = false; b.textContent = "进擂台"; }
+}
 async function loadMyNfts(){
   var msg = document.getElementById("myNftsMsg"), grid = document.getElementById("myNfts");
   if (!msg || !grid) return;
-  if (!walletAddr) { msg.textContent = ">_ 连接钱包后，这里显示你持有的 Volta Gent。"; grid.innerHTML = ""; myNftsStamp = ""; return; }
+  if (!walletAddr) { msg.textContent = ">_ 连接钱包后，这里显示你持有的 Volta Gent。"; grid.innerHTML = ""; myNftsStamp = ""; myTokens = []; fighter = null; arenaSync(); refreshArenaGate(); return; }
   var stamp = walletAddr.toLowerCase() + ":" + chain.minted;
   if (myNftsLoading || myNftsStamp === stamp) return;
   myNftsLoading = true;
@@ -723,8 +743,10 @@ async function loadMyNfts(){
   try {
     var bal = u256(await rpcCall(BALANCEOF_SEL + padAddr(walletAddr)));
     if (bal === 0) {
+      myTokens = []; fighter = null;
       msg.textContent = ">_ 这个钱包还没有 Volta Gent — 去上面的面板 mint 一个。";
       grid.innerHTML = "";
+      arenaSync(); refreshArenaGate();
     } else {
       var n = chain.minted, lo = Math.max(1, n - 599), ids = [], mine = [];
       for (var t = n; t >= lo; t--) ids.push(t);
@@ -734,8 +756,10 @@ async function loadMyNfts(){
         chunk.forEach(function(id, idx){ if (res[idx] && ("0x" + res[idx].slice(26)).toLowerCase() === walletAddr.toLowerCase()) mine.push(id); });
       }
       mine.sort(function(a, b2){ return a - b2; });
-      msg.textContent = ">_ " + shortAddr(walletAddr) + " 持有 " + mine.length + " 个 Volta Gent" + (n > 600 ? "（仅扫描最近 600 个 token）" : "") + "：";
-      grid.innerHTML = mine.map(function(id){ return '<a href="https://bscscan.com/nft/' + CONTRACT + '/' + id + '" style="display:block;text-align:center"><img src="images/' + id + '.webp" alt="' + tokenLabel(id) + '" style="width:100%;border:1px solid var(--line)"><span class="dim">' + tokenLabel(id) + '</span></a>'; }).join("");
+      myTokens = mine;
+      if (!fighter || mine.indexOf(fighter.id) < 0) setFighter(mine[0]); else { arenaSync(); refreshArenaGate(); }
+      msg.textContent = ">_ " + shortAddr(walletAddr) + " 持有 " + mine.length + " 个 Volta Gent" + (n > 600 ? "（仅扫描最近 600 个 token）" : "") + "（点任意一个，选它进擂台）：";
+      grid.innerHTML = mine.map(function(id){ return '<div onclick="setFighter(' + id + ')" style="cursor:pointer;text-align:center"><img src="images/' + id + '.webp" alt="' + tokenLabel(id) + '" style="width:100%;border:1px solid var(--line)"><span class="dim">' + tokenLabel(id) + '</span></div>'; }).join("");
     }
     myNftsStamp = stamp;
   } catch(e) { msg.textContent = ">_ 读取失败，稍后自动重试。"; }
@@ -803,6 +827,19 @@ function paintLive(){
   for (var i = 0; i < cards.length; i++) cards[i].classList.toggle("on", i === livePhaseIdx());
   paintMint();
 }
+var AGENT_END_TS = 1794322980; /* mint opened 2026-11-10 ~15:03 WIB + 7h — approximate; on-chain agentPhaseActive() is the real state */
+function paintCountdown(){
+  var left = AGENT_END_TS - Math.floor(Date.now() / 1000);
+  var txt;
+  if (!chain.agent) txt = "已结束 — 公开阶段";
+  else if (!chain.open) txt = "未开始 — 等所有者开放";
+  else if (left <= 0) txt = "窗口时间到 — 等所有者结束智能体阶段";
+  else txt = "剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分 " + (left % 60) + " 秒";
+  var a = document.getElementById("agentCountdown"); if (a) a.textContent = txt;
+  var p = document.getElementById("phaseCountdown");
+  if (p) p.textContent = (chain.agent && chain.open && left > 0) ? "（剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分）" : "";
+}
+setInterval(paintCountdown, 1000);
 async function refreshChain(){
   try {
     chain.minted = u256(await rpcCall(SEL.minted));
@@ -810,6 +847,7 @@ async function refreshChain(){
     chain.agent = u256(await rpcCall(SEL.agentPhase)) === 1;
     chain.loaded = true;
     paintLive();
+    paintCountdown();
     loadRecent();
     if (walletAddr) refreshWallet();
   } catch(e){}
@@ -907,12 +945,14 @@ function energyMsg(t){
   setTimeout(function(){ m.textContent = ">_ 仅演示，不收费，无合约。"; }, 2200);
 }
 function energyUse(n){
+  if (!fighter) { energyMsg(walletAddr ? "先持有 Volta Gent 才能用能量 — 去 mint 一个。" : "先连接钱包，并持有 Volta Gent。"); return; }
   if (energy < n) { energyMsg("能量不足 — 请先充值。"); return; }
   energy -= n;
   paintEnergy();
   energyMsg(n === 10 ? "已领取，−10 能量。" : "已对战，−20 能量。");
 }
 function energyRecharge(){
+  if (!fighter) { energyMsg(walletAddr ? "先持有 Volta Gent 才能充值 — 去 mint 一个。" : "先连接钱包，并持有 Volta Gent。"); return; }
   if (energy >= 100) { energyMsg("已经满了。"); return; }
   energy = Math.min(100, energy + 10);
   paintEnergy();
@@ -928,9 +968,10 @@ var TIERPOWER = { COMMON: 10, UNCOMMON: 20, RARE: 35, EPIC: 55, LEGENDARY: 80, M
 var TIERZH = { COMMON: "普通", UNCOMMON: "优秀", RARE: "稀有", EPIC: "史诗", LEGENDARY: "传说", MYTHIC: "神话" };
 function tierPower(i){ return TIERPOWER[ROBOTS[i].t] || 10; }
 function arenaOddsText(){
-  var pA = tierPower(arenaMe()), pB = tierPower(arenaOpp);
+  var pA = fighter ? (TIERPOWER[fighter.tier] || 10) : tierPower(arenaMe()), pB = tierPower(arenaOpp);
   var pct = Math.round(pA / (pA + pB) * 100);
-  return "战力 " + pA + " vs " + pB + " · 你的胜率 " + pct + "% — " + TIERZH[ROBOTS[arenaMe()].t] + " vs " + TIERZH[ROBOTS[arenaOpp].t] + "。";
+  var myTier = fighter ? (TIERZH[fighter.tier] || "") : TIERZH[ROBOTS[arenaMe()].t];
+  return "战力 " + pA + " vs " + pB + " · 你的胜率 " + pct + "% — " + myTier + " vs " + TIERZH[ROBOTS[arenaOpp].t] + "。";
 }
 function arenaMe(){
   var sel = document.querySelector("#thumbs img.sel");
@@ -938,9 +979,15 @@ function arenaMe(){
 }
 function arenaSync(){
   var me = arenaMe();
-  document.getElementById("arenaMeImg").src = "images/volta-gent-" + (me + 1) + ".png";
-  document.getElementById("arenaMeName").textContent = ROBOTS[me].n;
-  document.getElementById("gateHolder").textContent = ROBOTS[me].n;
+  if (fighter) {
+    document.getElementById("arenaMeImg").src = "images/" + fighter.id + ".webp";
+    document.getElementById("arenaMeName").textContent = fighter.name + " " + tokenLabel(fighter.id);
+    document.getElementById("gateHolder").textContent = fighter.name + " " + tokenLabel(fighter.id);
+  } else {
+    document.getElementById("arenaMeImg").src = "images/volta-gent-" + (me + 1) + ".png";
+    document.getElementById("arenaMeName").textContent = walletAddr ? "未持有 NFT" : ROBOTS[me].n;
+    document.getElementById("gateHolder").textContent = walletAddr ? "未持有" : "未连接钱包";
+  }
   document.getElementById("arenaMeBar").style.width = energy + "%";
   var ge = document.getElementById("gateEnergy");
   ge.innerHTML = "能量 <b>" + energy + "/100</b>";
@@ -951,6 +998,7 @@ function arenaDisarm(){
   arenaArmed = false;
   var b = document.getElementById("arenaBtn");
   b.textContent = "进擂台"; b.disabled = false;
+  refreshArenaGate();
 }
 function arenaOpponent(){
   if (arenaBusy) return;
@@ -973,6 +1021,8 @@ function arenaLog(html){
 }
 function arenaEnter(){
   if (arenaBusy) return;
+  if (!walletAddr) { document.getElementById("arenamsg").textContent = ">_ 竞技场仅对持有人开放 — 请先连接钱包。"; return; }
+  if (!fighter) { document.getElementById("arenamsg").textContent = ">_ 你还没有 Volta Gent — 先 mint 一个才能进擂台。"; return; }
   if (energy < 20) {
     document.getElementById("arenamsg").textContent = ">_ 能量不足 — 请先充值。";
     return;
@@ -991,7 +1041,8 @@ function arenaEnter(){
   paintEnergy();
   arenaSync();
   var me = arenaMe(), op = arenaOpp;
-  var pA = tierPower(me), pB = tierPower(op);
+  var meName = fighter ? fighter.name : ROBOTS[me].n;
+  var pA = fighter ? (TIERPOWER[fighter.tier] || 10) : tierPower(me), pB = tierPower(op);
   var roll = Math.floor(Math.random() * (pA + pB));
   var meWins = roll < pA;
   var hpMe = 100, hpOp = 100, round = 0;
@@ -1005,7 +1056,7 @@ function arenaEnter(){
   document.getElementById("arenalog").innerHTML = "";
   document.getElementById("arenaVs").classList.add("fight");
   document.getElementById("arenamsg").textContent = ">_ 0.0005 BNB 已下注……";
-  arenaLog("⚡ " + ROBOTS[me].n + " vs " + ROBOTS[op].n + " — 开战！");
+  arenaLog("⚡ " + meName + " vs " + ROBOTS[op].n + " — 开战！");
   arenaLog("roll " + roll + "/" + (pA + pB) + " — 战力 " + pA + " vs " + pB + "。");
   function dmgNum(text, left, crit){
     var d = document.createElement("div");
@@ -1041,7 +1092,7 @@ function arenaEnter(){
   function finish(){
     document.getElementById("arenaVs").classList.remove("fight");
     ring.classList.remove("gold");
-    var winName = meWins ? ROBOTS[me].n : ROBOTS[op].n;
+    var winName = meWins ? meName : ROBOTS[op].n;
     if (meWins) {
       arenaW += 1; arenaWon = Math.round((arenaWon + 0.0009) * 10000) / 10000;
       opBox.classList.add("ko"); meBox.classList.add("win");
@@ -1064,12 +1115,12 @@ function arenaEnter(){
     round++;
     var dmgMe = 20 + Math.floor(Math.random() * 11) + Math.round(pA / 4);
     var critMe = strike("me", "op", dmgMe, meBox, opBox, "lungeL", "62%");
-    arenaLog("回合 " + round + " — " + ROBOTS[me].n + " 击中 −" + dmgMe + (critMe ? " 暴击！" : "") + "，" + ROBOTS[op].n + " 剩余 HP " + hpOp + "。");
+    arenaLog("回合 " + round + " — " + meName + " 击中 −" + dmgMe + (critMe ? " 暴击！" : "") + "，" + ROBOTS[op].n + " 剩余 HP " + hpOp + "。");
     if (hpOp <= 0) { setTimeout(finish, 500); return; }
     setTimeout(function(){
       var dmgOp = 20 + Math.floor(Math.random() * 11) + Math.round(pB / 4);
       var critOp = strike("op", "me", dmgOp, opBox, meBox, "lungeR", "22%");
-      arenaLog("回合 " + round + " — " + ROBOTS[op].n + " 击中 −" + dmgOp + (critOp ? " 暴击！" : "") + "，" + ROBOTS[me].n + " 剩余 HP " + hpMe + "。");
+      arenaLog("回合 " + round + " — " + ROBOTS[op].n + " 击中 −" + dmgOp + (critOp ? " 暴击！" : "") + "，" + meName + " 剩余 HP " + hpMe + "。");
       if (hpMe <= 0) { setTimeout(finish, 500); return; }
       if (round >= 5) {
         if (meWins) { hpOp = 0; document.getElementById("arenaOpHp").style.width = "0%"; }
