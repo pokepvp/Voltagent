@@ -406,7 +406,7 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ roadmap --list</span></div>
     <div class="winbody">
-      <div class="row"><span>[已完成] 00 — 概念 + 20 个样品</span><span><a href="volta-gent-concept.pdf" style="color:var(--grn)">PDF</a> · 网站 · 合约草稿</span></div>
+      <div class="row"><span>[已完成] 00 — 概念 + 20 个样品</span><span>网站 · 合约</span></div>
       <div class="row"><span>[已完成] 01 — 名称 + 符号</span><span>VOLTA GENT · VLTG</span></div>
       <div class="row"><span>[完成] 02 — 完整套装</span><span>完整 5,000 个</span></div>
       <div class="row"><span>[完成] 03 — 部署</span><span>合约 0x43cf…c5b1 · BASEURI 已设置</span></div>
@@ -467,7 +467,7 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">现在是演示对战：只有 Volta Gent 持有人能进擂台，出战的是你自己持有的 NFT，按它的稀有度算战力，不真实下注、不收费。真实版在开发中：两位持有者各下注 0.0005 BNB + 20 能量，胜者拿 0.0009 BNB（90%）。胜率 = 你的战力 ÷ 总战力。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 50%、优秀 25%、稀有 15%、史诗 7%、传说 2.5%、神话 0.5%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已部署，mint 已开放（0x43cf…c5b1）：现在是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个，约 14:03 UTC 结束），之后是公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已部署，mint 已开放（0x43cf…c5b1）：现在是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个，约 15:03 UTC 结束），之后是公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
     </div>
   </div>
 
@@ -478,12 +478,12 @@
       <p style="margin:0 0 6px">&gt; 你的粉丝的智能体先 mint——0.0001 BNB，比公开便宜 10 倍。</p>
       <p style="margin:0 0 6px">&gt; 只有 7 小时窗口——紧迫感带来转化。</p>
       <p style="margin:0 0 14px">&gt; 总量 5,000，前 1,000 个留给智能体。</p>
-      <p class="dim" style="margin:0 0 16px">mint 已开放，第一阶段进行中，约 14:03 UTC 结束。下面三段现在都能发。把网站链接粘贴到写着 [链接] 的地方。</p>
+      <p class="dim" style="margin:0 0 16px">mint 已开放，第一阶段进行中，约 15:03 UTC 结束。下面三段现在都能发。把网站链接粘贴到写着 [链接] 的地方。</p>
       <p class="dim" style="margin:16px 0 6px">帖子 1 — 预告 · 现在就能发</p>
-      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时（08:03–14:03 UTC），0.0001 BNB；公开 mint：0.001 BNB。链接：[链接]</code>
+      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时（08:03–15:03 UTC），0.0001 BNB；公开 mint：0.001 BNB。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">复制</button> <span class="dim" id="sharemsg-zh-teaser"></span>
       <p class="dim" style="margin:16px 0 6px">帖子 2 — 开 MINT · 现在就能发</p>
-      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时（约 14:03 UTC 结束），之后公开 0.001 BNB。把这条命令交给你的智能体：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
+      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时（约 15:03 UTC 结束），之后公开 0.001 BNB。把这条命令交给你的智能体：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">复制</button> <span class="dim" id="sharemsg-zh-launch"></span>
       <p class="dim" style="margin:16px 0 6px">广播指令 — 和开 mint 的帖子一起发，你粉丝的智能体一行就能 mint</p>
       <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
@@ -491,7 +491,7 @@
     </div>
   </div>
 
-  <footer>&gt;_ volta gent — 智能体先 mint，人类贵 10 倍。 &nbsp;·&nbsp; <a href="volta-gent-concept.pdf">概念 PDF（12 页）</a> &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; 合约：<a href="https://bscscan.com/address/0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">0x43cf…c5b1</a>（BNB 56）。</footer>
+  <footer>&gt;_ volta gent — 智能体先 mint，人类贵 10 倍。 &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; 合约：<a href="https://bscscan.com/address/0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">0x43cf…c5b1</a>（BNB 56）。</footer>
 </main>
 
 <div id="modal" role="dialog" aria-label="机器人预览">
