@@ -40,8 +40,8 @@
 <p class="sub">Halaman khusus owner kontrak NFT Volta Gent di BNB Smart Chain (chain ID 56). Setiap langkah ditandatangani oleh wallet owner—tidak ada proses yang berjalan otomatis.</p>
 
 <div class="facts"><ul>
-<li>Kontrak: <b>Volta Gent</b> (VLTG), ERC-721, total <b>5.000</b> token.<code>tokenURI</code> = baseURI + 编号 + <code>.json</code>。</li>
-<li>Fase agent: <b>1.000</b> token pertama khusus agent dengan harga <b>0,0001 BNB</b>, menggunakan <b>registry Binance Agent ID</b> <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> <b>把门</b>——该注册表是<b>写死在合约代码里的常量</b>（不是部署参数），本阶段每钱包最多 <b>2 个</b>。阶段在 mint 满 1,000 时自动结束，或由Owner提前调用 <code>endAgentPhase()</code> 结束（第 04 步 ).</li>
+<li>Kontrak: <b>Volta Gent</b> (VLTG), ERC-721, total <b>5.000</b> token.<code>tokenURI</code> = baseURI + nomor + <code>.json</code>.</li>
+<li>Fase agent: <b>1.000</b> token pertama khusus agent dengan harga <b>0,0001 BNB</b>, menggunakan <b>registry Binance Agent ID</b> <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> sebagai akses—registry ini adalah <b>konstanta di dalam kode kontrak</b> (bukan parameter deploy), maksimal <b>2 token</b> per wallet. Fase ini berakhir otomatis setelah 1.000 token tercetak, atau dapat diakhiri lebih awal oleh owner melalui <code>endAgentPhase()</code> (Langkah 04).</li>
 <li>Mint publik: <b>0,001 BNB</b> per token dan terbuka untuk semua wallet pribadi. Batas total kedua fase adalah <b>5 token</b> per wallet (MAX_PER_WALLET). Hanya wallet pribadi—pemanggilan dari kontrak akan ditolak. Biaya tersimpan di kontrak sampai ditarik oleh owner (Langkah 05).</li>
 <li>Metadata sudah tersedia: seluruh <b>5.000</b> file metadata JSON berada di <code>voltagent.site/meta/</code> (repository <code>pokepvp/Voltagent</code>), dan field image setiap metadata menggunakan URL absolut. Base URI sudah diisi pada Langkah 03. Seluruh <b>5.000 gambar (1–5.000) juga sudah online</b>.</li>
 <li>Mint dalam kondisi <b>nonaktif secara default</b>—owner dapat mengaktifkannya pada Langkah 04 setelah base URI diatur.</li>
@@ -58,7 +58,7 @@
 <div class="card"><h2>02 — Deploy Volta Gent</h2>
 <p>Deploy kontrak NFT (ERC-721, <b>Volta Gent / VLTG</b>). Parameter ekonomi di atas adalah konstanta kode dan tidak berubah. Satu-satunya parameter konstruktor adalah base URI—biarkan <b>kosong saat deploy</b>, lalu atur nilainya pada Langkah 03.</p>
 <label>Base URI (parameter konstruktor—kosongkan, atur pada Langkah 03)</label>
-<input id="baseInput" placeholder="（部署时 baseURI 留空——到第 03 步设置）" value="">
+<input id="baseInput" placeholder="(kosongkan saat deploy—atur pada Langkah 03)" value="">
 <div class="warn">⚠️ Registry Agent ID <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> ditanam langsung di dalam kontrak dan tidak dapat diubah setelah deploy—sudah dicocokkan dengan kontrak hasil kompilasi.</div>
 <p><button id="deployBtn">Deploy Volta Gent</button> <button id="copyBtn" class="alt">Salin Data Deploy (Manual)</button></p>
 <p class="status" id="deployStatus">Menunggu wallet terhubung.</p></div>
@@ -66,7 +66,7 @@
 <div class="card"><h2>03 — Atur Base URI Metadata</h2>
 <p>Arahkan <code>tokenURI</code> ke metadata yang sudah dipublikasikan (baseURI + nomor + <code>.json</code>). Seluruh 5.000 metadata JSON tersedia di <code>voltagent.site/meta/</code>. <b>Selesaikan langkah ini sebelum mengaktifkan mint</b> (Langkah 04).</p>
 <label>Alamat Kontrak</label>
-<input id="uriContract" placeholder="0x… Volta Gent Alamat Kontrak">
+<input id="uriContract" placeholder="0x… alamat kontrak Volta Gent">
 <label>Base URI</label>
 <input id="uriInput" placeholder="https://…/meta/" value="https://voltagent.site/meta/">
 <p><button id="setUriBtn">Atur Base URI</button></p>
@@ -75,7 +75,7 @@
 <div class="card"><h2>04 — Aktifkan Mint</h2>
 <p>Mint dimulai dalam kondisi <b>nonaktif</b>. Aktifkan hanya setelah base URI diatur (Langkah 03) dan metadata sudah online. Menonaktifkan mint menghentikan mint baru; transfer tetap berjalan normal.</p>
 <label>Alamat Kontrak</label>
-<input id="openInput" placeholder="0x… Volta Gent Alamat Kontrak">
+<input id="openInput" placeholder="0x… alamat kontrak Volta Gent">
 <p><button id="openBtn">Aktifkan Mint (setMintOpen true)</button> <button id="closeBtn" class="danger">Nonaktifkan Mint (setMintOpen false)</button></p>
 <p><button id="endPhaseBtn" class="alt">Akhiri Fase Agent (endAgentPhase)—Tidak Dapat Dibatalkan</button></p>
 <p class="small">Fase agent mencakup 1.000 token pertama dengan harga 0,0001 BNB (maksimal 2 per wallet dan memerlukan Agent ID). Fase berakhir otomatis saat 1.000 token tercetak. Gunakan tombol ini hanya jika periode agent sekitar 7 jam sudah selesai dan sisa suplai siap untuk mint publik (0,001 BNB).</p>
@@ -85,7 +85,7 @@
 <div class="card"><h2>05 — Status, Withdraw + Ringkasan</h2>
 <p>Status kontrak Volta Gent dibaca langsung dari blockchain. Biaya mint tersimpan di kontrak—withdraw akan mengirim seluruh saldo ke wallet owner. Salin ringkasan di bawah untuk menyimpan detail deploy dan verifikasi.</p>
 <label>Alamat Kontrak</label>
-<input id="stateInput" placeholder="0x… Volta Gent Alamat Kontrak">
+<input id="stateInput" placeholder="0x… alamat kontrak Volta Gent">
 <div class="grid">
 <div class="cell"><div class="k">Total Mint</div><div class="v" id="stMinted">—</div></div>
 <div class="cell"><div class="k">Mint Aktif</div><div class="v" id="stOpen">—</div></div>
@@ -94,7 +94,7 @@
 <div class="cell"><div class="k">Owner</div><div class="v" id="stOwner">—</div></div>
 <div class="cell"><div class="k">Base URI</div><div class="v" id="stUri">—</div></div>
 </div>
-<p><button id="stateBtn" class="alt">Refresh Status</button> <button id="wdBtn">把全部费用提到Owner钱包</button></p>
+<p><button id="stateBtn" class="alt">Refresh Status</button> <button id="wdBtn">Withdraw Semua BNB ke Wallet Owner</button></p>
 <p class="status" id="stateStatus"></p>
 <label>Ringkasan Deploy Volta Gent</label>
 <textarea id="summaryBox" readonly></textarea>
@@ -141,12 +141,12 @@ function buildSummary(){
   var c = document.getElementById("stateInput").value.trim() || deployedAddress || "(belum di-deploy)";
   var lines = [
     "Ringkasan Deploy Volta Gent (VLTG)",
-    "合约：" + c,
-    "Owner：" + (account || "(hubungkan wallet terlebih dahulu)"),
-    "网络：BNB Smart Chain（56）",
-    "BaseURI: " + document.getElementById("uriInput").value.trim(),
-    "Total Mint：" + document.getElementById("stMinted").textContent,
-    "Mint Aktif：" + document.getElementById("stOpen").textContent,
+    "Kontrak:" + c,
+    "Owner:" + (account || "(hubungkan wallet terlebih dahulu)"),
+    "Jaringan:BNB Smart Chain（56）",
+    "Base URI: " + document.getElementById("uriInput").value.trim(),
+    "Total Mint:" + document.getElementById("stMinted").textContent,
+    "Mint Aktif:" + document.getElementById("stOpen").textContent,
     "BscScan: https://bscscan.com/token/" + c,
     "Langkah berikutnya: hubungkan kontrak ini ke situs publik (index.html), verifikasi tokenURI #1, lalu umumkan mint."
   ];
@@ -163,7 +163,7 @@ document.getElementById("connectBtn").onclick = async function(){
       if (e && e.code === 4902) { await p.request({method:"wallet_addEthereumChain", params:[{chainId:"0x38", chainName:"BNB Smart Chain", nativeCurrency:{name:"BNB", symbol:"BNB", decimals:18}, rpcUrls:["https://bsc-dataseed.binance.org/"], blockExplorerUrls:["https://bscscan.com"]}]}); }
       else throw e;
     }
-    document.getElementById("walletLine").textContent = "已连接：" + account;
+    document.getElementById("walletLine").textContent = "Terhubung:" + account;
     document.getElementById("deployStatus").textContent = "Wallet terhubung. Siap melakukan deploy.";
     buildSummary();
   } catch (e) { document.getElementById("walletLine").textContent = "Gagal terhubung:" + (e && e.message ? e.message : e); }
@@ -192,7 +192,7 @@ document.getElementById("deployBtn").onclick = async function(){
         clearInterval(timer);
         deployedAddress = r.contractAddress;
         fillContractInputs(deployedAddress);
-        document.getElementById("deployStatus").textContent = "Volta Gent berhasil di-deploy di:" + deployedAddress + " (transaksi " + txHash + " ).地址已自动填入第 03–05 步。继续第 03 步（Atur Base URI），再第 04 步（Aktifkan mint ).复制第 05 步的摘要发给 Muse 做验证 + 网站接线。";
+        document.getElementById("deployStatus").textContent = "Volta Gent berhasil di-deploy di:" + deployedAddress + " (transaksi " + txHash + "). Alamat otomatis diisi pada Langkah 03–05. Lanjutkan dengan mengatur baseURI, mengaktifkan mint, lalu verifikasi status.";
         buildSummary();
       } else if (tries > 60) { clearInterval(timer); document.getElementById("deployStatus").textContent = "Belum ada konfirmasi setelah 60 pemeriksaan—lihat transaksi ini di BscScan:" + txHash; }
     }, 3000);
@@ -203,18 +203,18 @@ document.getElementById("setUriBtn").onclick = async function(){
   if (!p || !account) { document.getElementById("uriStatus").textContent = "Hubungkan wallet terlebih dahulu (Langkah 01)."; return; }
   var c = document.getElementById("uriContract").value.trim();
   var u = document.getElementById("uriInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("uriStatus").textContent = "Alamat Kontrak无效。"; return; }
+  if (!validAddr(c)) { document.getElementById("uriStatus").textContent = "Alamat kontrak tidak valid."; return; }
   var data = "0x55f804b3" + encodeStringArg(u);
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: data}]});
-    document.getElementById("uriStatus").textContent = "setBaseURI Transaksi terkirim:" + h + "。在第 05 步验证（Refresh Status ).";
+    document.getElementById("uriStatus").textContent = "Transaksi setBaseURI terkirim:" + h + " . Verifikasi pada Langkah 05 (Refresh Status).";
   } catch (e) { document.getElementById("uriStatus").textContent = "Gagal:" + (e && e.message ? e.message : e); }
 };
 async function setMintOpen(open){
   var p = provider();
   if (!p || !account) { document.getElementById("openStatus").textContent = "Hubungkan wallet terlebih dahulu (Langkah 01)."; return; }
   var c = document.getElementById("openInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "Alamat Kontrak无效。"; return; }
+  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "Alamat kontrak tidak valid."; return; }
   var data = "0xf8004d31" + encodeUint(open ? 1 : 0);
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: data}]});
@@ -227,17 +227,17 @@ document.getElementById("endPhaseBtn").onclick = async function(){
   var p = provider();
   if (!p || !account) { document.getElementById("openStatus").textContent = "Hubungkan wallet terlebih dahulu (Langkah 01)."; return; }
   var c = document.getElementById("openInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "Alamat Kontrak无效。"; return; }
+  if (!validAddr(c)) { document.getElementById("openStatus").textContent = "Alamat kontrak tidak valid."; return; }
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: "0x5235fca5"}]});
-    document.getElementById("openStatus").textContent = "endAgentPhase Transaksi terkirim:" + h + "。确认后，所有剩余 token 适用公开价格。";
+    document.getElementById("openStatus").textContent = "Transaksi endAgentPhase terkirim:" + h + " Setelah dikonfirmasi, token yang tersisa mengikuti harga publik.";
   } catch (e) { document.getElementById("openStatus").textContent = "Gagal:" + (e && e.message ? e.message : e); }
 };
 document.getElementById("stateBtn").onclick = async function(){
   var p = provider();
   if (!p) { document.getElementById("stateStatus").textContent = "Hubungkan wallet terlebih dahulu (Langkah 01)."; return; }
   var c = document.getElementById("stateInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Alamat Kontrak无效。"; return; }
+  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Alamat kontrak tidak valid."; return; }
   try {
     var tm = await callRead(c, "0xa2309ff8");
     var mo = await callRead(c, "0x24bbd049");
@@ -250,29 +250,29 @@ document.getElementById("stateBtn").onclick = async function(){
     document.getElementById("stOwner").textContent = "0x" + ow.slice(26);
     document.getElementById("stFee").textContent = (hexToInt(cf) / 1e18) + " BNB";
     document.getElementById("stBal").textContent = (hexToInt(bal) / 1e18) + " BNB";
-    document.getElementById("stUri").textContent = decodeString(bu) || "（空）";
-    document.getElementById("stateStatus").textContent = "状态已从链上刷新。";
+    document.getElementById("stUri").textContent = decodeString(bu) || "(kosong)";
+    document.getElementById("stateStatus").textContent = "Status berhasil diperbarui dari blockchain.";
     buildSummary();
-  } catch (e) { document.getElementById("stateStatus").textContent = "读取合约Gagal:" + e.message + "（确认Alamat Kontrak正确且已部署在 BNB Chain 上 )."; }
+  } catch (e) { document.getElementById("stateStatus").textContent = "Gagal membaca kontrak:" + e.message + " (pastikan alamat kontrak benar dan sudah di-deploy di BNB Chain)."; }
 };
 document.getElementById("wdBtn").onclick = async function(){
   var p = provider();
   if (!p || !account) { document.getElementById("stateStatus").textContent = "Hubungkan wallet terlebih dahulu (Langkah 01)."; return; }
   var c = document.getElementById("stateInput").value.trim();
-  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Alamat Kontrak无效。"; return; }
+  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Alamat kontrak tidak valid."; return; }
   try {
     var bal = await p.request({method:"eth_getBalance", params:[c, "latest"]});
     var bnb = hexToInt(bal) / 1e18;
-    document.getElementById("stateStatus").textContent = "Saldo Kontrak：" + bnb + " BNB. Mengirim transaksi withdraw…";
+    document.getElementById("stateStatus").textContent = "Saldo Kontrak:" + bnb + " BNB. Mengirim transaksi withdraw…";
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: "0x3ccfd60b"}]});
-    document.getElementById("stateStatus").textContent = "提取Transaksi terkirim:" + h + " . Setelah dikonfirmasi, seluruh saldo (" + bnb + " BNB）会进入Owner钱包。";
+    document.getElementById("stateStatus").textContent = "Transaksi withdraw terkirim:" + h + " . Setelah dikonfirmasi, seluruh saldo (" + bnb + " BNB) akan masuk ke wallet owner.";
   } catch (e) { document.getElementById("stateStatus").textContent = "Gagal:" + (e && e.message ? e.message : e); }
 };
 document.getElementById("copySummaryBtn").onclick = function(){
   buildSummary();
   var box = document.getElementById("summaryBox");
   box.select();
-  if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "摘要已复制——粘贴给 Muse。"; });
+  if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "Ringkasan disalin."; });
 };
 buildSummary();
 </script></body></html>
