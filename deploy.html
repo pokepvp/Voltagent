@@ -3,31 +3,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volta Gent — 部署控制台（所有者）</title>
 <style>
-  body{background:#0b0e14;color:#e8eaf0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:24px 14px 60px}
+  :root{--bg:#080516;--panel:#120c2b;--panel2:#171034;--line:#33215c;--text:#f4efff;--muted:#aaa1c7;--yellow:#f6ed00;--purple:#6d2bd9;--orange:#ff8d75}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;margin:0;padding:30px 14px 64px}
   .wrap{max-width:820px;margin:0 auto}
-  h1{font-size:24px;margin:0 0 4px}
-  .sub{color:#9aa3b5;font-size:14px;margin:0 0 18px}
-  .card{background:#12161f;border:1px solid #232a38;border-radius:14px;padding:18px;margin:14px 0}
-  .card h2{font-size:17px;margin:0 0 10px;color:#f5c542}
-  .card p{font-size:14px;line-height:1.55;color:#c6ccd9}
-  .facts{background:#0e1420;border:1px solid #232a38;border-radius:14px;padding:14px 18px;margin:14px 0}
-  .facts li{font-size:13.5px;line-height:1.6;color:#c6ccd9;margin:3px 0}
-  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:#ffd97a;word-break:break-all}
-  label{display:block;font-size:13px;color:#9aa3b5;margin:12px 0 5px}
-  input,textarea{width:100%;box-sizing:border-box;background:#0b0e14;border:1px solid #2b3446;border-radius:9px;color:#e8eaf0;padding:10px 12px;font-size:14px;font-family:ui-monospace,Menlo,Consolas,monospace}
-  textarea{min-height:150px;font-size:12.5px;line-height:1.5;resize:vertical}
-  button{background:#f5c542;color:#14100a;border:0;border-radius:9px;padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;margin:10px 8px 4px 0}
-  button.alt{background:#232a38;color:#e8eaf0}
-  button.danger{background:#3a2328;color:#ff9a9a}
-  button:hover{filter:brightness(1.08)}
-  .small{font-size:13px;color:#9aa3b5;line-height:1.5}
-  .status{font-size:13.5px;color:#a7f3c9;min-height:18px;word-break:break-all}
-  .warn{background:#2a2113;border:1px solid #6b5518;border-radius:9px;padding:10px 12px;font-size:13px;color:#ffd97a;line-height:1.5;margin:10px 0}
+  h1{font-size:26px;letter-spacing:.06em;margin:0 0 5px;text-transform:uppercase}
+  .sub{color:var(--muted);font:13px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0 0 18px}
+  .card{position:relative;background:linear-gradient(145deg,#160d32,#100925);border:1px solid var(--line);border-radius:13px;padding:19px 18px;margin:13px 0;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+  .card h2{font-size:17px;margin:0 0 11px;color:var(--text);letter-spacing:.01em}
+  .card h2::first-letter{color:var(--yellow)}
+  .card p{font:13.5px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#d2cbe5}
+  .facts{background:#100a25;border:1px solid var(--line);border-radius:13px;padding:14px 18px;margin:14px 0}
+  .facts li{font:13px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#d2cbe5;margin:3px 0}
+  code{font:12px ui-monospace,Menlo,Consolas,monospace;color:#ffe975;word-break:break-all}
+  label{display:block;font:12px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--muted);margin:12px 0 5px}
+  input,textarea{width:100%;background:#090617;border:1px dashed #bd735f;border-radius:3px;color:var(--text);padding:10px 12px;font:13px ui-monospace,Menlo,Consolas,monospace}
+  textarea{min-height:150px;font-size:12px;line-height:1.5;resize:vertical}
+  button{background:linear-gradient(90deg,#6226d3,#7634dd);color:#fff;border:1px solid var(--yellow);border-radius:2px;padding:10px 18px;font:700 13px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;cursor:pointer;margin:10px 8px 4px 0;box-shadow:0 0 0 1px rgba(246,237,0,.15)}
+  button.alt{background:#261446;color:#eee7ff;border-color:#8f6bc7}
+  button.danger{background:#3a172e;color:#ffaaa0;border-color:#d77867}
+  button:hover{filter:brightness(1.16);transform:translateY(-1px)}
+  .small{font:12px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--muted)}
+  .status{font:13px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#a7f3c9;min-height:18px;word-break:break-all}
+  .warn{background:#2b1b20;border:1px solid #a05b50;border-radius:3px;padding:10px 12px;font:12.5px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#ffd0a8;margin:10px 0}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
-  .cell{background:#0b0e14;border:1px solid #232a38;border-radius:10px;padding:10px 12px}
-  .cell .k{font-size:11.5px;color:#9aa3b5;text-transform:uppercase;letter-spacing:.04em}
-  .cell .v{font-size:15px;font-weight:700;margin-top:3px;word-break:break-all}
-  .foot{font-size:12.5px;color:#77808f;line-height:1.6;margin-top:18px}
+  .cell{background:#0b0718;border:1px solid #2d1c52;border-radius:4px;padding:10px 12px}
+  .cell .k{font:11px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .cell .v{font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-weight:700;margin-top:3px;word-break:break-all}
+  #wdBtn{background:linear-gradient(90deg,#8c2ad9,#b32be1);border-color:#ffcf3f;color:#fff}
+  .foot{font:12px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#81799d;margin-top:18px}
+  @media(max-width:560px){body{padding:22px 10px 50px}h1{font-size:22px}.card,.facts{padding:15px 13px}}
 </style></head>
 <body><div class="wrap">
 
