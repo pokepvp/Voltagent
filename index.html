@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VOLTA GENT (VLTG) — Agents Mint First. Free for Agent ID Holders.</title>
-<meta name="description" content="VOLTA GENT — Agents mint first: total supply 2,222. Agent phase: the first 1,500 are FREE for Binance Agent ID holders (max 2 per wallet). Public phase: 722 at 0.0011 BNB. Contract deploying soon.">
+<meta name="description" content="VOLTA GENT — Agents mint first: total supply 2,222. Agent phase: the first 1,500 are FREE for Binance Agent ID holders (max 2 per wallet). Public phase: 722 at 0.0011 BNB. Contract live on BNB Chain — mint opens soon.">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#060A1C">
 <meta property="og:type" content="website">
@@ -387,12 +387,12 @@
     <div class="win">
       <div class="winbar"><i></i><i></i><i></i><span>$ mint --status</span></div>
       <div class="winbody">
-        <div class="row"><span class="big"><span id="count">0</span> <small>/ 2,222</small></span><span class="dim" id="heroState">Contract deploying soon — address announced at launch</span></div>
+        <div class="row"><span class="big"><span id="count">0</span> <small>/ 2,222</small></span><span class="dim" id="heroState">Contract live on BNB Chain — mint opens soon</span></div>
         <div class="bar"><i id="barfill"></i></div>
-        <p class="dim" id="mintStateLine">Mint: not open &nbsp;·&nbsp; Volta Gent contract deploying soon &nbsp;·&nbsp; Chain: BNB &nbsp;·&nbsp; Wallet: OKX preferred</p>
+        <p class="dim" id="mintStateLine">Mint: not open &nbsp;·&nbsp; Contract live on BNB Chain &nbsp;·&nbsp; Chain: BNB &nbsp;·&nbsp; Wallet: OKX preferred</p>
         <button class="btn" id="connectBtn" onclick="connectWallet()">Connect OKX Wallet</button>
         <button class="btn ghost" id="mintBtn" onclick="document.getElementById('mintBuyBtn').scrollIntoView({behavior:'smooth',block:'center'})">MINT — NOT OPEN</button>
-        <p id="walletmsg">&gt;_ Contract deploying soon. Once it is deployed and mint opens, connect your wallet and mint at the live on-chain price.</p>
+        <p id="walletmsg">&gt;_ Contract live on BNB Chain. Once the owner opens the mint, connect your wallet and mint at the live on-chain price.</p>
       </div>
     </div>
 
@@ -452,7 +452,7 @@
       <div class="row" style="margin-top:12px"><span>Total</span><span id="mintTotal">0 BNB</span></div>
       <p class="dim" id="mintMax">Max 2 per wallet (agent phase).</p>
       <button class="btn" id="mintBuyBtn" onclick="mintBuy()">MINT — COMING SOON</button>
-      <p id="mintmsg" class="dim">&gt;_ The Volta Gent contract deploys soon — mint opens once the address is published.</p>
+      <p id="mintmsg" class="dim">&gt;_ The Volta Gent contract is live on BNB Chain — the owner opens the mint soon.</p>
     </div>
   </div>
 
@@ -485,7 +485,7 @@
   <div class="win" style="margin-top:20px">
     <div class="winbar"><i></i><i></i><i></i><span>$ agent --mint</span></div>
     <div class="winbody">
-      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from the Volta Gent contract on BNB Chain (56) - the Volta Gent contract address is announced at launch (published at voltagent.site). Agent phase: the first 1,500 mints are FREE (0 BNB) for Binance Agent ID holders, max 2 per wallet; public price 0.0011 BNB (1100000000000000 wei), max 5 per wallet total. Call mint(qty) with exactly quoteFor(qty) as value. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from the Volta Gent contract 0x2703a2be75e0c470d83573badc6a1b1b86d1871e on BNB Chain (56). Agent phase: the first 1,500 mints are FREE (0 BNB) for Binance Agent ID holders, max 2 per wallet; public price 0.0011 BNB (1100000000000000 wei), max 5 per wallet total. Call mint(qty) with exactly quoteFor(qty) as value. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK, then return the transaction link.</code>
       <button class="btn" onclick="copyPrompt()">Copy Prompt</button>
       <p class="dim" id="copymsg">One line is all it takes — your agent handles the rest.</p>
     </div>
@@ -603,7 +603,7 @@
       <p class="dim" style="margin-top:12px">Recent mints</p>
       <p class="dim" id="recentLine">— No mints yet. —</p>
       <div id="recentList"></div>
-      <p class="dim">Once the contract is deployed, these numbers read straight from the chain (address announced at launch).</p>
+      <p class="dim">These numbers read straight from the chain — contract 0x2703…871e is live on BNB Chain.</p>
     </div>
   </div>
 
@@ -666,12 +666,12 @@
       <div class="row"><span>[Done] 00 — Concept + 20 samples</span><span>Website · Contract</span></div>
       <div class="row"><span>[Done] 01 — Name + symbol</span><span>VOLTA GENT · VLTG</span></div>
       <div class="row"><span>[Done] 02 — Full set</span><span>All 2,222 tokens</span></div>
-      <div class="row"><span>[In progress] 03 — Contract deployment</span><span>Volta Gent · supply 2,222 · base URI to be set</span></div>
+      <div class="row"><span>[Done] 03 — Contract deployment</span><span>Volta Gent · supply 2,222 · live on BNB Chain</span></div>
       <div class="row"><span>[In progress] 04 — Sale</span><span>Agent ±7h → Public</span></div>
       <div class="row"><span>[Done] 05 — Economy live</span><span>Energy + Arena live · contract 0x0734…49b3</span></div>
       <div class="row"><span>[In progress] 06 — Staking + VOLT Points</span><span>Stake VLTG · 10 pts/day · no lockup</span></div>
       <div class="row"><span>[Later] 07 — After sellout</span><span>Not decided yet</span></div>
-      <p class="dim" style="margin-top:12px">The Volta Gent contract deploys soon: total supply 2,222 (1,500 free for agents + 722 public at 0.0011 BNB). The address will be published here after deployment, and the owner opens the mint.</p>
+      <p class="dim" style="margin-top:12px">The Volta Gent contract is live on BNB Chain: total supply 2,222 (1,500 free for agents + 722 public at 0.0011 BNB). Contract: 0x2703a2be75e0c470d83573badc6a1b1b86d1871e — the owner opens the mint soon.</p>
     </div>
   </div>
 
@@ -688,7 +688,7 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How does the arena work?</span><i>+</i></div><div class="a">Live, with real stakes: holders only, fighting with an NFT you own. Two holders each stake 0.0005 BNB + 20 energy; when the second joins, the commit block is set +2, and then anyone can settle — the blockhash decides, and the winner takes 0.0009 BNB (90%) while 0.0001 BNB goes to the pool. Win chance = your power ÷ total power of both sides. An open battle nobody joins can be cancelled for a refund; a locked battle still unsettled after 256 blocks can be refunded as expired.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How is rarity decided?</span><i>+</i></div><div class="a">Rarity is written into each token's metadata before deployment: Common 20%, Uncommon 20%, Rare 20%, Epic 20%, Legendary 10%, Mythic 10%. Whichever token number you mint is the rarity you get. Higher rarity hits harder — but it can still lose.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Where does the money go?</span><i>+</i></div><div class="a">Mint fees, recharge fees and the arena rake are held in the contracts and can only be withdrawn by the owner.</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint right now?</span><i>+</i></div><div class="a">Not yet: the Volta Gent contract deploys soon, with a total supply of 2,222. Once it is deployed and opened by the owner, the agent phase runs first (first 1,500 free, Agent ID required, max 2 per wallet), then the public phase (722 tokens at 0.0011 BNB, max 5 per wallet in total). The contract address will be published on this page at deployment — and then the buttons and numbers here read live on-chain state.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What are VOLT Points?</span><i>+</i></div><div class="a">Points you earn by staking your Volta Gent in the staking contract: 10 points per staked NFT per day, counted on-chain. They are not a token — they cannot be transferred or sold, and they are not a BNB yield. They record your support and unlock priority access and future rewards across the Volta Gent ecosystem.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Is there a lockup when I stake?</span><i>+</i></div><div class="a">No lockup at all. Stake and unstake whenever you like. Unstaking automatically claims the points that token has earned first, and partial days are never lost — your accrual checkpoint only advances by the time already converted into points.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What do VOLT Points unlock?</span><i>+</i></div><div class="a">Priority. Points and staking history put you first in line for whitelist spots and early access in future Volta Gent drops, features, and seasons — plus future holder rewards. The more you stake and the longer you hold, the higher you climb.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint right now?</span><i>+</i></div><div class="a">Not yet: the Volta Gent contract is live on BNB Chain (0x2703a2be75e0c470d83573badc6a1b1b86d1871e), with a total supply of 2,222, but the owner has not opened the mint yet. Once it opens, the agent phase runs first (first 1,500 free, Agent ID required, max 2 per wallet), then the public phase (722 tokens at 0.0011 BNB, max 5 per wallet in total). The buttons and numbers on this page already read live on-chain state.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What are VOLT Points?</span><i>+</i></div><div class="a">Points you earn by staking your Volta Gent in the staking contract: 10 points per staked NFT per day, counted on-chain. They are not a token — they cannot be transferred or sold, and they are not a BNB yield. They record your support and unlock priority access and future rewards across the Volta Gent ecosystem.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Is there a lockup when I stake?</span><i>+</i></div><div class="a">No lockup at all. Stake and unstake whenever you like. Unstaking automatically claims the points that token has earned first, and partial days are never lost — your accrual checkpoint only advances by the time already converted into points.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What do VOLT Points unlock?</span><i>+</i></div><div class="a">Priority. Points and staking history put you first in line for whitelist spots and early access in future Volta Gent drops, features, and seasons — plus future holder rewards. The more you stake and the longer you hold, the higher you climb.</div></div>
     </div>
   </div>
 
@@ -699,7 +699,7 @@
       <p style="margin:0 0 6px">&gt; Your followers' agents mint first — FREE (0 BNB). Public price 0.0011 BNB.</p>
       <p style="margin:0 0 6px">&gt; Only a ±7-hour window — urgency converts.</p>
       <p style="margin:0 0 14px">&gt; Total supply 2,222: the first 1,500 are free for agents, 722 are public.</p>
-      <p class="dim" style="margin:0 0 16px">The contract deploys soon; the three posts below are for once mint is open. Paste the site link wherever you see [link].</p>
+      <p class="dim" style="margin:0 0 16px">The contract is live on BNB Chain; the three posts below are for once mint is open. Paste the site link wherever you see [link].</p>
       <p class="dim" style="margin:16px 0 6px">Post 1 — Teaser · post when mint opens</p>
       <code id="share-teaser" onclick="copyBlock('share-teaser','sharemsg-teaser')">Agents mint first — and they mint FREE. Volta Gent: 2,222 pixel AI agent robots on BNB Chain, launching soon. Agent phase: the first 1,500 are FREE (Agent ID required, max 2 per wallet). Public mint: 722 at 0.0011 BNB. Link: [link]</code>
       <button class="btn ghost" onclick="copyBlock('share-teaser','sharemsg-teaser')">Copy</button> <span class="dim" id="sharemsg-teaser"></span>
@@ -707,14 +707,14 @@
       <code id="share-launch" onclick="copyBlock('share-launch','sharemsg-launch')">Mint is opening — agents go first. Volta Gent is launching: total supply 2,222. Agent phase: the first 1,500 are FREE (Agent ID required, max 2 per wallet); then 722 public at 0.0011 BNB. Hand this command to your agent: Mint 1 Volta Gent from the Volta Gent contract on BNB Chain, verify my Agent ID, read totalMinted and the price, preview it, and wait for my OK. Link: [link]</code>
       <button class="btn ghost" onclick="copyBlock('share-launch','sharemsg-launch')">Copy</button> <span class="dim" id="sharemsg-launch"></span>
       <p class="dim" style="margin:16px 0 6px">Broadcast prompt — post it with the launch post, so your followers' agents can mint in one line</p>
-      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from the Volta Gent contract on BNB Chain (56) - the Volta Gent contract address is announced at launch (published at voltagent.site). Agent phase: the first 1,500 mints are FREE (0 BNB) for Binance Agent ID holders, max 2 per wallet; public price 0.0011 BNB (1100000000000000 wei), max 5 per wallet total. Call mint(qty) with exactly quoteFor(qty) as value. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from the Volta Gent contract 0x2703a2be75e0c470d83573badc6a1b1b86d1871e on BNB Chain (56). Agent phase: the first 1,500 mints are FREE (0 BNB) for Binance Agent ID holders, max 2 per wallet; public price 0.0011 BNB (1100000000000000 wei), max 5 per wallet total. Call mint(qty) with exactly quoteFor(qty) as value. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK, then return the transaction link.</code>
       <button class="btn ghost" onclick="copyBlock('share-prompt','sharemsg-prompt')">Copy</button> <span class="dim" id="sharemsg-prompt"></span>
     </div>
   </div>
 
-  <footer>&gt;_ volta gent — agents mint first · free; public 0.0011 BNB. &nbsp;·&nbsp; <a href="https://x.com/VoltaGentVLTG">X @VoltaGentVLTG</a> &nbsp;·&nbsp; Volta Gent contract: deploying soon (address announced at launch) · BNB Chain.</footer>
+  <footer>&gt;_ volta gent — agents mint first · free; public 0.0011 BNB. &nbsp;·&nbsp; <a href="https://x.com/VoltaGentVLTG">X @VoltaGentVLTG</a> &nbsp;·&nbsp; Volta Gent contract: <a href="https://bscscan.com/token/0x2703a2be75e0c470d83573badc6a1b1b86d1871e">0x2703…871e</a> · BNB Chain.</footer>
 </main>
-<a class="stickycta" href="#mint"><span class="sc-l"><span class="sc-t">CONTRACT DEPLOYING SOON</span><span class="sc-b">Mint &mdash; Coming Soon</span></span><span class="sc-go">VIEW &darr;</span></a>
+<a class="stickycta" href="#mint"><span class="sc-l"><span class="sc-t">CONTRACT LIVE ON BNB CHAIN</span><span class="sc-b">Mint &mdash; Opening Soon</span></span><span class="sc-go">VIEW &darr;</span></a>
 
 
 <div id="modal" role="dialog" aria-label="Robot preview">
@@ -759,7 +759,7 @@ var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: r
     "<span class=\"ok\">[OK] 6 rarity tiers - Energy 100/100</span>",
     "<span class=\"ok\">[OK] Arena ready - the ring is hot</span>",
     "<span class=\"ok\">[OK] BNB Chain - connected</span>",
-    "<span class=\"ok\">[OK] Volta Gent contract — deploying soon</span>",
+    "<span class=\"ok\">[OK] Volta Gent contract — live on BNB Chain</span>",
     "<span class=\"ok\">[OK] System ready — Agents MINT first.</span>"
   ];
   if (reduced) { finish(); return; }
@@ -874,8 +874,8 @@ function togglePhase(el){
   paintMint();
 }
 
-/* Mint panel — wired to the Volta Gent contract (address published at deployment) */
-var CONTRACT = ""; /* Volta Gent — contract address, published here at deployment */
+/* Mint panel — wired to the Volta Gent contract (live on BNB Chain) */
+var CONTRACT = "0x2703a2be75e0c470d83573badc6a1b1b86d1871e"; /* Volta Gent — contract address, live on BNB Chain */
 var STAKING_CONTRACT = ""; /* VoltaStaking — staking contract address, published here at deployment (see deploy-staking.html) */
 var RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
 var SEL = { minted:"0xa2309ff8", open:"0x24bbd049", agentPhase:"0x77bdf3e1", quote:"0x5df07ec2", mint:"0xa0712d68", hasAgent:"0x4eab3ef2", mintedBy:"0x0d758111", agentMintedBy:"0x38698bee" };
@@ -958,7 +958,7 @@ async function loadMyNfts(){
   var msg = document.getElementById("myNftsMsg"), grid = document.getElementById("myNfts");
   if (!msg || !grid) return;
   if (!walletAddr) { msg.textContent = ">_ Connect your wallet - your Volta Gent will show up here."; grid.innerHTML = ""; myNftsStamp = ""; myTokens = []; fighter = null; arenaSync(); refreshArenaGate(); return; }
-  if (!CONTRACT) { msg.textContent = ">_ Contract deploying soon - once it is live, connect your wallet and your Volta Gent will show up here."; return; }
+  if (!CONTRACT) { msg.textContent = ">_ Contract live on BNB Chain - connect your wallet and your Volta Gent will show up here."; return; }
   var stamp = walletAddr.toLowerCase() + ":" + chain.minted;
   if (myNftsLoading || myNftsStamp === stamp) return;
   myNftsLoading = true;
@@ -1024,7 +1024,7 @@ function paintMint(){
   }
   document.getElementById("mintMax").textContent = note;
   var btn = document.getElementById("mintBuyBtn");
-  if (!chain.loaded){ btn.textContent = CONTRACT ? "MINT - READING CHAIN..." : "MINT - COMING SOON"; if (!CONTRACT) document.getElementById("mintmsg").textContent = ">_ The Volta Gent contract deploys soon - mint opens once the address is published."; }
+  if (!chain.loaded){ btn.textContent = CONTRACT ? "MINT - READING CHAIN..." : "MINT - COMING SOON"; if (!CONTRACT) document.getElementById("mintmsg").textContent = ">_ The Volta Gent contract is live on BNB Chain - mint opens soon."; }
   else if (!chain.open){
     btn.textContent = "MINT - NOT OPEN";
     if (!mintBusy && Date.now() > msgLockUntil) document.getElementById("mintmsg").textContent = ">_ Contract deployed, but mint is not open yet - waiting for the owner to open it.";
@@ -1038,11 +1038,11 @@ function paintMint(){
 function paintLive(){
   if (!CONTRACT){
     var c0 = document.getElementById("count"); if (c0) c0.textContent = "0";
-    var hs0 = document.getElementById("heroState"); if (hs0) hs0.textContent = "Contract deploying soon - address announced at launch";
-    var ml0 = document.getElementById("mintStateLine"); if (ml0) ml0.innerHTML = "Mint: not open &nbsp;·&nbsp; Volta Gent contract deploying soon &nbsp;·&nbsp; Chain: BNB &nbsp;·&nbsp; Wallet: OKX preferred";
+    var hs0 = document.getElementById("heroState"); if (hs0) hs0.textContent = "Contract live on BNB Chain - mint opens soon";
+    var ml0 = document.getElementById("mintStateLine"); if (ml0) ml0.innerHTML = "Mint: not open &nbsp;·&nbsp; Contract live on BNB Chain &nbsp;·&nbsp; Chain: BNB &nbsp;·&nbsp; Wallet: OKX preferred";
     var pa0 = document.getElementById("phaseAgentLine"); if (pa0) pa0.textContent = "0 / 1,500 · FREE (0 BNB)";
     var pp0 = document.getElementById("phasePublicLine"); if (pp0) pp0.textContent = "0 / 722 · 0.0011 BNB";
-    var rl0 = document.getElementById("recentLine"); if (rl0) rl0.textContent = "- Once the contract is deployed, these numbers read straight from the chain. -";
+    var rl0 = document.getElementById("recentLine"); if (rl0) rl0.textContent = "- These numbers read straight from the chain. -";
     paintMint();
     return;
   }
@@ -1061,13 +1061,13 @@ function paintLive(){
   for (var i = 0; i < cards.length; i++) cards[i].classList.toggle("on", i === livePhaseIdx());
   paintMint();
 }
-var AGENT_END_TS = 1794322980; /* NOTE: reset to the agent-window end when the contract address is wired in above; on-chain agentPhaseActive() is the real state */
+var AGENT_END_TS = 0; /* 0 = not set. The contract has no on-chain deadline: the agent phase ends when the owner calls endAgentPhase() or once 1,500 are minted. While mint is closed, paintCountdown() ignores this value ("waiting for the owner to open"), so no fake countdown runs pre-open. Set this to the planned window end in the push that flips this site when the owner opens the mint. On-chain agentPhaseActive() is the real state */
 function paintCountdown(){
   var left = AGENT_END_TS - Math.floor(Date.now() / 1000);
   var endD = new Date(AGENT_END_TS * 1000);
   var endUTC = ("0" + endD.getUTCHours()).slice(-2) + ":" + ("0" + endD.getUTCMinutes()).slice(-2) + " UTC";
   var txt;
-  if (!CONTRACT) txt = "Not started - contract deploying soon";
+  if (!CONTRACT) txt = "Not started - contract address not set";
   else if (!chain.agent) txt = "Ended - public phase";
   else if (!chain.open) txt = "Not started - waiting for the owner to open";
   else if (left <= 0) txt = "Window over - waiting for the owner to end the agent phase";
@@ -1113,7 +1113,7 @@ function mintQtyChange(d){
 }
 async function mintBuy(){
   if (mintBusy) return;
-  if (!CONTRACT) { setMintMsg(">_ The contract is not deployed yet - minting starts once the address is published and mint opens."); return; }
+  if (!CONTRACT) { setMintMsg(">_ Minting starts once the owner opens the mint."); return; }
   if (!chain.loaded) { setMintMsg(">_ Reading on-chain state..."); refreshChain(); return; }
   if (!chain.open) { setMintMsg(">_ Mint is not open yet - waiting for the owner."); return; }
   var provider = getProvider();
