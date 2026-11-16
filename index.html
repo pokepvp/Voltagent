@@ -258,6 +258,97 @@
 .ring.gold{border-color:#D4A017;box-shadow:0 0 34px rgba(212,160,23,.35)}
 @keyframes ringShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 .ring.shake{animation:ringShake .3s}
+
+/* ===== Design polish pass ===== */
+  /* Ticker */
+  .ticker{position:relative;z-index:2;overflow:hidden;border-bottom:1px solid var(--line-soft);
+    background:linear-gradient(90deg,rgba(34,211,238,.07),rgba(255,216,61,.06),rgba(34,211,238,.07));
+    padding:8px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+  .ticker .track{display:flex;width:max-content;animation:tick 32s linear infinite}
+  .ticker:hover .track{animation-play-state:paused}
+  .ticker .seq{display:flex;align-items:center;flex-shrink:0}
+  .ticker .seq span{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.16em;color:var(--dim);white-space:nowrap;padding:0 16px}
+  .ticker .seq span b{color:var(--volt)}
+  .ticker .seq span i{font-style:normal;color:var(--cyan);padding-left:16px}
+  @keyframes tick{to{transform:translateX(-50%)}}
+  /* Hero medallion halo + float */
+  .hero>div:last-child{position:relative}
+  .hero>div:last-child::before{content:"";position:absolute;inset:-14px;border-radius:30px;z-index:0;filter:blur(26px);opacity:.45;pointer-events:none;
+    background:conic-gradient(from 0deg,rgba(34,211,238,.55),rgba(255,216,61,.45),rgba(56,189,248,.35),rgba(255,216,61,.45),rgba(34,211,238,.55));
+    animation:halo 10s linear infinite}
+  @keyframes halo{to{transform:rotate(360deg)}}
+  .artcard{z-index:1;animation:floaty 7s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  /* Button sheen */
+  .btn{position:relative;overflow:hidden}
+  .btn::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;transform:skewX(-22deg);pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transition:left .55s ease}
+  .btn:hover::after{left:118%}
+  .btn.ghost::after{background:linear-gradient(90deg,transparent,rgba(34,211,238,.30),transparent)}
+  .btn:disabled::after{display:none}
+  /* Card / window hover lift */
+  .step{transition:transform .25s,border-color .25s,box-shadow .25s}
+  .step:hover{transform:translateY(-3px);border-color:rgba(103,172,255,.42);box-shadow:0 14px 34px rgba(2,6,20,.45)}
+  .win{transition:border-color .3s}
+  .win:hover{border-color:rgba(103,172,255,.38)}
+  /* Section rhythm: gradient hairline above each h2 */
+  h2{position:relative;padding-top:22px}
+  h2::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,rgba(34,211,238,.55),rgba(255,216,61,.28) 45%,transparent 85%)}
+  /* FAQ polish */
+  .faqitem{padding-left:10px;padding-right:10px;transition:background .2s}
+  .faqitem:hover{background:rgba(34,211,238,.05)}
+  .faqitem.open{background:rgba(255,216,61,.05);box-shadow:inset 2px 0 0 var(--volt)}
+  /* Supply allocation bar */
+  .alloc{margin-top:22px;border:1px solid var(--line);border-radius:18px;padding:20px 22px;
+    background:linear-gradient(165deg,rgba(23,34,72,.88),rgba(10,16,40,.94));box-shadow:0 14px 40px rgba(2,6,20,.45)}
+  .alloc .a-head{display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;align-items:baseline}
+  .alloc .a-title{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--cyan)}
+  .alloc .a-note{font-family:var(--mono);font-size:11.5px;color:var(--dim2)}
+  .alloc-bar{display:flex;height:16px;border-radius:999px;overflow:hidden;margin:14px 0 12px;border:1px solid var(--line-soft);background:rgba(255,255,255,.03)}
+  .alloc-bar i{display:block;height:100%}
+  .alloc-bar .free{width:67.52%;background:linear-gradient(90deg,var(--volt),#FFE97A);box-shadow:0 0 16px rgba(255,216,61,.35)}
+  .alloc-bar .pub{flex:1;background:linear-gradient(90deg,var(--cyan),var(--cyan2))}
+  .alloc-legend{display:flex;gap:8px 26px;flex-wrap:wrap;font-size:13px;color:var(--dim)}
+  .alloc-legend b{color:var(--txt);font-family:var(--disp)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+  .dot.free{background:var(--volt);box-shadow:0 0 8px rgba(255,216,61,.7)}
+  .dot.pub{background:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,.7)}
+  /* Quick flow strip */
+  .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+  .fstep{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line-soft);border-radius:16px;padding:18px;background:rgba(13,21,51,.55);
+    transition:transform .25s,border-color .25s,box-shadow .25s}
+  .fstep:hover{transform:translateY(-3px);border-color:rgba(103,172,255,.42);box-shadow:0 14px 34px rgba(2,6,20,.45)}
+  .fstep .fn{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-weight:700;font-size:13px;color:#171106;background:linear-gradient(135deg,var(--volt),var(--gold));box-shadow:0 0 16px rgba(255,201,60,.35)}
+  .fstep h3{font-family:var(--disp);font-size:16px;margin:2px 0 5px}
+  .fstep p{margin:0;color:var(--dim);font-size:13px;line-height:1.6}
+  @media(max-width:900px){.flow{grid-template-columns:1fr}}
+  /* Scroll reveal (JS adds .rv; no-JS / reduced-motion safe) */
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+  .rv.in{opacity:1;transform:none}
+  /* Footer tidy */
+  footer{text-align:center;line-height:2;padding-top:26px}
+  /* Mobile sticky mint CTA */
+  .stickycta{display:none}
+  @media(max-width:700px){
+    .stickycta{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:15;align-items:center;justify-content:space-between;gap:12px;
+      padding:11px 14px;border-radius:14px;text-decoration:none;color:var(--txt);
+      background:rgba(10,16,40,.9);border:1px solid rgba(255,216,61,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      box-shadow:0 14px 36px rgba(0,0,0,.55)}
+    .stickycta .sc-l{display:flex;flex-direction:column;gap:1px}
+    .stickycta .sc-t{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim)}
+    .stickycta .sc-b{font-family:var(--disp);font-weight:700;font-size:15px;color:var(--volt);line-height:1.25}
+    .stickycta .sc-go{font-family:var(--mono);font-size:11px;font-weight:700;color:#171106;background:linear-gradient(92deg,var(--volt),var(--gold));border-radius:9px;padding:9px 13px;white-space:nowrap}
+    body{padding-bottom:78px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .ticker .track{animation:none}
+    .artcard{animation:none}
+    .hero>div:last-child::before{animation:none}
+    .btn::after{display:none}
+    .rv{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
@@ -281,6 +372,11 @@
   </a>
   <span class="topright"><span class="online">Agents online</span> <span class="preview hot">LAUNCHING SOON</span></span>
 </header>
+<div class="ticker" aria-hidden="true"><div class="track">
+  <div class="seq"><span><b>2,222</b> TOTAL SUPPLY <i>&#9889;</i></span><span>AGENT PHASE &middot; <b>1,500 FREE</b> FOR AGENT ID HOLDERS <i>&#9889;</i></span><span>PUBLIC &middot; <b>722</b> AT <b>0.0011 BNB</b> <i>&#9889;</i></span><span>STAKE VLTG &middot; EARN <b>10 VOLT POINTS</b> / DAY <i>&#9889;</i></span><span>NO LOCKUP &middot; UNSTAKE ANYTIME <i>&#9889;</i></span><span>BNB CHAIN <i>&#9889;</i></span></div>
+  <div class="seq"><span><b>2,222</b> TOTAL SUPPLY <i>&#9889;</i></span><span>AGENT PHASE &middot; <b>1,500 FREE</b> FOR AGENT ID HOLDERS <i>&#9889;</i></span><span>PUBLIC &middot; <b>722</b> AT <b>0.0011 BNB</b> <i>&#9889;</i></span><span>STAKE VLTG &middot; EARN <b>10 VOLT POINTS</b> / DAY <i>&#9889;</i></span><span>NO LOCKUP &middot; UNSTAKE ANYTIME <i>&#9889;</i></span><span>BNB CHAIN <i>&#9889;</i></span></div>
+</div></div>
+
 <main>
   <p class="prompt">&gt;_ <b>voltagent --boot</b> <span class="cursor"></span></p>
   <span class="eyebrow">&#9889; VOLTA GENT &middot; VLTG &middot; BNB CHAIN</span>
@@ -325,6 +421,17 @@
       <p class="more">Fees are held by the contract and withdrawn by the owner.</p>
       <p class="hint">Tap to expand +</p>
     </div>
+  </div>
+  <div class="alloc">
+    <div class="a-head"><span class="a-title">SUPPLY ALLOCATION</span><span class="a-note">How the 2,222 split &mdash; allocation only, mint has not opened</span></div>
+    <div class="alloc-bar"><i class="free"></i><i class="pub"></i></div>
+    <div class="alloc-legend"><span><span class="dot free"></span><b>Agent phase &mdash; 1,500</b> &middot; FREE for Agent ID holders &middot; 67.5%</span><span><span class="dot pub"></span><b>Public &mdash; 722</b> &middot; 0.0011 BNB &middot; 32.5%</span></div>
+  </div>
+
+  <div class="flow">
+    <div class="fstep"><span class="fn">01</span><div><h3>Connect wallet</h3><p>Connect OKX or any BNB Chain wallet &mdash; no wallet, no mint.</p></div></div>
+    <div class="fstep"><span class="fn">02</span><div><h3>Mint free or public</h3><p>Agent ID holders mint the first 1,500 FREE. Everyone else joins the public phase at 0.0011 BNB.</p></div></div>
+    <div class="fstep"><span class="fn">03</span><div><h3>Stake &amp; earn VOLT Points</h3><p>Stake each VLTG to earn 10 VOLT Points per day. No lockup &mdash; unstake anytime.</p></div></div>
   </div>
 
   <h2 id="utility"><span class="k">&gt;_</span><span>Utility</span></h2>
@@ -607,6 +714,8 @@
 
   <footer>&gt;_ volta gent — agents mint first · free; public 0.0011 BNB. &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; Volta Gent contract: deploying soon (address announced at launch) · BNB Chain.</footer>
 </main>
+<a class="stickycta" href="#mint"><span class="sc-l"><span class="sc-t">CONTRACT DEPLOYING SOON</span><span class="sc-b">Mint &mdash; Coming Soon</span></span><span class="sc-go">VIEW &darr;</span></a>
+
 
 <div id="modal" role="dialog" aria-label="Robot preview">
   <button type="button" onclick="closeModal()">Close X</button>
@@ -1649,6 +1758,29 @@ function copyBlock(id, msgId) {
   if (navigator.clipboard) { navigator.clipboard.writeText(t).then(done, function(){ msg.textContent = ">_ Please copy it manually."; }); }
   else { msg.textContent = ">_ Please copy it manually."; }
 }
+</script>
+<script>
+/* Presentational scroll-reveal only — no functional behaviour. */
+(function(){
+  try{
+    if(!('IntersectionObserver' in window)) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('main h2, main .win, main .step, main .phase, main .card, main .ring, .alloc, .fstep');
+    if(!els.length) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en, i){
+        if(en.isIntersecting){
+          var el = en.target;
+          el.style.transitionDelay = ((i % 4) * 60) + 'ms';
+          el.classList.add('in');
+          io.unobserve(el);
+          setTimeout(function(){ el.classList.remove('rv','in'); el.style.transitionDelay = ''; }, 950);
+        }
+      });
+    }, {threshold: 0.08, rootMargin: '0px 0px -4% 0px'});
+    els.forEach(function(el){ el.classList.add('rv'); io.observe(el); });
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
