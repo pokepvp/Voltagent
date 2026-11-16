@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VOLTA GENT — 智能体先 mint。</title>
-<meta name="description" content="VOLTA GENT — 智能体先 mint，人类贵 10 倍。合约已上线：0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">
+<meta name="description" content="VOLTA GENT V2 — 智能体先 mint：新合约总量 2,222，智能体阶段前 1,500 个免费（需 Agent ID，每钱包最多 2 个），公开 722 个 · 0.0011 BNB。新合约即将部署。">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#020403">
 <meta property="og:type" content="website">
 <meta property="og:title" content="VOLTA GENT — 智能体先 mint。">
-<meta property="og:description" content="BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期仅 7 小时，0.0001 BNB；公开 mint 0.001 BNB。人类贵 10 倍。">
+<meta property="og:description" content="BNB 链上 2,222 个像素 AI 智能体机器人（新合约 V2）。智能体阶段：前 1,500 个免费 mint（需 Agent ID，每钱包最多 2 个）；公开 mint：722 个 · 0.0011 BNB。智能体先行。">
 <meta property="og:url" content="https://voltagent.site/">
 <meta property="og:image" content="https://voltagent.site/images/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VOLTA GENT — 智能体先 mint。">
-<meta name="twitter:description" content="BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期仅 7 小时，0.0001 BNB；公开 mint 0.001 BNB。人类贵 10 倍。">
+<meta name="twitter:description" content="BNB 链上 2,222 个像素 AI 智能体机器人（新合约 V2）。智能体阶段：前 1,500 个免费 mint（需 Agent ID，每钱包最多 2 个）；公开 mint：722 个 · 0.0011 BNB。智能体先行。">
 <meta name="twitter:image" content="https://voltagent.site/images/og-image.png">
 <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
 <link rel="apple-touch-icon" href="images/icon-180.png">
@@ -220,7 +220,7 @@
 <main>
   <p class="prompt">&gt;_ <b>voltagent --boot</b> <span class="cursor"></span></p>
   <h1 id="headline">智能体<br>先 <span>MINT。</span></h1>
-  <p class="tag">人类贵 <b>10 倍。</b></p>
+  <p class="tag">智能体 <b>免费 MINT。</b></p>
 
   <div class="hero">
     <div>
@@ -278,12 +278,12 @@
     <div class="win">
       <div class="winbar"><i></i><i></i><i></i><span>$ mint --status</span></div>
       <div class="winbody">
-        <div class="row"><span class="big"><span id="count">0</span> <small>/ 5,000</small></span><span class="dim" id="heroState">合约已上线 — 读取链上…</span></div>
+        <div class="row"><span class="big"><span id="count">0</span> <small>/ 2,222</small></span><span class="dim" id="heroState">新合约即将部署 — 地址待公布</span></div>
         <div class="bar"><i id="barfill"></i></div>
-        <p class="dim" id="mintStateLine">mint：读取链上… &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX</p>
+        <p class="dim" id="mintStateLine">mint：未开放 &nbsp;·&nbsp; 新合约 VoltaGentV2 部署中 &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX</p>
         <button class="btn" id="connectBtn" onclick="connectWallet()">连接 OKX</button>
         <button class="btn ghost" id="mintBtn" onclick="document.getElementById('mintBuyBtn').scrollIntoView({behavior:'smooth',block:'center'})">MINT — 未开放</button>
-        <p id="walletmsg">&gt;_ 合约已上线。连接钱包后按链上价格 mint。</p>
+        <p id="walletmsg">&gt;_ 新合约即将部署。部署并开放后，连接钱包按链上价格 mint。</p>
       </div>
     </div>
   </div>
@@ -291,15 +291,15 @@
   <div class="phases">
     <div class="phase on" onclick="togglePhase(this)">
       <h3>01 / 仅限智能体</h3>
-      <p class="price">0.0001 BNB <small>/ 个</small></p>
-      <p>7 小时，每钱包最多 2 个。<span id="phaseCountdown"></span></p>
+      <p class="price">0 BNB · 免费 <small>/ 个</small></p>
+      <p>前 1,500 个，7 小时窗口，每钱包最多 2 个。<span id="phaseCountdown"></span></p>
       <p class="more">门禁：0x60B926… · balanceOf &gt; 0 · 链上验证。</p>
       <p class="hint">点我展开 +</p>
     </div>
     <div class="phase" onclick="togglePhase(this)">
       <h3>02 / 公开</h3>
-      <p class="price">0.001 BNB <small>/ 个</small></p>
-      <p>智能体之后，每钱包最多 5 个。</p>
+      <p class="price">0.0011 BNB <small>/ 个</small></p>
+      <p>智能体阶段之后，共 722 个；每钱包总计最多 5 个。</p>
       <p class="more">费用由合约保管，所有者提取。</p>
       <p class="hint">点我展开 +</p>
     </div>
@@ -309,13 +309,13 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ mint --buy</span></div>
     <div class="winbody">
-      <div class="row"><span id="mintPhase">智能体阶段</span><span id="mintPrice">0.0001 BNB / 个</span></div>
+      <div class="row"><span id="mintPhase">智能体阶段</span><span id="mintPrice">0 BNB · 免费 / 个</span></div>
       <div class="row" style="margin-top:12px"><span>智能体窗口倒计时</span><span id="agentCountdown">—</span></div>
       <div class="row" style="margin-top:12px;align-items:center"><span>数量</span><span><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="mintQtyChange(-1)">−</button><b id="mintQty" style="margin:0 10px">1</b><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="mintQtyChange(1)">＋</button></span></div>
-      <div class="row" style="margin-top:12px"><span>总计</span><span id="mintTotal">0.0001 BNB</span></div>
+      <div class="row" style="margin-top:12px"><span>总计</span><span id="mintTotal">0 BNB</span></div>
       <p class="dim" id="mintMax">每钱包最多 2 个（智能体阶段）。</p>
       <button class="btn" id="mintBuyBtn" onclick="mintBuy()">MINT — 未开放</button>
-      <p id="mintmsg" class="dim">&gt;_ 合约已部署 — 读取链上状态中…</p>
+      <p id="mintmsg" class="dim">&gt;_ 新合约即将部署 — 地址将在部署后公布，mint 随后开放。</p>
     </div>
   </div>
 
@@ -332,14 +332,14 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ mint --list</span></div>
     <div class="winbody">
-      <div class="row"><span class="big"><span id="mintedCount">0</span> <small>/ 5,000</small></span><span class="dim">已 MINT</span></div>
+      <div class="row"><span class="big"><span id="mintedCount">0</span> <small>/ 2,222</small></span><span class="dim">已 MINT</span></div>
       <div class="bar"><i id="mintedBar" style="width:0%"></i></div>
-      <div class="row" style="margin-top:12px"><span>智能体阶段</span><span id="phaseAgentLine">0 / 1,000 · 0.0001 BNB</span></div>
-      <div class="row"><span>公开</span><span id="phasePublicLine">0 / 4,000 · 0.001 BNB</span></div>
+      <div class="row" style="margin-top:12px"><span>智能体阶段</span><span id="phaseAgentLine">0 / 1,500 · 免费（0 BNB）</span></div>
+      <div class="row"><span>公开</span><span id="phasePublicLine">0 / 722 · 0.0011 BNB</span></div>
       <p class="dim" style="margin-top:12px">最近 MINT</p>
       <p class="dim" id="recentLine">— 还没有 mint 记录。—</p>
       <div id="recentList"></div>
-      <p class="dim">这里的数字直接从链上读取（合约 0x43cf…c5b1）。</p>
+      <p class="dim">新合约部署后，这里的数字直接从链上读取（地址待公布）。</p>
     </div>
   </div>
 
@@ -415,12 +415,12 @@
     <div class="winbody">
       <div class="row"><span>[已完成] 00 — 概念 + 20 个样品</span><span>网站 · 合约</span></div>
       <div class="row"><span>[已完成] 01 — 名称 + 符号</span><span>VOLTA GENT · VLTG</span></div>
-      <div class="row"><span>[完成] 02 — 完整套装</span><span>完整 5,000 个</span></div>
-      <div class="row"><span>[完成] 03 — 部署</span><span>合约 0x43cf…c5b1 · BASEURI 已设置</span></div>
+      <div class="row"><span>[完成] 02 — 完整套装</span><span>完整 2,222 个</span></div>
+      <div class="row"><span>[进行中] 03 — 新合约部署</span><span>VoltaGentV2 · 总量 2,222 · BASEURI 待设置</span></div>
       <div class="row"><span>[进行中] 04 — 销售</span><span>智能体 7 小时 → 公开</span></div>
       <div class="row"><span>[已完成] 05 — 经济运转</span><span>能量 + 竞技场已上线 · 合约 0x0734…49b3</span></div>
       <div class="row"><span>[以后] 06 — 售罄之后</span><span>尚未决定</span></div>
-      <p class="dim" style="margin-top:12px">合约已部署：0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1（BNB 56）。mint 由所有者开放。</p>
+      <p class="dim" style="margin-top:12px">新合约 VoltaGentV2 即将部署：总量 2,222（智能体免费 1,500 + 公开 722 · 0.0011 BNB）。地址将在部署后公布，mint 由所有者开放。</p>
     </div>
   </div>
 
@@ -428,11 +428,11 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ agent --mint</span></div>
     <div class="winbody">
-      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <code id="agentprompt" onclick="copyPrompt()">Mint 1 Volta Gent from the NEW VoltaGentV2 contract on BNB Chain (56) - contract address is published at voltagent.site when deployment completes. Agent phase: the first 1,500 mints are FREE (0 BNB) for Binance Agent ID holders, max 2 per wallet; public price 0.0011 BNB (1100000000000000 wei), max 5 per wallet total. Call mint(qty) with exactly quoteFor(qty) as value. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
       <button class="btn" onclick="copyPrompt()">复制指令</button>
       <p class="dim" id="copymsg">一行就够，剩下的交给你的智能体。</p>
       <p class="dim" style="margin:16px 0 6px">中文版指令</p>
-      <code id="agentprompt-zh" onclick="copyBlock('agentprompt-zh','copymsg-zh')">从 BNB Chain（56）上的合约 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 mint 1 个 Volta Gent。先到注册表 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F 验证我的 Agent ID，再读取 totalMinted 和当前价格，给我预览，等我确认。</code>
+      <code id="agentprompt-zh" onclick="copyBlock('agentprompt-zh','copymsg-zh')">从 BNB Chain（56）上的新合约 VoltaGentV2 mint 1 个 Volta Gent（合约地址在部署完成后于 voltagent.site 公布）。智能体阶段：前 1,500 个免费（0 BNB），需持有 Agent ID，每钱包最多 2 个；公开价 0.0011 BNB（1100000000000000 wei），每钱包总计最多 5 个。调用 mint(qty)，value 恰好为 quoteFor(qty)。先到注册表 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F 验证我的 Agent ID，再读取 totalMinted 和当前价格，给我预览，等我确认。</code>
       <button class="btn ghost" onclick="copyBlock('agentprompt-zh','copymsg-zh')">复制中文指令</button> <span class="dim" id="copymsg-zh"></span>
     </div>
   </div>
@@ -466,15 +466,15 @@
     <div class="winbar"><i></i><i></i><i></i><span>$ faq --list</span></div>
     <div class="winbody">
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是币安 Agent ID？</span><i>+</i></div><div class="a">币安颁发的链上身份。合约会查询 Agent ID 注册表 0x60B926… 的 balanceOf——如果是 0，智能体阶段会拒绝你的 mint。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>为什么智能体更便宜？</span><i>+</i></div><div class="a">智能体先 mint，0.0001 BNB；公开 mint 0.001 BNB。智能体就是分发渠道——他们先 mint、发帖，在公开销售前证明需求。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>智能体阶段持续多久？</span><i>+</i></div><div class="a">7 小时。之后所有者调用 endAgentPhase()，第二阶段向所有人开放。没有自动计时，需要手动执行一笔交易。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>没有 Agent ID 也能 mint 吗？</span><i>+</i></div><div class="a">可以，在第二阶段（公开）：0.001 BNB，每钱包最多 5 个。第一阶段仅限智能体。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>为什么智能体更便宜？</span><i>+</i></div><div class="a">智能体先 mint，而且免费（0 BNB）；公开 mint 0.0011 BNB。智能体就是分发渠道——他们先 mint、发帖，在公开销售前证明需求。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>智能体阶段持续多久？</span><i>+</i></div><div class="a">前 1,500 个免费名额 mint 完自动结束；窗口约 7 小时，所有者也可以调用 endAgentPhase() 提前结束，之后第二阶段向所有人开放。没有自动计时，提前结束需要手动执行一笔交易。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>没有 Agent ID 也能 mint 吗？</span><i>+</i></div><div class="a">可以，在第二阶段（公开）：0.0011 BNB，每钱包总计最多 5 个。第一阶段（前 1,500 个）免费、仅限智能体。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>什么是能量？</span><i>+</i></div><div class="a">能量是 VoltaArena 合约里的链上数值（合约 0x0734…49b3），已经上线：每个 NFT 100 点、每小时恢复 +1，领取挖矿花费 10 点、对战花费 20 点，充值 0.0001 BNB 充 10 点。本页显示的是你选中 token 的真实链上能量。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>挖矿能赚多少 BNB？</span><i>+</i></div><div class="a">已上线：每个 NFT 每小时挖 0.00001 BNB，最多累计 48 小时，满 0.0001 BNB 才能领取（花费 10 能量）。收益从竞技场奖池支付（对战抽成等），池子不足时领取会失败。没有任何保证收益。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>竞技场怎么玩？</span><i>+</i></div><div class="a">已上线，真实下注：只有 Volta Gent 持有人能参战，出战的是你自己持有的 NFT。两位持有人各下注 0.0005 BNB + 20 能量，第二位加入后锁定区块 +2，之后任何人都能结算，胜负由该区块哈希决定，胜者拿 0.0009 BNB（90%），0.0001 BNB 进奖池。胜率 = 你的战力 ÷ 双方总战力。没人加入的开放对战可以取消退款；锁定后超过 256 个区块还没结算，可以走过期退款。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>稀有度怎么决定？</span><i>+</i></div><div class="a">稀有度写在每个 token 的 metadata 里、部署前就定好了：普通 20%、优秀 20%、稀有 20%、史诗 20%、传说 10%、神话 10%。mint 到哪个编号，就是哪个稀有度。稀有度越高打得越强——但也可能输。</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>钱去哪了？</span><i>+</i></div><div class="a">Mint 费用、充值费用和竞技场抽成都存在合约里，只有所有者可以提取。</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">合约已部署，mint 已开放（0x43cf…c5b1）：现在是智能体阶段（需要 Agent ID，0.0001 BNB，每钱包最多 2 个，约 15:03 UTC 结束），之后是公开阶段（0.001 BNB，每钱包最多 5 个）。本页的按钮和数字都直接读链上状态。</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>现在能 mint 吗？</span><i>+</i></div><div class="a">还不行：新合约 VoltaGentV2 即将部署，总量 2,222。部署并由所有者开放后，先是智能体阶段（前 1,500 个免费，需要 Agent ID，每钱包最多 2 个），之后是公开阶段（722 个，0.0011 BNB，每钱包总计最多 5 个）。合约地址将在部署后公布在本页；届时本页的按钮和数字直接读链上状态。</div></div>
     </div>
   </div>
 
@@ -482,23 +482,23 @@
   <div class="win">
     <div class="winbar"><i></i><i></i><i></i><span>$ share --kit</span></div>
     <div class="winbody">
-      <p style="margin:0 0 6px">&gt; 你的粉丝的智能体先 mint——0.0001 BNB，比公开便宜 10 倍。</p>
+      <p style="margin:0 0 6px">&gt; 你的粉丝的智能体先 mint——免费（0 BNB），公开价 0.0011 BNB。</p>
       <p style="margin:0 0 6px">&gt; 只有 7 小时窗口——紧迫感带来转化。</p>
-      <p style="margin:0 0 14px">&gt; 总量 5,000，前 1,000 个留给智能体。</p>
-      <p class="dim" style="margin:0 0 16px">mint 已开放，第一阶段进行中，约 15:03 UTC 结束。下面三段现在都能发。把网站链接粘贴到写着 [链接] 的地方。</p>
-      <p class="dim" style="margin:16px 0 6px">帖子 1 — 预告 · 现在就能发</p>
-      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，人类贵 10 倍。Volta Gent —— BNB 链上 5,000 个像素 AI 智能体机器人。智能体专属期：仅 7 小时（08:03–15:03 UTC），0.0001 BNB；公开 mint：0.001 BNB。链接：[链接]</code>
+      <p style="margin:0 0 14px">&gt; 总量 2,222，前 1,500 个免费留给智能体，公开 722 个。</p>
+      <p class="dim" style="margin:0 0 16px">新合约即将部署；下面三段是开放 mint 后使用的文案。把网站链接粘贴到写着 [链接] 的地方。</p>
+      <p class="dim" style="margin:16px 0 6px">帖子 1 — 预告 · 开放后发</p>
+      <code id="share-zh-teaser" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">智能体先 mint，而且免费。Volta Gent —— BNB 链上 2,222 个像素 AI 智能体机器人（新合约 V2）。智能体阶段：前 1,500 个免费（需 Agent ID，每钱包最多 2 个）；公开 mint：722 个 · 0.0011 BNB。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-teaser','sharemsg-zh-teaser')">复制</button> <span class="dim" id="sharemsg-zh-teaser"></span>
-      <p class="dim" style="margin:16px 0 6px">帖子 2 — 开 MINT · 现在就能发</p>
-      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">已开 mint —— 智能体先行。Volta Gent：智能体 0.0001 BNB，仅 7 小时（约 15:03 UTC 结束），之后公开 0.001 BNB。把这条命令交给你的智能体：从 BNB 链上的合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
+      <p class="dim" style="margin:16px 0 6px">帖子 2 — 开 MINT · 开放后发</p>
+      <code id="share-zh-launch" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">即将开 mint —— 智能体先行。Volta Gent 新合约 V2：总量 2,222，智能体阶段前 1,500 个免费（需 Agent ID，每钱包最多 2 个），之后公开 722 个 · 0.0011 BNB。把这条命令交给你的智能体：从 BNB 链上的 VoltaGentV2 合约 mint 1 个 Volta Gent，验证我的 Agent ID，读取 totalMinted 和价格，预览后等我确认。链接：[链接]</code>
       <button class="btn ghost" onclick="copyBlock('share-zh-launch','sharemsg-zh-launch')">复制</button> <span class="dim" id="sharemsg-zh-launch"></span>
       <p class="dim" style="margin:16px 0 6px">广播指令 — 和开 mint 的帖子一起发，你粉丝的智能体一行就能 mint</p>
-      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from contract 0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1 on BNB 56. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
+      <code id="share-prompt" onclick="copyBlock('share-prompt','sharemsg-prompt')">Mint 1 Volta Gent from the NEW VoltaGentV2 contract on BNB Chain (56) - contract address is published at voltagent.site when deployment completes. Agent phase: the first 1,500 mints are FREE (0 BNB) for Binance Agent ID holders, max 2 per wallet; public price 0.0011 BNB (1100000000000000 wei), max 5 per wallet total. Call mint(qty) with exactly quoteFor(qty) as value. Verify my Agent ID in 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, read totalMinted + price, preview, wait for my OK.</code>
       <button class="btn ghost" onclick="copyBlock('share-prompt','sharemsg-prompt')">复制</button> <span class="dim" id="sharemsg-prompt"></span>
     </div>
   </div>
 
-  <footer>&gt;_ volta gent — 智能体先 mint，人类贵 10 倍。 &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; 合约：<a href="https://bscscan.com/address/0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1">0x43cf…c5b1</a>（BNB 56）。</footer>
+  <footer>&gt;_ volta gent — 智能体先 mint · 免费；公开 0.0011 BNB。 &nbsp;·&nbsp; <a href="https://x.com/VoltaGent_io">X @VoltaGent_io</a> &nbsp;·&nbsp; 新合约 VoltaGentV2：即将部署（地址待公布）（BNB 56）。</footer>
 </main>
 
 <div id="modal" role="dialog" aria-label="机器人预览">
@@ -543,7 +543,7 @@ var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: r
     "<span class=\"ok\">[OK] 6 种稀有度 · 能量 100/100</span>",
     "<span class=\"ok\">[OK] 竞技场就绪 — 擂台已热</span>",
     "<span class=\"ok\">[OK] BNB 56 链 — 已连接</span>",
-    "<span class=\"ok\">[OK] 合约已部署 — 0x43cf…c5b1</span>",
+    "<span class=\"ok\">[OK] 新合约 VoltaGentV2 — 即将部署</span>",
     "<span class=\"ok\">[OK] 系统就绪 — 智能体先 MINT。</span>"
   ];
   if (reduced) { finish(); return; }
@@ -658,16 +658,16 @@ function togglePhase(el){
   paintMint();
 }
 
-/* Mint panel: LIVE — wired to the deployed Volta Gent contract (BNB 56) */
-var CONTRACT = "0x43cfeb5267125c4f3495d48dea202a7fc43bc5b1";
+/* Mint panel — wired to the NEW VoltaGentV2 contract (address published at deployment) */
+var CONTRACT = ""; /* VoltaGentV2 — NEW contract address, published here at deployment */
 var RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
 var SEL = { minted:"0xa2309ff8", open:"0x24bbd049", agentPhase:"0x77bdf3e1", quote:"0x5df07ec2", mint:"0xa0712d68", hasAgent:"0x4eab3ef2", mintedBy:"0x0d758111", agentMintedBy:"0x38698bee" };
 var chain = { minted:0, open:false, agent:true, loaded:false };
 var walletAddr = null, walletInfo = null;
 var mintBusy = false, msgLockUntil = 0;
 var MINTPHASES = [
-  {name:"智能体阶段", price:0.0001, max:2, note:"每钱包最多 2 个（智能体阶段）。"},
-  {name:"公开", price:0.001, max:5, note:"每钱包最多 5 个（公开）。"}
+  {name:"智能体阶段", price:0, max:2, note:"每钱包最多 2 个（智能体阶段）。"},
+  {name:"公开", price:0.0011, max:5, note:"每钱包总计最多 5 个（公开）。"}
 ];
 var mintQty = 1;
 function u256(h){ return parseInt(h, 16); }
@@ -741,6 +741,7 @@ async function loadMyNfts(){
   var msg = document.getElementById("myNftsMsg"), grid = document.getElementById("myNfts");
   if (!msg || !grid) return;
   if (!walletAddr) { msg.textContent = ">_ 连接钱包后，这里显示你持有的 Volta Gent。"; grid.innerHTML = ""; myNftsStamp = ""; myTokens = []; fighter = null; arenaSync(); refreshArenaGate(); return; }
+  if (!CONTRACT) { msg.textContent = ">_ 新合约即将部署 — 部署后连接钱包，这里显示你持有的 Volta Gent。"; return; }
   var stamp = walletAddr.toLowerCase() + ":" + chain.minted;
   if (myNftsLoading || myNftsStamp === stamp) return;
   myNftsLoading = true;
@@ -790,55 +791,67 @@ function qtyMax(){
   return ph.max;
 }
 function setMintMsg(t){ var m = document.getElementById("mintmsg"); if (m) m.textContent = t; msgLockUntil = Date.now() + 9000; }
+function fmtP(x){ return x === 0 ? "0" : x.toFixed(4); }
 function paintMint(){
   var ph = MINTPHASES[livePhaseIdx()];
   var qm = Math.max(1, qtyMax());
   if (mintQty > qm) mintQty = qm;
   if (mintQty < 1) mintQty = 1;
   document.getElementById("mintPhase").textContent = ph.name;
-  document.getElementById("mintPrice").textContent = ph.price.toFixed(4) + " BNB / 个";
+  document.getElementById("mintPrice").textContent = fmtP(ph.price) + " BNB / 个";
   document.getElementById("mintQty").textContent = mintQty;
-  document.getElementById("mintTotal").textContent = (mintQty * ph.price).toFixed(4) + " BNB";
+  document.getElementById("mintTotal").textContent = fmtP(mintQty * ph.price) + " BNB";
   var note = ph.note;
   if (walletAddr && walletInfo){
     note += chain.agent ? " 本钱包智能体阶段已 mint " + walletInfo.agentMinted + " 个。" : " 本钱包已 mint " + walletInfo.mintedBy + " 个。";
   }
   document.getElementById("mintMax").textContent = note;
   var btn = document.getElementById("mintBuyBtn");
-  if (!chain.loaded){ btn.textContent = "MINT — 读取链上…"; }
+  if (!chain.loaded){ btn.textContent = CONTRACT ? "MINT — 读取链上…" : "MINT — 即将开放"; if (!CONTRACT) document.getElementById("mintmsg").textContent = ">_ 新合约 VoltaGentV2 即将部署 — 地址公布后开放 mint。"; }
   else if (!chain.open){
     btn.textContent = "MINT — 未开放";
     if (!mintBusy && Date.now() > msgLockUntil) document.getElementById("mintmsg").textContent = ">_ 合约已部署，mint 还没开放 — 等所有者开放。";
   } else {
-    btn.textContent = "MINT · " + (mintQty * ph.price).toFixed(4) + " BNB";
+    btn.textContent = "MINT · " + fmtP(mintQty * ph.price) + " BNB";
     if (!mintBusy && Date.now() > msgLockUntil) document.getElementById("mintmsg").textContent = chain.agent ? ">_ 智能体阶段开放中：需要 Agent ID（注册表 balanceOf > 0）。" : ">_ 公开阶段开放中：任何钱包都能 mint。";
   }
   var hb = document.getElementById("mintBtn");
   if (hb) hb.textContent = chain.open ? "MINT — 已开放" : "MINT — 未开放";
 }
 function paintLive(){
+  if (!CONTRACT){
+    var c0 = document.getElementById("count"); if (c0) c0.textContent = "0";
+    var hs0 = document.getElementById("heroState"); if (hs0) hs0.textContent = "新合约即将部署 — 地址待公布";
+    var ml0 = document.getElementById("mintStateLine"); if (ml0) ml0.innerHTML = "mint：未开放 &nbsp;·&nbsp; 新合约 VoltaGentV2 部署中 &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX";
+    var pa0 = document.getElementById("phaseAgentLine"); if (pa0) pa0.textContent = "0 / 1,500 · 免费（0 BNB）";
+    var pp0 = document.getElementById("phasePublicLine"); if (pp0) pp0.textContent = "0 / 722 · 0.0011 BNB";
+    var rl0 = document.getElementById("recentLine"); if (rl0) rl0.textContent = "— 新合约部署后，这里的数字直接从链上读取。—";
+    paintMint();
+    return;
+  }
   var c = document.getElementById("count"); if (c) c.textContent = chain.minted;
-  var bf = document.getElementById("barfill"); if (bf) bf.style.width = (chain.minted / 5000 * 100) + "%";
+  var bf = document.getElementById("barfill"); if (bf) bf.style.width = (chain.minted / 2222 * 100) + "%";
   var mc = document.getElementById("mintedCount"); if (mc) mc.textContent = chain.minted;
-  var mb = document.getElementById("mintedBar"); if (mb) mb.style.width = (chain.minted / 5000 * 100) + "%";
+  var mb = document.getElementById("mintedBar"); if (mb) mb.style.width = (chain.minted / 2222 * 100) + "%";
   var hs = document.getElementById("heroState");
   if (hs) hs.textContent = !chain.loaded ? "合约已上线 — 读取链上…" : (chain.open ? (chain.agent ? "合约已上线 · 智能体阶段开放中" : "合约已上线 · 公开阶段开放中") : "合约已上线 · 待所有者开放");
   var ml = document.getElementById("mintStateLine");
   if (ml) ml.innerHTML = "mint：" + (chain.open ? "开放中" : "未开放") + " &nbsp;·&nbsp; 链：BNB 56 &nbsp;·&nbsp; 钱包：优先 OKX";
-  var pa = document.getElementById("phaseAgentLine"); if (pa) pa.textContent = Math.min(chain.minted, 1000) + " / 1,000 · 0.0001 BNB";
-  var pp = document.getElementById("phasePublicLine"); if (pp) pp.textContent = Math.max(0, chain.minted - 1000) + " / 4,000 · 0.001 BNB";
+  var pa = document.getElementById("phaseAgentLine"); if (pa) pa.textContent = Math.min(chain.minted, 1500) + " / 1,500 · 免费（0 BNB）";
+  var pp = document.getElementById("phasePublicLine"); if (pp) pp.textContent = Math.max(0, chain.minted - 1500) + " / 722 · 0.0011 BNB";
   var rl = document.getElementById("recentLine"); if (rl) rl.textContent = chain.minted > 0 ? "— 已有 " + chain.minted + " 个被 mint（链上实时）。—" : "— 还没有 mint 记录。—";
   var cards = document.querySelectorAll(".phase");
   for (var i = 0; i < cards.length; i++) cards[i].classList.toggle("on", i === livePhaseIdx());
   paintMint();
 }
-var AGENT_END_TS = 1794322980; /* mint opened 2026-11-10 ~15:03 WIB + 7h — approximate; on-chain agentPhaseActive() is the real state */
+var AGENT_END_TS = 1794322980; /* V2 NOTE: reset to the V2 agent-window end when the new contract address is wired in above; on-chain agentPhaseActive() is the real state */
 function paintCountdown(){
   var left = AGENT_END_TS - Math.floor(Date.now() / 1000);
   var endD = new Date(AGENT_END_TS * 1000);
   var endUTC = ("0" + endD.getUTCHours()).slice(-2) + ":" + ("0" + endD.getUTCMinutes()).slice(-2) + " UTC";
   var txt;
-  if (!chain.agent) txt = "已结束 — 公开阶段";
+  if (!CONTRACT) txt = "未开始 — 新合约即将部署";
+  else if (!chain.agent) txt = "已结束 — 公开阶段";
   else if (!chain.open) txt = "未开始 — 等所有者开放";
   else if (left <= 0) txt = "窗口时间到 — 等所有者结束智能体阶段";
   else txt = "剩 " + Math.floor(left / 3600) + " 小时 " + Math.floor((left % 3600) / 60) + " 分 " + (left % 60) + " 秒 · 截止 " + endUTC;
@@ -848,6 +861,7 @@ function paintCountdown(){
 }
 setInterval(paintCountdown, 1000);
 async function refreshChain(){
+  if (!CONTRACT) { paintLive(); paintCountdown(); return; }
   try {
     chain.minted = u256(await rpcCall(SEL.minted));
     chain.open = u256(await rpcCall(SEL.open)) === 1;
@@ -881,6 +895,7 @@ function mintQtyChange(d){
 }
 async function mintBuy(){
   if (mintBusy) return;
+  if (!CONTRACT) { setMintMsg(">_ 新合约尚未部署 — 地址公布并开放后才能 mint。"); return; }
   if (!chain.loaded) { setMintMsg(">_ 正在读取链上状态…"); refreshChain(); return; }
   if (!chain.open) { setMintMsg(">_ mint 还没开放 — 等所有者开放。"); return; }
   var provider = getProvider();
@@ -890,7 +905,7 @@ async function mintBuy(){
   try {
     if (chain.agent) {
       var has = u256(await rpcCall(SEL.hasAgent + padAddr(walletAddr))) === 1;
-      if (!has) { setMintMsg(">_ 没有 Agent ID — 智能体阶段不能 mint。等公开阶段（0.001 BNB）。"); mintBusy = false; return; }
+      if (!has) { setMintMsg(">_ 没有 Agent ID — 智能体阶段不能 mint。等公开阶段（0.0011 BNB）。"); mintBusy = false; return; }
       var am = u256(await rpcCall(SEL.agentMintedBy + padAddr(walletAddr)));
       if (am + mintQty > 2) { setMintMsg(">_ 智能体阶段每钱包最多 2 个，你已 mint " + am + " 个。"); mintBusy = false; return; }
     } else {
