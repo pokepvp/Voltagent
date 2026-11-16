@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VoltaStaking — Owner Deploy Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#060A1C;--panel:rgba(17,26,56,.72);--line:rgba(103,172,255,.22);--line2:#1D2C55;--text:#EAF4FF;--muted:#93A7CC;--yellow:#FFD83D;--gold:#FFC93C;--cyan:#22D3EE;--red:#FF5C7A;--ok:#2EE6A8}
+  *{box-sizing:border-box}
+  body{color:var(--text);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:34px 14px 64px;
+    background:radial-gradient(900px 480px at 12% -6%, rgba(34,211,238,.14), transparent 60%),radial-gradient(800px 480px at 88% 0%, rgba(255,216,61,.07), transparent 55%),linear-gradient(180deg,#070C22,var(--bg) 300px);background-color:var(--bg)}
+  .wrap{max-width:840px;margin:0 auto}
+  .brandrow{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .brandrow img{width:54px;height:54px;border-radius:13px;border:1px solid var(--line);box-shadow:0 0 20px rgba(34,211,238,.35)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;letter-spacing:.04em;margin:0;text-transform:uppercase}
+  h1 i{font-style:normal;background:linear-gradient(92deg,var(--cyan),var(--yellow));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:13.5px;line-height:1.6;margin:4px 0 18px}
+  .card{position:relative;background:linear-gradient(165deg,rgba(23,34,72,.88),rgba(10,16,40,.94));border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 14px 40px rgba(2,6,20,.45)}
+  .card h2{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 11px;letter-spacing:.02em}
+  .card h2 .stepno{color:var(--yellow);margin-right:8px}
+  .card p{font-size:13.5px;line-height:1.6;color:#C7D6F2}
+  .facts{background:rgba(13,21,51,.75);border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin:14px 0}
+  .facts li{font-size:13px;line-height:1.65;color:#C7D6F2;margin:4px 0}
+  code{font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#FFE975;word-break:break-all}
+  label{display:block;font-size:12px;color:var(--muted);margin:13px 0 5px;letter-spacing:.03em}
+  input,textarea{width:100%;background:#05081A;border:1px solid var(--line2);border-radius:10px;color:var(--text);padding:11px 12px;font:13px 'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+  input:focus,textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  textarea{min-height:150px;font-size:12px;line-height:1.55;resize:vertical}
+  button{background:linear-gradient(92deg,var(--yellow),var(--gold));color:#171106;border:0;border-radius:10px;padding:11px 19px;font:700 13.5px 'Inter',system-ui,sans-serif;cursor:pointer;margin:10px 8px 4px 0;box-shadow:0 8px 22px rgba(255,201,60,.2);transition:.18s}
+  button.alt{background:rgba(13,21,51,.6);color:var(--text);border:1px solid var(--line);box-shadow:none}
+  button.danger{background:rgba(255,92,122,.12);color:#FFB3C2;border:1px solid rgba(255,92,122,.5);box-shadow:none}
+  button:hover{transform:translateY(-1px);filter:brightness(1.07)}
+  .small{font-size:12px;line-height:1.55;color:var(--muted)}
+  .status{font-size:13px;line-height:1.5;color:var(--ok);min-height:18px;word-break:break-all;font-family:'JetBrains Mono',monospace}
+  .warn{background:rgba(255,92,122,.08);border:1px solid rgba(255,92,122,.45);border-radius:10px;padding:11px 13px;font-size:12.5px;line-height:1.55;color:#FFD0A8;margin:10px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .cell{background:#05081A;border:1px solid var(--line2);border-radius:10px;padding:11px 12px}
+  .cell .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .cell .v{font-size:15px;font-weight:700;margin-top:3px;word-break:break-all}
+  #wdBtn{background:linear-gradient(92deg,var(--cyan),#38BDF8);color:#06121F;box-shadow:0 8px 22px rgba(34,211,238,.22)}
+  .foot{font-size:12px;line-height:1.65;color:#7186AC;margin-top:20px}
+  @media(max-width:560px){body{padding:22px 10px 50px}h1{font-size:21px}.card,.facts{padding:15px 13px}}
+</style></head>
+<body><div class="wrap">
+
+<div class="brandrow"><img src="data:image/webp;base64,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" alt="Volta Gent logo">
+<div><h1>VOLTA <i>STAKING</i></h1>
+<p class="sub" style="margin:0">Owner Deploy Panel · BNB Smart Chain</p></div></div>
+<p class="sub">Owner-only page for the VoltaStaking contract on BNB Smart Chain (chain ID 56). Holders stake Volta Gent (VLTG) NFTs here and earn VOLT Points. Every step is signed by the owner wallet — nothing runs automatically.</p>
+
+<div class="facts"><ul>
+<li>Contract: <b>VoltaStaking</b> — stake <b>Volta Gent (VLTG)</b> NFTs, earn <b>VOLT Points</b>: <b>10 points per staked NFT per day</b>, counted on-chain per token from the moment it is staked.</li>
+<li><b>No lockup</b> — unstake anytime. Unstaking auto-claims that token's accrued points first, and partial days are never lost: the accrual checkpoint only advances by the time already converted into points.</li>
+<li>VOLT Points are <b>not a token</b>: they are a stored balance inside this contract — non-transferable, no BNB involved, <b>no yield</b>. They unlock priority access and future rewards in the ecosystem.</li>
+<li>The owner can <b>never seize staked NFTs</b> — the contract deliberately has no function that moves staked tokens out.</li>
+<li><b>Deploy order:</b> deploy <b>VoltaGentV2</b> first (deploy.html), then deploy this staking contract, then wire the VoltaGentV2 address in Step 03 below.</li>
+</ul>
+<p class="small">Warning: this contract is <b>unaudited</b>. Use only your own wallet in an OKX / MetaMask / Trust dApp browser. Never share your seed phrase or private key with anyone.</p></div>
+
+<div class="card"><h2><span class="stepno">01</span>Connect the Owner Wallet</h2>
+<p>Connect the wallet that will own the staking contract. The page switches to BNB Smart Chain automatically. Only the owner can set the NFT contract address (Step 03).</p>
+<p><button id="connectBtn">Connect Wallet (OKX preferred)</button></p>
+<p class="status" id="walletLine">Not connected.</p>
+<p class="small">This page detects OKX first (<code>window.okxwallet</code>), then other wallets, and will ask to switch to / add the BNB Smart Chain network (56).</p></div>
+
+<div class="card"><h2><span class="stepno">02</span>Deploy VoltaStaking</h2>
+<p>Deploy the staking contract. The points rate (<b>10 VOLT Points per NFT per day</b>) is a constant in the code and cannot change. The only constructor parameter is the NFT contract address — you can leave it <b>empty</b> and wire it in Step 03 instead (recommended: deploy VoltaGentV2 first, then paste its address in Step 03).</p>
+<label>Initial NFT contract address (optional — may be changed later in Step 03)</label>
+<input id="nftInitInput" placeholder="0x… VoltaGentV2 address (or leave empty)" value="">
+<div class="warn">⚠️ Staking only works after the NFT contract is set: <code>stake()</code> reverts while no NFT contract is wired. The owner can set or update it anytime with <code>setNftContract</code> (Step 03).</div>
+<p><button id="deployBtn">Deploy VoltaStaking</button> <button id="copyBtn" class="alt">Copy Deploy Data (Manual)</button></p>
+<p class="status" id="deployStatus">Waiting for wallet connection.</p></div>
+
+<div class="card"><h2><span class="stepno">03</span>Set the NFT Contract</h2>
+<p><b>Deploy VoltaGentV2 first</b> (deploy.html), then paste its address here so the staking contract knows which NFTs to accept. Only the owner can call this.</p>
+<label>Staking contract address</label>
+<input id="stakeContract" placeholder="0x… VoltaStaking contract address">
+<label>VoltaGentV2 (NFT) contract address</label>
+<input id="nftInput" placeholder="0x… VoltaGentV2 address">
+<p><button id="setNftBtn">Set NFT Contract</button></p>
+<p class="status" id="nftStatus"></p></div>
+
+<div class="card"><h2><span class="stepno">04</span>Summary + Log</h2>
+<label>Staking contract address</label>
+<input id="stateInput" placeholder="0x… VoltaStaking contract address">
+<div class="grid">
+<div class="cell"><div class="k">Staking Contract</div><div class="v" id="stContract">—</div></div>
+<div class="cell"><div class="k">NFT Contract (VLTG)</div><div class="v" id="stNft">—</div></div>
+<div class="cell"><div class="k">Points Rate</div><div class="v" id="stRate">—</div></div>
+<div class="cell"><div class="k">Total Staked</div><div class="v" id="stTotal">—</div></div>
+<div class="cell"><div class="k">Owner</div><div class="v" id="stOwner">—</div></div>
+</div>
+<p><button id="stateBtn" class="alt">Refresh Status</button></p>
+<p class="status" id="stateStatus"></p>
+<label>Deployment summary</label>
+<textarea id="summaryBox" readonly></textarea>
+<p><button id="copySummaryBtn" class="alt">Copy Summary</button></p>
+<p class="status" id="summaryStatus"></p>
+<label>Log</label>
+<div id="logBox" style="background:#05081A;border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font:12px 'JetBrains Mono',monospace;line-height:1.6;color:#93A7CC;min-height:84px;white-space:pre-line;word-break:break-all"></div>
+</div>
+
+<p class="foot">VoltaStaking: stake Volta Gent (VLTG) NFTs, earn 10 VOLT Points per NFT per day — no lockup, points non-transferable, no BNB yield. After deployment: paste the VoltaGentV2 address into <code>CONTRACT</code> and this staking address into <code>STAKING_CONTRACT</code> in index.html, push the site, then announce staking.</p>
+
+</div>
+<script>
+var BYTECODE = "0x608060405234801561000f575f5ffd5b50604051610e50380380610e5083398101604081905261002e916100d1565b338061005357604051631e4fbdf760e01b81525f600482015260240160405180910390fd5b61005c81610082565b50600180546001600160a01b0319166001600160a01b03929092169190911790556100fe565b5f80546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b5f602082840312156100e1575f5ffd5b81516001600160a01b03811681146100f7575f5ffd5b9392505050565b610d458061010b5f395ff3fe608060405234801561000f575f5ffd5b50600436106100fb575f3560e01c8063ac86e18611610093578063c60b20b411610063578063c60b20b414610246578063d56d229d1461024e578063e449f34114610261578063f2fde38b14610274575f5ffd5b8063ac86e186146101cc578063af500ba3146101f4578063affe39aa14610214578063b913b48814610227575f5ffd5b806352f5ad77116100ce57806352f5ad7714610185578063715018a614610198578063817b1cd2146101a05780638da5cb5b146101a8575f5ffd5b806304d092c7146100ff5780630fbf0a9314610109578063150b7a021461011c57806325ca4cff14610158575b5f5ffd5b610107610287565b005b610107610117366004610a86565b610312565b61013a61012a366004610b21565b630a85bd0160e11b949350505050565b6040516001600160e01b031990911681526020015b60405180910390f35b610177610166366004610bfe565b60026020525f908152604090205481565b60405190815260200161014f565b610107610193366004610bfe565b61053a565b61010761058b565b600754610177565b5f546001600160a01b03165b6040516001600160a01b03909116815260200161014f565b6101b46101da366004610c1e565b60036020525f90815260409020546001600160a01b031681565b610207610202366004610bfe565b61059e565b60405161014f9190610c35565b610177610222366004610bfe565b610607565b610177610235366004610c1e565b60046020525f908152604090205481565b610177600a81565b6001546101b4906001600160a01b031681565b61010761026f366004610a86565b61066b565b610107610282366004610bfe565b6108e6565b335f90815260056020526040812090805b82548110156102d8576102c48382815481106102b6576102b6610c77565b905f5260205f200154610923565b6102ce9083610c9f565b9150600101610298565b5060405181815233907fba953728785de35be3827ee7a7a7867a8472947562602939440e6c0bdbf4725e9060200160405180910390a25050565b6001546001600160a01b03166103665760405162461bcd60e51b81526020600482015260146024820152731391950818dbdb9d1c9858dd081b9bdd081cd95d60621b60448201526064015b60405180910390fd5b8061039f5760405162461bcd60e51b81526020600482015260096024820152686e6f20746f6b656e7360b81b604482015260640161035d565b6001546001600160a01b03165f5b82811015610534575f8484838181106103c8576103c8610c77565b602090810292909201355f8181526003909352604090922054919250506001600160a01b03161561042c5760405162461bcd60e51b815260206004820152600e60248201526d185b1c9958591e481cdd185ad95960921b604482015260640161035d565b5f81815260036020908152604080832080546001600160a01b03191633908117909155600483528184204290558352600580835281842080548686526006855292852083905590835260018281018255908452918320018390556007805491929091610499908490610c9f565b90915550506040516323b872dd60e01b8152336004820152306024820152604481018290526001600160a01b038416906323b872dd906064015f604051808303815f87803b1580156104e9575f5ffd5b505af11580156104fb573d5f5f3e3d5ffd5b50506040518392503391507f9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d905f90a3506001016103ad565b50505050565b6105426109af565b600180546001600160a01b0319166001600160a01b0383169081179091556040517f59a5d05e07c1abe05e0b0818f295b1126b3a7645c2f6a4950e0a2628b778c7fb905f90a250565b6105936109af565b61059c5f6109db565b565b6001600160a01b0381165f908152600560209081526040918290208054835181840281018401909452808452606093928301828280156105fb57602002820191905f5260205f20905b8154815260200190600101908083116105e7575b50505050509050919050565b6001600160a01b0381165f9081526005602052604081208190815b81548110156106625761064e82828154811061064057610640610c77565b905f5260205f200154610a2a565b6106589084610c9f565b9250600101610622565b50909392505050565b806106a45760405162461bcd60e51b81526020600482015260096024820152686e6f20746f6b656e7360b81b604482015260640161035d565b6001546001600160a01b03165f5b82811015610534575f8484838181106106cd576106cd610c77565b602090810292909201355f8181526003909352604090922054919250506001600160a01b031633146107325760405162461bcd60e51b815260206004820152600e60248201526d6e6f7420796f7572207374616b6560901b604482015260640161035d565b61073b81610923565b505f8181526006602090815260408083205433845260059092528220805491929161076890600190610cb2565b8154811061077857610778610c77565b905f5260205f20015490508060055f336001600160a01b03166001600160a01b031681526020019081526020015f2083815481106107b8576107b8610c77565b5f9182526020808320909101929092558281526006825260408082208590553382526005909252208054806107ef576107ef610cc5565b5f828152602080822083015f199081018390559092019092558482526006815260408083208390556003825280832080546001600160a01b0319169055600490915281208190556007805460019290610849908490610cb2565b90915550506040516323b872dd60e01b8152306004820152336024820152604481018490526001600160a01b038616906323b872dd906064015f604051808303815f87803b158015610899575f5ffd5b505af11580156108ab573d5f5f3e3d5ffd5b50506040518592503391507f0f5bb82176feb1b5e747e28471aa92156a04d9f3ab9f45f28e2d704232b93f75905f90a35050506001016106b2565b6108ee6109af565b6001600160a01b03811661091757604051631e4fbdf760e01b81525f600482015260240161035d565b610920816109db565b50565b5f61092d82610a2a565b905080156109aa575f828152600360209081526040808320546001600160a01b03168352600290915281208054839290610968908490610c9f565b90915550600a905061097d8262015180610cd9565b6109879190610cf0565b5f83815260046020526040812080549091906109a4908490610c9f565b90915550505b919050565b5f546001600160a01b0316331461059c5760405163118cdaa760e01b815233600482015260240161035d565b5f80546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b5f818152600360205260408120546001600160a01b0316610a4c57505f919050565b5f828152600460205260409020546201518090600a90610a6c9042610cb2565b610a769190610cd9565b610a809190610cf0565b92915050565b5f5f60208385031215610a97575f5ffd5b823567ffffffffffffffff811115610aad575f5ffd5b8301601f81018513610abd575f5ffd5b803567ffffffffffffffff811115610ad3575f5ffd5b8560208260051b8401011115610ae7575f5ffd5b6020919091019590945092505050565b80356001600160a01b03811681146109aa575f5ffd5b634e487b7160e01b5f52604160045260245ffd5b5f5f5f5f60808587031215610b34575f5ffd5b610b3d85610af7565b9350610b4b60208601610af7565b925060408501359150606085013567ffffffffffffffff811115610b6d575f5ffd5b8501601f81018713610b7d575f5ffd5b803567ffffffffffffffff811115610b9757610b97610b0d565b604051601f8201601f19908116603f0116810167ffffffffffffffff81118282101715610bc657610bc6610b0d565b604052818152828201602001891015610bdd575f5ffd5b816020840160208301375f6020838301015280935050505092959194509250565b5f60208284031215610c0e575f5ffd5b610c1782610af7565b9392505050565b5f60208284031215610c2e575f5ffd5b5035919050565b602080825282518282018190525f918401906040840190835b81811015610c6c578351835260209384019390920191600101610c4e565b509095945050505050565b634e487b7160e01b5f52603260045260245ffd5b634e487b7160e01b5f52601160045260245ffd5b80820180821115610a8057610a80610c8b565b81810381811115610a8057610a80610c8b565b634e487b7160e01b5f52603160045260245ffd5b8082028115828204841417610a8057610a80610c8b565b5f82610d0a57634e487b7160e01b5f52601260045260245ffd5b50049056fea2646970667358221220835221582ceb9ba6743ec3f0252076bcb5551a6c2ad028f823456daa5a69038d64736f6c634300081c0033";
+var account = null;
+var deployedAddress = "";
+function provider(){ if (window.okxwallet) return window.okxwallet; if (window.ethereum) return window.ethereum; return null; }
+function hexToInt(h){ return parseInt(h, 16); }
+function padHex(s, len){ while (s.length < len) s = "0" + s; return s; }
+function encodeUint(n){ return padHex(n.toString(16), 64); }
+function encodeAddressArg(a){ return "000000000000000000000000" + a.replace(/^0x/i, "").toLowerCase(); }
+function validAddr(a){ return /^0x[0-9a-fA-F]{40}$/.test(a); }
+async function callRead(to, data){
+  var p = provider();
+  return p.request({method:"eth_call", params:[{to: to, data: data}, "latest"]});
+}
+function log(msg){
+  var el = document.getElementById("logBox");
+  var t = new Date().toISOString().slice(11, 19);
+  el.textContent += "[" + t + "] " + msg + "\n";
+}
+function fillContractInputs(addr){
+  document.getElementById("stakeContract").value = addr;
+  document.getElementById("stateInput").value = addr;
+}
+function buildDeployData(){
+  var init = document.getElementById("nftInitInput").value.trim();
+  if (init && !validAddr(init)) throw new Error("Invalid initial NFT address — fix it or leave the field empty.");
+  return BYTECODE + encodeAddressArg(init || "0x0000000000000000000000000000000000000000");
+}
+function buildSummary(){
+  var c = document.getElementById("stateInput").value.trim() || deployedAddress || "(not deployed yet)";
+  var nftShown = document.getElementById("stNft").textContent;
+  var nft = (nftShown && nftShown !== "—") ? nftShown : (document.getElementById("nftInput").value.trim() || "(not set yet)");
+  var lines = [
+    "VoltaStaking Deployment Summary",
+    "Staking Contract: " + c,
+    "NFT Contract (VLTG): " + nft,
+    "Owner: " + (account || "(connect the wallet first)"),
+    "Network: BNB Smart Chain (56)",
+    "Points Rate: 10 VOLT Points per NFT per day",
+    "Total Staked: " + document.getElementById("stTotal").textContent,
+    "BscScan: https://bscscan.com/address/" + c,
+    "Next step: paste the VoltaGentV2 address into CONTRACT and this staking address into STAKING_CONTRACT in index.html, push the site, then announce staking."
+  ];
+  document.getElementById("summaryBox").value = lines.join("\n");
+}
+document.getElementById("connectBtn").onclick = async function(){
+  var p = provider();
+  if (!p) { document.getElementById("walletLine").textContent = "No wallet found - open this page in an OKX / MetaMask dApp browser."; return; }
+  try {
+    var accs = await p.request({method:"eth_requestAccounts"});
+    account = accs[0];
+    try { await p.request({method:"wallet_switchEthereumChain", params:[{chainId:"0x38"}]}); }
+    catch (e) {
+      if (e && e.code === 4902) { await p.request({method:"wallet_addEthereumChain", params:[{chainId:"0x38", chainName:"BNB Smart Chain", nativeCurrency:{name:"BNB", symbol:"BNB", decimals:18}, rpcUrls:["https://bsc-dataseed.binance.org"], blockExplorerUrls:["https://bscscan.com"]}]}); }
+      else throw e;
+    }
+    document.getElementById("walletLine").textContent = "Connected: " + account;
+    document.getElementById("deployStatus").textContent = "Wallet connected. Ready to deploy.";
+    log("Wallet connected: " + account);
+    buildSummary();
+  } catch (e) { document.getElementById("walletLine").textContent = "Connection failed: " + (e && e.message ? e.message : e); }
+};
+document.getElementById("copyBtn").onclick = function(){
+  try {
+    var d = buildDeployData();
+    if (navigator.clipboard) navigator.clipboard.writeText(d).then(function(){ document.getElementById("deployStatus").textContent = "Deploy data copied (" + d.length + " characters). Paste it into your wallet's contract deployment."; });
+  } catch (e) { document.getElementById("deployStatus").textContent = "Failed: " + e.message; }
+};
+document.getElementById("deployBtn").onclick = async function(){
+  var p = provider();
+  if (!p || !account) { document.getElementById("deployStatus").textContent = "Connect your wallet first (Step 01)."; return; }
+  var data;
+  try { data = buildDeployData(); } catch (e) { document.getElementById("deployStatus").textContent = "Failed: " + e.message; return; }
+  try {
+    var gas = await p.request({method:"eth_estimateGas", params:[{from: account, data: data}]});
+    document.getElementById("deployStatus").textContent = "Estimated gas: " + hexToInt(gas) + " . Sending the deploy transaction...";
+    var txHash = await p.request({method:"eth_sendTransaction", params:[{from: account, data: data}]});
+    document.getElementById("deployStatus").textContent = "Transaction sent: " + txHash + " . Waiting for confirmation...";
+    log("Deploy transaction sent: " + txHash);
+    var tries = 0;
+    var timer = setInterval(async function(){
+      tries++;
+      var r = await p.request({method:"eth_getTransactionReceipt", params:[txHash]});
+      if (r && r.contractAddress) {
+        clearInterval(timer);
+        deployedAddress = r.contractAddress;
+        fillContractInputs(deployedAddress);
+        document.getElementById("deployStatus").textContent = "VoltaStaking deployed at: " + deployedAddress + " (tx " + txHash + "). The address has been filled into Steps 03-04 automatically. Now set the NFT contract in Step 03.";
+        log("VoltaStaking deployed at: " + deployedAddress);
+        buildSummary();
+      } else if (tries > 60) { clearInterval(timer); document.getElementById("deployStatus").textContent = "No confirmation after 60 checks - see this transaction on BscScan: " + txHash; }
+    }, 3000);
+  } catch (e) { document.getElementById("deployStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+};
+document.getElementById("setNftBtn").onclick = async function(){
+  var p = provider();
+  if (!p || !account) { document.getElementById("nftStatus").textContent = "Connect your wallet first (Step 01)."; return; }
+  var c = document.getElementById("stakeContract").value.trim();
+  var n = document.getElementById("nftInput").value.trim();
+  if (!validAddr(c)) { document.getElementById("nftStatus").textContent = "Invalid staking contract address."; return; }
+  if (!validAddr(n)) { document.getElementById("nftStatus").textContent = "Invalid NFT contract address — deploy VoltaGentV2 first (deploy.html) and paste its address."; return; }
+  var data = "0x52f5ad77" + encodeAddressArg(n);
+  try {
+    var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: data}]});
+    document.getElementById("nftStatus").textContent = "setNftContract transaction sent: " + h + " . Verify in Step 04 (Refresh Status).";
+    log("setNftContract(" + n + ") sent: " + h);
+  } catch (e) { document.getElementById("nftStatus").textContent = "Failed: " + (e && e.message ? e.message : e); }
+};
+document.getElementById("stateBtn").onclick = async function(){
+  var p = provider();
+  if (!p) { document.getElementById("stateStatus").textContent = "Connect your wallet first (Step 01)."; return; }
+  var c = document.getElementById("stateInput").value.trim();
+  if (!validAddr(c)) { document.getElementById("stateStatus").textContent = "Invalid contract address."; return; }
+  try {
+    var nf = await callRead(c, "0xd56d229d");
+    var rate = await callRead(c, "0xc60b20b4");
+    var tot = await callRead(c, "0x817b1cd2");
+    var ow = await callRead(c, "0x8da5cb5b");
+    var nftAddr = "0x" + nf.slice(26);
+    document.getElementById("stContract").textContent = c;
+    document.getElementById("stNft").textContent = (nftAddr === "0x0000000000000000000000000000000000000000") ? "(not set — see Step 03)" : nftAddr;
+    document.getElementById("stRate").textContent = hexToInt(rate) + " pts / NFT / day";
+    document.getElementById("stTotal").textContent = String(hexToInt(tot));
+    document.getElementById("stOwner").textContent = "0x" + ow.slice(26);
+    document.getElementById("stateStatus").textContent = "Status refreshed from the blockchain.";
+    log("Status refreshed: NFT = " + document.getElementById("stNft").textContent + ", total staked = " + hexToInt(tot) + ".");
+    buildSummary();
+  } catch (e) { document.getElementById("stateStatus").textContent = "Failed to read the contract: " + e.message + " (make sure the contract address is correct and already deployed on BNB Chain)."; }
+};
+document.getElementById("copySummaryBtn").onclick = function(){
+  buildSummary();
+  var box = document.getElementById("summaryBox");
+  box.select();
+  if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "Summary copied."; });
+};
+buildSummary();
+log("Panel ready. Deploy VoltaGentV2 first (deploy.html), then deploy VoltaStaking here.");
+</script></body></html>

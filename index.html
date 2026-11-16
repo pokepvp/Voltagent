@@ -327,6 +327,14 @@
     </div>
   </div>
 
+  <h2 id="utility"><span class="k">&gt;_</span><span>Utility</span></h2>
+  <p class="secsub">A Volta Gent is more than a collectible — every VLTG works for its holder.</p>
+  <div class="steps">
+    <div class="step"><div class="n">UTILITY 01</div><h3>Access Key</h3><p>Your VLTG is a key: Volta Arena and Volta Mining are holder-gated. Holders play, non-holders watch.</p></div>
+    <div class="step"><div class="n">UTILITY 02</div><h3>Staking Points</h3><p>Stake your VLTG and earn 10 VOLT Points per NFT per day. No lockup — unstake anytime. Points are non-transferable and unlock priority access and future rewards.</p></div>
+    <div class="step"><div class="n">UTILITY 03</div><h3>Ecosystem Pass</h3><p>VLTG holders get priority: whitelist spots and early access in future drops across our ecosystem — Voxel World Pixel, AgentCard, and what's next.</p></div>
+  </div>
+
   <h2 id="mint"><span class="k">&gt;_</span><span>Mint</span></h2>
   <div class="win" style="margin-top:20px">
     <div class="winbar"><i></i><i></i><i></i><span>$ mint --buy</span></div>
@@ -338,6 +346,23 @@
       <p class="dim" id="mintMax">Max 2 per wallet (agent phase).</p>
       <button class="btn" id="mintBuyBtn" onclick="mintBuy()">MINT — COMING SOON</button>
       <p id="mintmsg" class="dim">&gt;_ The new VoltaGentV2 contract deploys soon — mint opens once the address is published.</p>
+    </div>
+  </div>
+
+  <h2 id="staking"><span class="k">&gt;_</span><span>Staking</span></h2>
+  <div class="win" style="margin-top:20px">
+    <div class="winbar"><i></i><i></i><i></i><span>$ stake --volt</span></div>
+    <div class="winbody">
+      <div class="row"><span>Your staked VLTG</span><span id="stakeCount">—</span></div>
+      <div class="row" style="margin-top:12px"><span>Claimable VOLT Points</span><span id="stakeClaimable">—</span></div>
+      <div class="row" style="margin-top:12px"><span>Your VOLT Points balance</span><span id="stakeBalance">—</span></div>
+      <div class="row" style="margin-top:12px"><span>Total staked (all holders)</span><span id="stakeTotal">—</span></div>
+      <div class="row" style="margin-top:14px;align-items:center"><span>Token ID</span><span><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="stakeIdChange(-1)">−</button><b id="stakeTokenId" style="margin:0 10px">1</b><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="stakeIdChange(1)">+</button></span></div>
+      <p class="dim" style="margin-top:12px">How staking works: stake a VLTG &rarr; it earns 10 VOLT Points per day &rarr; claim your points anytime &rarr; unstake anytime, no lockup. Unstaking claims that token's points first.</p>
+      <button class="btn" id="stakeDoBtn" onclick="stakeToken()" disabled>STAKE — COMING SOON</button>
+      <button class="btn ghost" id="unstakeDoBtn" onclick="unstakeToken()" disabled>UNSTAKE</button>
+      <button class="btn ghost" id="claimPointsBtn" onclick="claimPoints()" disabled>CLAIM POINTS</button>
+      <p id="stakemsg" class="dim">&gt;_ Staking launches with the new contract — deploying soon.</p>
     </div>
   </div>
 
@@ -537,7 +562,8 @@
       <div class="row"><span>[In progress] 03 — New contract deployment</span><span>VoltaGentV2 · supply 2,222 · base URI to be set</span></div>
       <div class="row"><span>[In progress] 04 — Sale</span><span>Agent ±7h → Public</span></div>
       <div class="row"><span>[Done] 05 — Economy live</span><span>Energy + Arena live · contract 0x0734…49b3</span></div>
-      <div class="row"><span>[Later] 06 — After sellout</span><span>Not decided yet</span></div>
+      <div class="row"><span>[In progress] 06 — Staking + VOLT Points</span><span>Stake VLTG · 10 pts/day · no lockup</span></div>
+      <div class="row"><span>[Later] 07 — After sellout</span><span>Not decided yet</span></div>
       <p class="dim" style="margin-top:12px">The new VoltaGentV2 contract deploys soon: total supply 2,222 (1,500 free for agents + 722 public at 0.0011 BNB). The address will be published here after deployment, and the owner opens the mint.</p>
     </div>
   </div>
@@ -555,7 +581,7 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How does the arena work?</span><i>+</i></div><div class="a">Live, with real stakes: holders only, fighting with an NFT you own. Two holders each stake 0.0005 BNB + 20 energy; when the second joins, the commit block is set +2, and then anyone can settle — the blockhash decides, and the winner takes 0.0009 BNB (90%) while 0.0001 BNB goes to the pool. Win chance = your power ÷ total power of both sides. An open battle nobody joins can be cancelled for a refund; a locked battle still unsettled after 256 blocks can be refunded as expired.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How is rarity decided?</span><i>+</i></div><div class="a">Rarity is written into each token's metadata before deployment: Common 20%, Uncommon 20%, Rare 20%, Epic 20%, Legendary 10%, Mythic 10%. Whichever token number you mint is the rarity you get. Higher rarity hits harder — but it can still lose.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Where does the money go?</span><i>+</i></div><div class="a">Mint fees, recharge fees and the arena rake are held in the contracts and can only be withdrawn by the owner.</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint right now?</span><i>+</i></div><div class="a">Not yet: the new VoltaGentV2 contract deploys soon, with a total supply of 2,222. Once it is deployed and opened by the owner, the agent phase runs first (first 1,500 free, Agent ID required, max 2 per wallet), then the public phase (722 tokens at 0.0011 BNB, max 5 per wallet in total). The contract address will be published on this page at deployment — and then the buttons and numbers here read live on-chain state.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint right now?</span><i>+</i></div><div class="a">Not yet: the new VoltaGentV2 contract deploys soon, with a total supply of 2,222. Once it is deployed and opened by the owner, the agent phase runs first (first 1,500 free, Agent ID required, max 2 per wallet), then the public phase (722 tokens at 0.0011 BNB, max 5 per wallet in total). The contract address will be published on this page at deployment — and then the buttons and numbers here read live on-chain state.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What are VOLT Points?</span><i>+</i></div><div class="a">Points you earn by staking your Volta Gent in the staking contract: 10 points per staked NFT per day, counted on-chain. They are not a token — they cannot be transferred or sold, and they are not a BNB yield. They record your support and unlock priority access and future rewards across the ecosystem.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Is there a lockup when I stake?</span><i>+</i></div><div class="a">No lockup at all. Stake and unstake whenever you like. Unstaking automatically claims the points that token has earned first, and partial days are never lost — your accrual checkpoint only advances by the time already converted into points.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What do VOLT Points unlock?</span><i>+</i></div><div class="a">Priority. Points and staking history put you first in line for whitelist spots and early access in future drops across our ecosystem — including Voxel World Pixel and AgentCard — plus future holder rewards. The more you stake and the longer you hold, the higher you climb.</div></div>
     </div>
   </div>
 
@@ -741,6 +767,7 @@ function togglePhase(el){
 
 /* Mint panel — wired to the NEW VoltaGentV2 contract (address published at deployment) */
 var CONTRACT = ""; /* VoltaGentV2 — NEW contract address, published here at deployment */
+var STAKING_CONTRACT = ""; /* VoltaStaking — staking contract address, published here at deployment (see deploy-staking.html) */
 var RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
 var SEL = { minted:"0xa2309ff8", open:"0x24bbd049", agentPhase:"0x77bdf3e1", quote:"0x5df07ec2", mint:"0xa0712d68", hasAgent:"0x4eab3ef2", mintedBy:"0x0d758111", agentMintedBy:"0x38698bee" };
 var chain = { minted:0, open:false, agent:true, loaded:false };
@@ -942,6 +969,7 @@ function paintCountdown(){
 }
 setInterval(paintCountdown, 1000);
 async function refreshChain(){
+  refreshStaking();
   if (!CONTRACT) { paintLive(); paintCountdown(); return; }
   try {
     chain.minted = u256(await rpcCall(SEL.minted));
@@ -1015,6 +1043,189 @@ async function mintBuy(){
 paintMint();
 refreshChain();
 setInterval(refreshChain, 20000);
+/* Staking panel — wired to the VoltaStaking contract (address published at deployment).
+   VOLT Points: 10 points per staked NFT per day, no lockup, non-transferable. */
+var SSEL = { stake:"0x0fbf0a93", unstake:"0xe449f341", claim:"0x04d092c7", claimable:"0xaffe39aa", balance:"0x25ca4cff", stakedOf:"0xaf500ba3", totalStaked:"0x817b1cd2" };
+var ISAPPROVED_SEL = "0xe985e9c5", SETAPPROVAL_SEL = "0xa22cb465";
+var stakeState = { stakedIds: [], claimable: 0, balance: 0, total: 0, loaded: false };
+var stakeBusy = false, stakeTokenId = 1;
+function setStakeMsg(t){ var m = document.getElementById("stakemsg"); if (m) m.textContent = t; }
+async function stakeRpcCall(data){
+  for (var i = 0; i < RPCS.length; i++){
+    try {
+      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_call", params:[{ to:STAKING_CONTRACT, data:data }, "latest"] }) });
+      var j = await r.json();
+      if (j && j.result) return j.result;
+    } catch(e){}
+  }
+  throw new Error("rpc");
+}
+async function stakeRpcBatch(datas){
+  for (var i = 0; i < RPCS.length; i++){
+    try {
+      var payload = datas.map(function(d, idx){ return { jsonrpc:"2.0", id: idx + 1, method:"eth_call", params:[{ to:STAKING_CONTRACT, data:d }, "latest"] }; });
+      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload) });
+      var j = await r.json();
+      if (Array.isArray(j)) {
+        var out = [];
+        for (var k = 0; k < datas.length; k++) {
+          var hit = null;
+          for (var m = 0; m < j.length; m++) if (j[m].id === k + 1) hit = j[m];
+          out.push(hit && hit.result ? hit.result : null);
+        }
+        return out;
+      }
+    } catch(e){}
+  }
+  return datas.map(function(){ return null; });
+}
+function encU256Array(arr){
+  var out = padU256(32) + padU256(arr.length);
+  for (var i = 0; i < arr.length; i++) out += padU256(arr[i]);
+  return out;
+}
+function decodeU256Array(hex){
+  if (!hex || hex === "0x") return [];
+  var h = hex.replace(/^0x/i, "");
+  if (h.length < 128) return [];
+  var len = parseInt(h.slice(64, 128), 16);
+  var out = [];
+  for (var i = 0; i < len; i++) out.push(parseInt(h.slice(128 + i * 64, 192 + i * 64), 16));
+  return out;
+}
+function paintStaking(){
+  var live = !!STAKING_CONTRACT && !!CONTRACT;
+  var c = document.getElementById("stakeCount"), cl = document.getElementById("stakeClaimable"),
+      b = document.getElementById("stakeBalance"), t = document.getElementById("stakeTotal"),
+      sb = document.getElementById("stakeDoBtn"), ub = document.getElementById("unstakeDoBtn"), cb = document.getElementById("claimPointsBtn");
+  if (!live) {
+    if (c) c.textContent = "—";
+    if (cl) cl.textContent = "—";
+    if (b) b.textContent = "—";
+    if (t) t.textContent = "—";
+    if (sb) { sb.disabled = true; sb.textContent = "STAKE — COMING SOON"; }
+    if (ub) ub.disabled = true;
+    if (cb) cb.disabled = true;
+    setStakeMsg(">_ Staking launches with the new contract — deploying soon.");
+    return;
+  }
+  if (sb) { sb.disabled = false; sb.textContent = "STAKE"; }
+  if (ub) ub.disabled = false;
+  if (cb) cb.disabled = false;
+  if (t) t.textContent = stakeState.loaded ? String(stakeState.total) : "—";
+  if (!walletAddr) {
+    if (c) c.textContent = "—";
+    if (cl) cl.textContent = "—";
+    if (b) b.textContent = "—";
+    setStakeMsg(">_ Connect your wallet to stake, claim and unstake.");
+    return;
+  }
+  if (c) c.textContent = stakeState.loaded ? String(stakeState.stakedIds.length) : "—";
+  if (cl) cl.textContent = stakeState.loaded ? String(stakeState.claimable) : "—";
+  if (b) b.textContent = stakeState.loaded ? String(stakeState.balance) : "—";
+}
+async function refreshStaking(){
+  paintStaking();
+  if (!STAKING_CONTRACT || !CONTRACT) return;
+  try {
+    var datas = [SSEL.totalStaked];
+    if (walletAddr) datas.push(SSEL.stakedOf + padAddr(walletAddr), SSEL.claimable + padAddr(walletAddr), SSEL.balance + padAddr(walletAddr));
+    var res = await stakeRpcBatch(datas);
+    if (res[0]) stakeState.total = u256(res[0]);
+    if (walletAddr && res.length > 3) {
+      stakeState.stakedIds = decodeU256Array(res[1]);
+      stakeState.claimable = res[2] ? u256(res[2]) : 0;
+      stakeState.balance = res[3] ? u256(res[3]) : 0;
+    }
+    stakeState.loaded = true;
+    paintStaking();
+  } catch(e){}
+}
+function stakeIdChange(d){
+  stakeTokenId = Math.min(2222, Math.max(1, stakeTokenId + d));
+  document.getElementById("stakeTokenId").textContent = stakeTokenId;
+}
+async function waitStakeReceipt(tx){
+  for (var i = 0; i < 20; i++) {
+    await new Promise(function(r){ setTimeout(r, 2000); });
+    var rc = await rpcReceipt(tx);
+    if (rc) return rc.status === "0x1";
+  }
+  return false;
+}
+async function stakeToken(){
+  if (stakeBusy) return;
+  if (!STAKING_CONTRACT || !CONTRACT) { setStakeMsg(">_ Staking launches with the new contract — deploying soon."); return; }
+  var provider = getProvider();
+  if (!provider) { setStakeMsg(">_ No wallet detected - please install OKX first."); return; }
+  if (!walletAddr) { await connectWallet(); if (!walletAddr) { setStakeMsg(">_ Please connect your wallet first."); return; } }
+  stakeBusy = true;
+  try {
+    var approved = u256(await rpcCall(ISAPPROVED_SEL + padAddr(walletAddr) + padAddr(STAKING_CONTRACT))) === 1;
+    if (!approved) {
+      setStakeMsg(">_ Step 1 of 2: approve the staking contract in your wallet…");
+      var atx = await provider.request({ method:"eth_sendTransaction", params:[{ from: walletAddr, to: CONTRACT, value: "0x0", data: SETAPPROVAL_SEL + padAddr(STAKING_CONTRACT) + padU256(1) }] });
+      var aok = await waitStakeReceipt(atx);
+      if (!aok) { setStakeMsg(">_ Approval not confirmed: " + atx); stakeBusy = false; return; }
+    }
+    setStakeMsg(">_ Confirm in your wallet: stake VLTG " + tokenLabel(stakeTokenId) + "…");
+    var tx = await provider.request({ method:"eth_sendTransaction", params:[{ from: walletAddr, to: STAKING_CONTRACT, value: "0x0", data: SSEL.stake + encU256Array([stakeTokenId]) }] });
+    setStakeMsg(">_ Submitted " + tx + " - waiting for on-chain confirmation...");
+    var ok = await waitStakeReceipt(tx);
+    if (ok) setStakeMsg(">_ STAKED! " + tokenLabel(stakeTokenId) + " now earns 10 VOLT Points per day. tx " + tx);
+    else setStakeMsg(">_ Transaction not confirmed or failed: " + tx);
+    refreshStaking();
+    loadMyNfts();
+  } catch(e) {
+    setStakeMsg(">_ Cancelled or failed" + (e && e.message ? ": " + String(e.message).slice(0, 80) : "."));
+  }
+  stakeBusy = false;
+}
+async function unstakeToken(){
+  if (stakeBusy) return;
+  if (!STAKING_CONTRACT || !CONTRACT) { setStakeMsg(">_ Staking launches with the new contract — deploying soon."); return; }
+  var provider = getProvider();
+  if (!provider) { setStakeMsg(">_ No wallet detected - please install OKX first."); return; }
+  if (!walletAddr) { await connectWallet(); if (!walletAddr) { setStakeMsg(">_ Please connect your wallet first."); return; } }
+  if (stakeState.loaded && stakeState.stakedIds.indexOf(stakeTokenId) === -1) { setStakeMsg(">_ " + tokenLabel(stakeTokenId) + " is not staked by this wallet."); return; }
+  stakeBusy = true;
+  try {
+    setStakeMsg(">_ Confirm in your wallet: unstake VLTG " + tokenLabel(stakeTokenId) + " (its points are claimed first)…");
+    var tx = await provider.request({ method:"eth_sendTransaction", params:[{ from: walletAddr, to: STAKING_CONTRACT, value: "0x0", data: SSEL.unstake + encU256Array([stakeTokenId]) }] });
+    setStakeMsg(">_ Submitted " + tx + " - waiting for on-chain confirmation...");
+    var ok = await waitStakeReceipt(tx);
+    if (ok) setStakeMsg(">_ UNSTAKED! " + tokenLabel(stakeTokenId) + " is back in your wallet, points claimed. tx " + tx);
+    else setStakeMsg(">_ Transaction not confirmed or failed: " + tx);
+    refreshStaking();
+    loadMyNfts();
+  } catch(e) {
+    setStakeMsg(">_ Cancelled or failed" + (e && e.message ? ": " + String(e.message).slice(0, 80) : "."));
+  }
+  stakeBusy = false;
+}
+async function claimPoints(){
+  if (stakeBusy) return;
+  if (!STAKING_CONTRACT || !CONTRACT) { setStakeMsg(">_ Staking launches with the new contract — deploying soon."); return; }
+  var provider = getProvider();
+  if (!provider) { setStakeMsg(">_ No wallet detected - please install OKX first."); return; }
+  if (!walletAddr) { await connectWallet(); if (!walletAddr) { setStakeMsg(">_ Please connect your wallet first."); return; } }
+  stakeBusy = true;
+  try {
+    setStakeMsg(">_ Confirm in your wallet: claim your VOLT Points…");
+    var tx = await provider.request({ method:"eth_sendTransaction", params:[{ from: walletAddr, to: STAKING_CONTRACT, value: "0x0", data: SSEL.claim }] });
+    setStakeMsg(">_ Submitted " + tx + " - waiting for on-chain confirmation...");
+    var ok = await waitStakeReceipt(tx);
+    if (ok) setStakeMsg(">_ POINTS CLAIMED! Your VOLT Points balance is updated. tx " + tx);
+    else setStakeMsg(">_ Transaction not confirmed or failed: " + tx);
+    refreshStaking();
+  } catch(e) {
+    setStakeMsg(">_ Cancelled or failed" + (e && e.message ? ": " + String(e.message).slice(0, 80) : "."));
+  }
+  stakeBusy = false;
+}
+paintStaking();
+refreshStaking();
+
 
 /* Gallery modal */
 var modal = document.getElementById("modal");
