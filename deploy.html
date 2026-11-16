@@ -67,9 +67,19 @@
 <p>Deploy the NFT contract (ERC-721, <b>Volta Gent / VLTG</b>). The economics above are constants in the code and cannot change. The only constructor parameter is the base URI — leave it <b>empty at deploy</b>, then set it in Step 03.</p>
 <label>Base URI (constructor parameter — leave empty, set it in Step 03)</label>
 <input id="baseInput" placeholder="(leave empty at deploy — set it in Step 03)" value="">
+<label>Binance Agent ID Registry (SPACE ID) — built into the contract</label>
+<input id="registryInput" value="0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F" readonly>
+<p class="small">Constant in the contract code — not a deploy parameter, cannot be changed.</p>
 <div class="warn">⚠️ The Agent ID registry <code>0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</code> is baked directly into the contract and cannot be changed after deployment — it has been cross-checked against the compiled contract.</div>
 <p><button id="deployBtn">Deploy Volta Gent</button> <button id="copyBtn" class="alt">Copy Deploy Data (Manual)</button></p>
 <p class="status" id="deployStatus">Waiting for wallet connection.</p></div>
+
+<div class="card"><h2>AGENT ID CHECKER</h2>
+<p class="small">Optional tool — check any wallet before opening the mint.</p>
+<label>Wallet Address</label>
+<input id="agentCheckInput" placeholder="0x… wallet address">
+<p><button id="agentCheckBtn" class="alt">CHECK AGENT ID</button></p>
+<p class="status" id="agentCheckStatus"></p></div>
 
 <div class="card"><h2><span class="stepno">03</span>Set the Metadata Base URI</h2>
 <p>Point <code>tokenURI</code> at the published metadata (baseURI + number + <code>.json</code>). JSON metadata 1–5,000 is available at <code>voltagent.site/meta/</code> (covering the new tokens 1–2,222). <b>Complete this step before opening the mint</b> (Step 04).</p>
@@ -285,4 +295,41 @@ document.getElementById("copySummaryBtn").onclick = function(){
 };
 buildSummary();
 
+</script>
+<script>
+(function(){
+  var REGISTRY = "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F";
+  var RPCS = ["https://bsc-rpc.publicnode.com", "https://bsc-dataseed.binance.org"];
+  var btn = document.getElementById("agentCheckBtn");
+  var input = document.getElementById("agentCheckInput");
+  var status = document.getElementById("agentCheckStatus");
+  function setStatus(html, color){ status.innerHTML = html; status.style.color = color || ""; }
+  function rpcCall(url, data){
+    return fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_call", params: [{ to: REGISTRY, data: data }, "latest"] }) })
+      .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function(j){ if (j.error) throw new Error("RPC error"); return j.result; });
+  }
+  function check(){
+    var addr = (input.value || "").trim();
+    if (!/^0x[0-9a-fA-F]{40}$/.test(addr)) {
+      setStatus("Invalid address — enter a full wallet address (0x + 40 hex characters).", "#FF5C7A");
+      return;
+    }
+    var data = "0x70a08231" + "000000000000000000000000" + addr.slice(2).toLowerCase();
+    btn.disabled = true;
+    setStatus("Checking the chain…", "#93A7CC");
+    rpcCall(RPCS[0], data).catch(function(){ return rpcCall(RPCS[1], data); })
+      .then(function(res){
+        var n = parseInt(res, 16);
+        if (isNaN(n)) throw new Error("Bad result");
+        if (n > 0) setStatus("✓ Holds Agent ID — this wallet can join the FREE agent mint (max 2 per wallet).<br>Agent IDs found: " + n, "");
+        else setStatus("✗ No Agent ID — this wallet can only join the public mint (0.0011 BNB).<br>Agent IDs found: 0", "#FFC93C");
+      })
+      .catch(function(){ setStatus("Could not reach the chain — try again.", "#FF5C7A"); })
+      .then(function(){ btn.disabled = false; });
+  }
+  btn.addEventListener("click", check);
+  input.addEventListener("keydown", function(e){ if (e.key === "Enter") check(); });
+})();
 </script></body></html>
