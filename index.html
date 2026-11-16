@@ -466,10 +466,11 @@
       <div class="row" style="margin-top:12px"><span>Total staked (all holders)</span><span id="stakeTotal">—</span></div>
       <div class="row" style="margin-top:14px;align-items:center"><span>Token ID</span><span><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="stakeIdChange(-1)">−</button><b id="stakeTokenId" style="margin:0 10px">1</b><button class="btn ghost" style="margin:0;padding:8px 14px" onclick="stakeIdChange(1)">+</button></span></div>
       <p class="dim" style="margin-top:12px">How staking works: stake a VLTG &rarr; it earns 10 VOLT Points per day &rarr; claim your points anytime &rarr; unstake anytime, no lockup. Unstaking claims that token's points first.</p>
-      <button class="btn" id="stakeDoBtn" onclick="stakeToken()" disabled>STAKE — COMING SOON</button>
+      <button class="btn" id="stakeDoBtn" onclick="stakeToken()" disabled>STAKE</button>
       <button class="btn ghost" id="unstakeDoBtn" onclick="unstakeToken()" disabled>UNSTAKE</button>
       <button class="btn ghost" id="claimPointsBtn" onclick="claimPoints()" disabled>CLAIM POINTS</button>
-      <p id="stakemsg" class="dim">&gt;_ Staking launches with the contract — deploying soon.</p>
+      <p id="stakemsg" class="dim">&gt;_ Staking is LIVE — stake your VLTG and earn 10 VOLT Points per NFT per day. Claim anytime, no lockup.</p>
+      <p class="dim" style="margin-top:12px">Staking contract: <a href="https://bscscan.com/address/0xda1f07a3d41797e1efacd2f30505d661978c7218">0xda1f…7218</a> · BNB Chain</p>
     </div>
   </div>
 
@@ -669,7 +670,7 @@
       <div class="row"><span>[Done] 03 — Contract deployment</span><span>Volta Gent · supply 2,222 · live on BNB Chain</span></div>
       <div class="row"><span>[In progress] 04 — Sale</span><span>Agent ±7h → Public</span></div>
       <div class="row"><span>[Done] 05 — Economy live</span><span>Energy + Arena live · contract 0x0734…49b3</span></div>
-      <div class="row"><span>[In progress] 06 — Staking + VOLT Points</span><span>Stake VLTG · 10 pts/day · no lockup</span></div>
+      <div class="row"><span>[Done] 06 — Staking + VOLT Points</span><span>Stake VLTG · 10 pts/day · no lockup · live</span></div>
       <div class="row"><span>[Later] 07 — After sellout</span><span>Not decided yet</span></div>
       <p class="dim" style="margin-top:12px">The Volta Gent contract is live on BNB Chain: total supply 2,222 (1,500 free for agents + 722 public at 0.0011 BNB). Contract: 0x2703a2be75e0c470d83573badc6a1b1b86d1871e — and the mint is LIVE: the agent phase is open now (first 1,500 FREE for Agent ID holders), then the public phase.</p>
     </div>
@@ -712,7 +713,7 @@
     </div>
   </div>
 
-  <footer>&gt;_ volta gent — agents mint first · free; public 0.0011 BNB. &nbsp;·&nbsp; <a href="https://x.com/VoltaGentVLTG">X @VoltaGentVLTG</a> &nbsp;·&nbsp; Volta Gent contract: <a href="https://bscscan.com/token/0x2703a2be75e0c470d83573badc6a1b1b86d1871e">0x2703…871e</a> · BNB Chain.</footer>
+  <footer>&gt;_ volta gent — agents mint first · free; public 0.0011 BNB. &nbsp;·&nbsp; <a href="https://x.com/VoltaGentVLTG">X @VoltaGentVLTG</a> &nbsp;·&nbsp; Volta Gent contract: <a href="https://bscscan.com/token/0x2703a2be75e0c470d83573badc6a1b1b86d1871e">0x2703…871e</a> &nbsp;·&nbsp; Staking contract: <a href="https://bscscan.com/address/0xda1f07a3d41797e1efacd2f30505d661978c7218">0xda1f…7218</a> · BNB Chain.</footer>
 </main>
 <a class="stickycta" href="#mint"><span class="sc-l"><span class="sc-t">CONTRACT LIVE ON BNB CHAIN</span><span class="sc-b">Mint LIVE &mdash; Agent Phase</span></span><span class="sc-go">VIEW &darr;</span></a>
 
@@ -760,6 +761,7 @@ var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: r
     "<span class=\"ok\">[OK] Arena ready - the ring is hot</span>",
     "<span class=\"ok\">[OK] BNB Chain - connected</span>",
     "<span class=\"ok\">[OK] Volta Gent contract — live on BNB Chain</span>",
+    "<span class=\"ok\">[OK] Staking live — 10 VOLT Points per NFT per day</span>",
     "<span class=\"ok\">[OK] System ready — Agents MINT first.</span>"
   ];
   if (reduced) { finish(); return; }
@@ -876,7 +878,7 @@ function togglePhase(el){
 
 /* Mint panel — wired to the Volta Gent contract (live on BNB Chain) */
 var CONTRACT = "0x2703a2be75e0c470d83573badc6a1b1b86d1871e"; /* Volta Gent — contract address, live on BNB Chain */
-var STAKING_CONTRACT = ""; /* VoltaStaking — staking contract address, published here at deployment (see deploy-staking.html) */
+var STAKING_CONTRACT = "0xda1f07a3d41797e1efacd2f30505d661978c7218"; /* VoltaStaking — live on BNB Chain (see deploy-staking.html) */
 var RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
 var SEL = { minted:"0xa2309ff8", open:"0x24bbd049", agentPhase:"0x77bdf3e1", quote:"0x5df07ec2", mint:"0xa0712d68", hasAgent:"0x4eab3ef2", mintedBy:"0x0d758111", agentMintedBy:"0x38698bee" };
 var chain = { minted:0, open:false, agent:true, loaded:false };
@@ -1152,7 +1154,7 @@ async function mintBuy(){
 paintMint();
 refreshChain();
 setInterval(refreshChain, 20000);
-/* Staking panel — wired to the VoltaStaking contract (address published at deployment).
+/* Staking panel — wired to the live VoltaStaking contract.
    VOLT Points: 10 points per staked NFT per day, no lockup, non-transferable. */
 var SSEL = { stake:"0x0fbf0a93", unstake:"0xe449f341", claim:"0x04d092c7", claimable:"0xaffe39aa", balance:"0x25ca4cff", stakedOf:"0xaf500ba3", totalStaked:"0x817b1cd2" };
 var ISAPPROVED_SEL = "0xe985e9c5", SETAPPROVAL_SEL = "0xa22cb465";
