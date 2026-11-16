@@ -437,7 +437,7 @@
   <h2 id="utility"><span class="k">&gt;_</span><span>Utility</span></h2>
   <p class="secsub">A Volta Gent is more than a collectible — every VLTG works for its holder.</p>
   <div class="steps">
-    <div class="step"><div class="n">UTILITY 01</div><h3>Access Key</h3><p>Your VLTG is a key: Volta Arena and Volta Mining are holder-gated. Holders play, non-holders watch.</p></div>
+    <div class="step"><div class="n">UTILITY 01</div><h3>Access Key</h3><p>Your VLTG is a key: the arena and mining economy planned for a later phase will be holder-gated. Holders play, non-holders watch.</p></div>
     <div class="step"><div class="n">UTILITY 02</div><h3>Staking Points</h3><p>Stake your VLTG and earn 10 VOLT Points per NFT per day. No lockup — unstake anytime. Points are non-transferable and unlock priority access and future rewards.</p></div>
     <div class="step"><div class="n">UTILITY 03</div><h3>Ecosystem Pass</h3><p>One key for everything Volta: VLTG holders get priority access, whitelist spots, and early entry to future Volta Gent drops, features, and seasons — the longer you hold, the earlier you enter.</p></div>
   </div>
@@ -580,7 +580,7 @@
       <div class="row"><span class="tier-epic">Epic</span><span>20% · Power 55</span></div>
       <div class="row"><span class="tier-legendary">Legendary</span><span>10% · Power 80</span></div>
       <div class="row"><span class="tier-mythic">Mythic</span><span>10% · Power 100</span></div>
-      <p class="dim" style="margin-top:12px">Rarity is baked into each token's metadata before deployment. Power drives your arena win chance: win chance = your power ÷ total power of both fighters. Higher rarity hits harder — but it can still lose.</p>
+      <p class="dim" style="margin-top:12px">Rarity is baked into each token's metadata before deployment. Power is each token's battle stat, ready for the arena planned in a later phase: win chance will be your power ÷ the total power of both fighters. Higher rarity hits harder.</p>
     </div>
   </div>
 
@@ -608,58 +608,6 @@
     </div>
   </div>
 
-  <h2><span class="k">&gt;_</span><span>Energy</span></h2>
-  <div class="win" style="margin-top:20px">
-    <div class="winbar"><i></i><i></i><i></i><span>$ energy --status</span></div>
-    <div class="winbody">
-      <div class="row"><span class="big"><span id="energy">—</span> <small>/ 100</small></span><span class="dim">Regenerates +1 per hour — free · live on-chain</span></div>
-      <div class="bar"><i id="energyfill" style="width:0%"></i></div>
-      <p class="dim">Energy, mining and the arena are live (VoltaArena contract 0x0734…49b3). Pick one of your tokens under "My NFTs" and this panel shows its real on-chain energy and mining earnings.</p>
-      <div class="row" style="margin-top:14px"><span>Battle token</span><span id="energyToken">Not selected</span></div>
-      <div class="row"><span>Power</span><span id="energyPower">—</span></div>
-      <div class="row"><span>Accrued mining</span><span id="energyMining">—</span></div>
-      <div class="row"><span>Active battle</span><span id="energyBattle">None</span></div>
-      <button class="btn" id="claimBtn" onclick="arenaClaim()">Claim Mining</button>
-      <button class="btn ghost" id="rechargeBtn" onclick="arenaRecharge()">Recharge +10 Energy — 0.0001 BNB</button>
-      <p id="energymsg" class="dim">&gt;_ Connect your wallet and select an NFT you hold to see its on-chain energy.</p>
-      <div class="row" style="margin-top:14px"><span>Cap</span><span>100 / NFT</span></div>
-      <div class="row"><span>Mining</span><span>0.00001 BNB / hour (accrues up to 48 hours)</span></div>
-      <div class="row"><span>Claim</span><span>−10 energy · minimum 0.0001 BNB · paid from the prize pool</span></div>
-      <div class="row"><span>Battle</span><span>−20 energy · stake 0.0005 BNB</span></div>
-      <div class="row"><span>Recharge</span><span>0.0001 BNB / 10 points</span></div>
-      <p class="dim" style="margin-top:12px">Mining rewards are paid from the arena prize pool; a claim fails if the pool is short. No returns are guaranteed.</p>
-    </div>
-  </div>
-
-  <h2 id="arena"><span class="k">&gt;_</span><span>The Arena</span></h2>
-  <div class="ring">
-    <div class="crowd"></div><div class="spot"></div><div class="floor"></div>
-    <div class="post l"></div><div class="post r"></div>
-    <div class="rope r1"></div><div class="rope r2"></div><div class="rope r3"></div>
-    <div class="fighters">
-      <div class="fighter me" id="arenaMeBox"><img id="arenaMeImg" src="images/volta-gent-1.png" alt="Your fighter"><b id="arenaMeName">First Boot</b><div class="hpbar"><i id="arenaMeHp" style="width:100%"></i></div><div class="ebar"><i id="arenaMeBar" style="width:100%"></i></div></div>
-      <div class="vs" id="arenaVs">VS</div>
-      <div class="fighter op" id="arenaOpBox"><img id="arenaOpImg" src="images/volta-gent-3.png" alt="Opponent"><b id="arenaOpName">Waiting for opponent</b><div class="hpbar"><i id="arenaOpHp" style="width:100%"></i></div><div class="ebar"><i id="arenaOpBar" style="width:70%"></i></div></div>
-    </div>
-  </div>
-  <div class="gate">
-    <span class="chip">Holder <b id="gateHolder">First Boot</b></span>
-    <span class="chip" id="gateEnergy">Energy <b>—/100</b></span>
-    <span class="chip" id="gatePower">Power <b>—</b></span>
-    <span class="chip">Stake <b>0.0005 BNB</b></span>
-  </div>
-  <p class="dim" id="arenaOdds" style="margin-top:8px"></p>
-  <p class="dim" id="tierProgress" style="margin-top:8px">Rarity data progress: reading on-chain…</p>
-  <p class="dim" id="openBattleLine" style="margin-top:8px">Open battle: reading on-chain…</p>
-  <p class="dim" style="margin-top:8px">Real battles (VoltaArena contract): two holders each stake 0.0005 BNB + 20 energy. When the second fighter joins, the commit block is set +2 — after that, anyone can settle. The winner takes 0.0009 BNB; 0.0001 BNB goes to the prize pool. Win chance = your power ÷ total power of both sides. Holders only, and your token needs at least 20 energy to fight.</p>
-  <div id="arenalog" class="dim" style="min-height:66px;margin-top:8px;line-height:1.9"></div>
-  <button class="btn" id="arenaBtn" onclick="arenaEnter()">Start Battle · 0.0005 BNB</button>
-  <button class="btn ghost" id="resolveBtn" onclick="arenaResolve()" style="display:none">Settle Battle</button>
-  <button class="btn ghost" id="cancelBtn" onclick="arenaCancel()" style="display:none">Cancel Open Battle</button>
-  <button class="btn ghost" id="refundBtn" onclick="arenaRefund()" style="display:none">Refund Expired Battle</button>
-  <p class="dim" id="arenamsg">&gt;_ The arena is open to Volta Gent holders only — connect your wallet and choose a fighter in "My NFTs".</p>
-  <p class="dim">Total battles <span id="arenaBattleCount">0</span> · Prize pool available <span id="arenaPool">—</span> BNB · Arena contract: <a href="https://bscscan.com/address/0x0734eb0941d25690f24872149fb8d2b191fb49b3">0x0734…49b3</a></p>
-
   <h2><span class="k">&gt;_</span><span>Roadmap</span></h2>
   <div class="win" style="margin-top:20px">
     <div class="winbar"><i></i><i></i><i></i><span>$ roadmap --list</span></div>
@@ -670,8 +618,8 @@
       <div class="row"><span>[Done] 03 — Contract deployment</span><span>Volta Gent · supply 2,222 · live on BNB Chain</span></div>
       <div class="row"><span>[Done] 04 — Free agent mint</span><span>1,500 FREE — sold out in ~3 hours</span></div>
       <div class="row"><span>[Live] 05 — Public mint</span><span>722 · 0.0011 BNB · open to every wallet</span></div>
-      <div class="row"><span>[Done] 06 — Economy live</span><span>Energy + Arena live · contract 0x0734…49b3</span></div>
-      <div class="row"><span>[Done] 07 — Staking + VOLT Points</span><span>Stake VLTG · 10 pts/day · no lockup · live</span></div>
+      <div class="row"><span>[Done] 06 — Staking + VOLT Points</span><span>Stake VLTG · 10 pts/day · no lockup · live</span></div>
+      <div class="row"><span>[Later] 07 — Arena + mining economy</span><span>Rebuilt for the current collection · not decided yet</span></div>
       <div class="row"><span>[Later] 08 — After sellout</span><span>Not decided yet</span></div>
       <p class="dim" style="margin-top:12px">The Volta Gent contract is live on BNB Chain: total supply 2,222 (1,500 free for agents + 722 public at 0.0011 BNB). Contract: 0x2703a2be75e0c470d83573badc6a1b1b86d1871e — the free agent mint (1,500) sold out in ~3 hours, and the public mint is LIVE now: 722 at 0.0011 BNB, open to every wallet.</p>
     </div>
@@ -685,11 +633,11 @@
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Why do agents mint cheaper?</span><i>+</i></div><div class="a">Agents minted first, and for free (0 BNB) — they are the distribution channel: they minted and posted first, proving demand before the public sale. The free phase sold out (1,500/1,500); the public mint is 0.0011 BNB.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How long does the agent phase last?</span><i>+</i></div><div class="a">It has ended: the phase closed automatically once all 1,500 free slots were minted — about 3 hours after the mint opened on 16 Nov 2026. The public phase is now live for everyone.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint without an Agent ID?</span><i>+</i></div><div class="a">Yes. The free agent phase has sold out, and the public phase is live: every wallet can mint at 0.0011 BNB — no Agent ID needed — max 5 per wallet in total (if you minted 2 free, you can mint 3 more).</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What is energy?</span><i>+</i></div><div class="a">Energy is an on-chain value in the VoltaArena contract (0x0734…49b3), and it is already live: 100 points per NFT, +1 regeneration per hour; claiming mining costs 10 points, a battle costs 20, and a recharge is 0.0001 BNB for 10 points. This page shows the real on-chain energy of your selected token.</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How much BNB does mining earn?</span><i>+</i></div><div class="a">Live now: each NFT mines 0.00001 BNB per hour, accruing up to 48 hours, claimable once it reaches 0.0001 BNB (costs 10 energy). Rewards are paid from the arena prize pool (battle rake and more); if the pool is short, the claim fails. No returns are guaranteed.</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How does the arena work?</span><i>+</i></div><div class="a">Live, with real stakes: holders only, fighting with an NFT you own. Two holders each stake 0.0005 BNB + 20 energy; when the second joins, the commit block is set +2, and then anyone can settle — the blockhash decides, and the winner takes 0.0009 BNB (90%) while 0.0001 BNB goes to the pool. Win chance = your power ÷ total power of both sides. An open battle nobody joins can be cancelled for a refund; a locked battle still unsettled after 256 blocks can be refunded as expired.</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How is rarity decided?</span><i>+</i></div><div class="a">Rarity is written into each token's metadata before deployment: Common 20%, Uncommon 20%, Rare 20%, Epic 20%, Legendary 10%, Mythic 10%. Whichever token number you mint is the rarity you get. Higher rarity hits harder — but it can still lose.</div></div>
-      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Where does the money go?</span><i>+</i></div><div class="a">Mint fees, recharge fees and the arena rake are held in the contracts and can only be withdrawn by the owner.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What is energy?</span><i>+</i></div><div class="a">Energy is the battle fuel planned for the future arena: 100 points per NFT, regenerating +1 per hour, spent on battles and mining claims. The arena and mining economy are planned for a later phase, rebuilt for the current collection — they are not live yet, and nothing about them runs on-chain today.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How much BNB does mining earn?</span><i>+</i></div><div class="a">Mining is not live yet. It is planned as part of the arena economy in a later phase, rebuilt for the current collection — the rates are not decided, and any figures from the earlier system no longer apply. When mining launches, the exact numbers will be published here first. No returns are ever guaranteed.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How does the arena work?</span><i>+</i></div><div class="a">The arena is planned for a later phase — it is not live yet. The design: holders only, fighting with an NFT you own; two holders stake BNB and energy, the chain decides the winner, and win chance = your power ÷ total power of both sides. The arena will be rebuilt for the current collection, and the final rules will be published here before it opens.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>How is rarity decided?</span><i>+</i></div><div class="a">Rarity is written into each token's metadata before deployment: Common 20%, Uncommon 20%, Rare 20%, Epic 20%, Legendary 10%, Mythic 10%. Whichever token number you mint is the rarity you get. Higher rarity means higher Power — the battle stat for the arena planned in a later phase.</div></div>
+      <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Where does the money go?</span><i>+</i></div><div class="a">Mint fees are held in the contract and can only be withdrawn by the owner.</div></div>
       <div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Can I mint right now?</span><i>+</i></div><div class="a">Yes — the public mint is LIVE on the Volta Gent contract (0x2703a2be75e0c470d83573badc6a1b1b86d1871e), total supply 2,222. The free agent mint sold out: all 1,500 free slots were claimed in ~3 hours. Now the public phase is open: 722 tokens at 0.0011 BNB, open to every wallet — no Agent ID needed — max 5 per wallet in total, including any free mints. The buttons and numbers on this page read live on-chain state.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What are VOLT Points?</span><i>+</i></div><div class="a">Points you earn by staking your Volta Gent in the staking contract: 10 points per staked NFT per day, counted on-chain. They are not a token — they cannot be transferred or sold, and they are not a BNB yield. They record your support and unlock priority access and future rewards across the Volta Gent ecosystem.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>Is there a lockup when I stake?</span><i>+</i></div><div class="a">No lockup at all. Stake and unstake whenever you like. Unstaking automatically claims the points that token has earned first, and partial days are never lost — your accrual checkpoint only advances by the time already converted into points.</div></div><div class="faqitem" onclick="this.classList.toggle('open')"><div class="q"><span>What do VOLT Points unlock?</span><i>+</i></div><div class="a">Priority. Points and staking history put you first in line for whitelist spots and early access in future Volta Gent drops, features, and seasons — plus future holder rewards. The more you stake and the longer you hold, the higher you climb.</div></div>
     </div>
   </div>
@@ -758,8 +706,7 @@ var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: r
     "<span class=\"ok\">[OK] Agents online</span>",
     "<span class=\"ok\">[OK] Registry 0x60B926… — gate ready</span>",
     "<span class=\"ok\">[OK] Loaded 20 robots</span>",
-    "<span class=\"ok\">[OK] 6 rarity tiers - Energy 100/100</span>",
-    "<span class=\"ok\">[OK] Arena ready - the ring is hot</span>",
+    "<span class=\"ok\">[OK] 6 rarity tiers - Power 10-100</span>",
     "<span class=\"ok\">[OK] BNB Chain - connected</span>",
     "<span class=\"ok\">[OK] Volta Gent contract — live on BNB Chain</span>",
     "<span class=\"ok\">[OK] Staking live — 10 VOLT Points per NFT per day</span>",
@@ -838,7 +785,6 @@ function selectRobot(i){
   tier.className = r.c;
   var thumbs = document.querySelectorAll("#thumbs img");
   for (var k = 0; k < thumbs.length; k++) thumbs[k].classList.toggle("sel", k === i);
-  arenaSync();
 }
 document.getElementById("thumbs").addEventListener("click", function(e){
   var t = e.target.closest("img");
@@ -952,15 +898,11 @@ async function setFighter(id){
     if (j && j.name) fighter.name = j.name.replace("Volta Gent — ", "");
     if (j && j.attributes) for (var i = 0; i < j.attributes.length; i++) if (j.attributes[i].trait_type === "Tier") fighter.tier = String(j.attributes[i].value).toUpperCase();
   } catch(e){}
-  arenaSync();
-  refreshArenaGate();
-  refreshArena();
 }
-function refreshArenaGate(){ /* real gate logic: see the VoltaArena section below (later definition wins) */ }
 async function loadMyNfts(){
   var msg = document.getElementById("myNftsMsg"), grid = document.getElementById("myNfts");
   if (!msg || !grid) return;
-  if (!walletAddr) { msg.textContent = ">_ Connect your wallet - your Volta Gent will show up here."; grid.innerHTML = ""; myNftsStamp = ""; myTokens = []; fighter = null; arenaSync(); refreshArenaGate(); return; }
+  if (!walletAddr) { msg.textContent = ">_ Connect your wallet - your Volta Gent will show up here."; grid.innerHTML = ""; myNftsStamp = ""; myTokens = []; fighter = null; return; }
   if (!CONTRACT) { msg.textContent = ">_ Contract live on BNB Chain - connect your wallet and your Volta Gent will show up here."; return; }
   var stamp = walletAddr.toLowerCase() + ":" + chain.minted;
   if (myNftsLoading || myNftsStamp === stamp) return;
@@ -972,7 +914,6 @@ async function loadMyNfts(){
       myTokens = []; fighter = null;
       msg.textContent = ">_ This wallet holds no Volta Gent yet - mint one in the panel above.";
       grid.innerHTML = "";
-      arenaSync(); refreshArenaGate();
     } else {
       var n = chain.minted, lo = Math.max(1, n - 599), ids = [], mine = [];
       for (var t = n; t >= lo; t--) ids.push(t);
@@ -983,8 +924,8 @@ async function loadMyNfts(){
       }
       mine.sort(function(a, b2){ return a - b2; });
       myTokens = mine;
-      if (!fighter || mine.indexOf(fighter.id) < 0) setFighter(mine[0]); else { arenaSync(); refreshArenaGate(); }
-      msg.textContent = ">_ " + shortAddr(walletAddr) + " holds " + mine.length + " Volta Gent" + (n > 600 ? " (only the latest 600 tokens were scanned)" : "") + " (click any token to send it into the ring):";
+      if (!fighter || mine.indexOf(fighter.id) < 0) setFighter(mine[0]);
+      msg.textContent = ">_ " + shortAddr(walletAddr) + " holds " + mine.length + " Volta Gent" + (n > 600 ? " (only the latest 600 tokens were scanned)" : "") + " (click any token to select it):";
       grid.innerHTML = mine.map(function(id){ return '<div onclick="setFighter(' + id + ')" style="cursor:pointer;text-align:center"><img src="images/' + id + '.webp" alt="' + tokenLabel(id) + '" style="width:100%;border:1px solid var(--line)"><span class="dim">' + tokenLabel(id) + '</span></div>'; }).join("");
     }
     myNftsStamp = stamp;
@@ -1358,361 +1299,9 @@ function closeModal(){ modal.classList.remove("open"); }
 modal.addEventListener("click", function(e){ if (e.target === modal) closeModal(); });
 document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeModal(); });
 
-/* Energy + Arena: REAL — wired to the deployed VoltaArena contract (BNB 56).
-   Reads: batched eth_call to the arena contract. Writes: wallet eth_sendTransaction.
-   Battles resolve on-chain from the commit blockhash — no local simulation. */
-var ARENA = "0x0734eb0941d25690f24872149fb8d2b191fb49b3";
-var ASEL = { enter:"0xac8dd23f", resolve:"0xd93705a5", cancel:"0x540ee0ec", refund:"0xf16c510a", claim:"0xaff1bfb0", recharge:"0xc460a13f", energyOf:"0x5c23b3bd", miningOf:"0x89377c6c", powerOf:"0x04eaa113", blobLen:"0x2a3d8817", battleCount:"0xe00b6363", openId:"0x1983d694", getBattle:"0x6dd0ce7a", activeOf:"0x00c2cfa0", pool:"0x02d8c681" };
-var STAKE_HEX = "0x1c6bf52634000"; /* exactly 0.0005 BNB */
-var RECHARGE_HEX = "0x5af3107a4000"; /* exactly 0.0001 BNB per recharge unit (10 energy) */
-var TIERPOWER = { COMMON: 10, UNCOMMON: 20, RARE: 35, EPIC: 55, LEGENDARY: 80, MYTHIC: 100 };
+/* Rarity tier display names — used by the collection showcase and the preview modal. */
 var TIERZH = { COMMON: "Common", UNCOMMON: "Uncommon", RARE: "Rare", EPIC: "Epic", LEGENDARY: "Legendary", MYTHIC: "Mythic" };
-var BATTLE_STATE_ZH = ["None", "Open - waiting for opponent", "Locked - awaiting settlement", "Settled", "Cancelled", "Refunded"];
-var arenaBusy = false, arenaMsgUntil = 0, arenaLogStamp = "";
-var arenaState = { loaded:false, blobLen:0, battleCount:0, openId:0, openBattle:null, openPower:0, poolWei:0, block:0, energy:null, power:null, miningWei:null, activeId:0, myBattle:null, myOppPower:0 };
-function tierPower(i){ return TIERPOWER[ROBOTS[i].t] || 10; }
-function arenaMe(){
-  var sel = document.querySelector("#thumbs img.sel");
-  return sel ? parseInt(sel.getAttribute("data-i"), 10) : 0;
-}
-async function arenaRpcCall(data){
-  for (var i = 0; i < RPCS.length; i++){
-    try {
-      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_call", params:[{ to:ARENA, data:data }, "latest"] }) });
-      var j = await r.json();
-      if (j && j.result) return j.result;
-    } catch(e){}
-  }
-  return null;
-}
-async function arenaRpcBatch(datas){
-  for (var i = 0; i < RPCS.length; i++){
-    try {
-      var payload = datas.map(function(d, idx){ return { jsonrpc:"2.0", id: idx + 1, method:"eth_call", params:[{ to:ARENA, data:d }, "latest"] }; });
-      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload) });
-      var j = await r.json();
-      if (Array.isArray(j)) {
-        var out = [];
-        for (var k = 0; k < datas.length; k++) {
-          var hit = null;
-          for (var m = 0; m < j.length; m++) if (j[m].id === k + 1) hit = j[m];
-          out.push(hit && hit.result ? hit.result : null);
-        }
-        return out;
-      }
-    } catch(e){}
-  }
-  return datas.map(function(){ return null; });
-}
-async function rpcBlockNum(){
-  for (var i = 0; i < RPCS.length; i++){
-    try {
-      var r = await fetch(RPCS[i], { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ jsonrpc:"2.0", id:1, method:"eth_blockNumber", params:[] }) });
-      var j = await r.json();
-      if (j && j.result) return parseInt(j.result, 16);
-    } catch(e){}
-  }
-  return 0;
-}
-function weiNum(hex){ return hex ? Number(BigInt(hex)) / 1e18 : 0; }
-function fmtBnb(x){ return x.toFixed(5); }
-function decodeBattle(hex){
-  if (!hex || hex === "0x") return null;
-  var h = hex.replace(/^0x/i, "");
-  if (h.length < 64 * 7) return null;
-  function slot(i){ return h.slice(i * 64, (i + 1) * 64); }
-  return {
-    playerA: "0x" + slot(0).slice(24), tokenA: parseInt(slot(1), 16),
-    playerB: "0x" + slot(2).slice(24), tokenB: parseInt(slot(3), 16),
-    commitBlock: parseInt(slot(4), 16), state: parseInt(slot(5), 16),
-    winner: "0x" + slot(6).slice(24)
-  };
-}
-async function refreshArena(){
-  try {
-    var base = await arenaRpcBatch([ASEL.blobLen, ASEL.battleCount, ASEL.openId, ASEL.pool]);
-    if (base[0]) arenaState.blobLen = u256(base[0]);
-    if (base[1]) arenaState.battleCount = u256(base[1]);
-    arenaState.openId = base[2] ? u256(base[2]) : 0;
-    if (base[3]) arenaState.poolWei = weiNum(base[3]);
-    var bn = await rpcBlockNum();
-    if (bn) arenaState.block = bn;
-    arenaState.openBattle = null; arenaState.openPower = 0;
-    if (arenaState.openId > 0) {
-      arenaState.openBattle = decodeBattle(await arenaRpcCall(ASEL.getBattle + padU256(arenaState.openId)));
-      if (arenaState.openBattle) {
-        var pw = await arenaRpcCall(ASEL.powerOf + padU256(arenaState.openBattle.tokenA));
-        if (pw) arenaState.openPower = u256(pw);
-      }
-    }
-    if (fighter) {
-      var id = fighter.id;
-      var sel = await arenaRpcBatch([ASEL.energyOf + padU256(id), ASEL.powerOf + padU256(id), ASEL.miningOf + padU256(id), ASEL.activeOf + padU256(id)]);
-      if (sel[0]) arenaState.energy = u256(sel[0]);
-      if (sel[1]) arenaState.power = u256(sel[1]);
-      if (sel[2]) arenaState.miningWei = weiNum(sel[2]);
-      arenaState.activeId = sel[3] ? u256(sel[3]) : 0;
-      arenaState.myBattle = null; arenaState.myOppPower = 0;
-      if (arenaState.activeId > 0) {
-        arenaState.myBattle = decodeBattle(await arenaRpcCall(ASEL.getBattle + padU256(arenaState.activeId)));
-        if (arenaState.myBattle && arenaState.myBattle.state === 2) {
-          var oppId = arenaState.myBattle.tokenA === id ? arenaState.myBattle.tokenB : arenaState.myBattle.tokenA;
-          var opw = await arenaRpcCall(ASEL.powerOf + padU256(oppId));
-          if (opw) arenaState.myOppPower = u256(opw);
-        }
-      }
-    } else {
-      arenaState.energy = null; arenaState.power = null; arenaState.miningWei = null;
-      arenaState.activeId = 0; arenaState.myBattle = null; arenaState.myOppPower = 0;
-    }
-    arenaState.loaded = true;
-  } catch(e){}
-  paintArena();
-}
-function arenaSync(){ paintArena(); }
-function paintArena(){
-  var meImg = document.getElementById("arenaMeImg"), meName = document.getElementById("arenaMeName");
-  var gateHolder = document.getElementById("gateHolder");
-  if (!meImg || !meName) return;
-  var me = arenaMe();
-  if (fighter) {
-    meImg.src = "images/" + fighter.id + ".webp";
-    meName.textContent = fighter.name + " " + tokenLabel(fighter.id);
-    if (gateHolder) gateHolder.textContent = fighter.name + " " + tokenLabel(fighter.id);
-  } else {
-    meImg.src = "images/volta-gent-" + (me + 1) + ".png";
-    meName.textContent = walletAddr ? "No NFT held" : ROBOTS[me].n;
-    if (gateHolder) gateHolder.textContent = walletAddr ? "None held" : "Wallet not connected";
-  }
-  var e = arenaState.energy;
-  var eShown = (fighter && e !== null) ? e : null;
-  document.getElementById("arenaMeBar").style.width = (eShown === null ? 0 : eShown) + "%";
-  document.getElementById("arenaMeHp").style.width = "100%";
-  var ge = document.getElementById("gateEnergy");
-  ge.innerHTML = "Energy <b>" + (eShown === null ? "—" : eShown) + "/100</b>";
-  ge.classList.toggle("no", eShown !== null && eShown < 20);
-  var gp = document.getElementById("gatePower");
-  if (gp) gp.innerHTML = "Power <b>" + (!fighter ? "—" : (arenaState.power === null ? "…" : (arenaState.power === 0 ? "Data not uploaded yet" : arenaState.power))) + "</b>";
-  /* Energy window */
-  var enEl = document.getElementById("energy");
-  if (enEl) enEl.textContent = eShown === null ? "—" : eShown;
-  var efEl = document.getElementById("energyfill");
-  if (efEl) efEl.style.width = (eShown === null ? 0 : eShown) + "%";
-  var etEl = document.getElementById("energyToken");
-  if (etEl) etEl.textContent = fighter ? (fighter.name + " " + tokenLabel(fighter.id)) : "Not selected - pick one in \"My NFTs\"";
-  var epEl = document.getElementById("energyPower");
-  if (epEl) epEl.textContent = !fighter ? "—" : (arenaState.power === null ? "Reading on-chain..." : (arenaState.power === 0 ? "Data not uploaded yet - this token's rarity data is not on the arena contract yet" : arenaState.power + " (" + (TIERZH[fighter.tier] || "") + ")"));
-  var emEl = document.getElementById("energyMining");
-  if (emEl) emEl.textContent = !fighter ? "—" : (arenaState.miningWei === null ? "Reading on-chain..." : fmtBnb(arenaState.miningWei) + " BNB" + (arenaState.miningWei >= 0.0001 ? " - ready to claim" : " - below the 0.0001 BNB minimum claim"));
-  var ebEl = document.getElementById("energyBattle");
-  if (ebEl) ebEl.textContent = arenaState.myBattle ? ("#" + arenaState.activeId + " · " + BATTLE_STATE_ZH[arenaState.myBattle.state]) : "None";
-  /* Tier progress */
-  var tp = document.getElementById("tierProgress");
-  if (tp) tp.textContent = "Rarity data progress: " + arenaState.blobLen + " / 5,000 (" + Math.floor(arenaState.blobLen / 50) + "%)" + (arenaState.blobLen < 5000 ? " - the owner uploads data in batches; tokens past the progress point show \"data not uploaded\" and cannot battle yet." : " - all token data is uploaded.");
-  /* Opponent box + open battle */
-  var ob = arenaState.openBattle, mb = arenaState.myBattle;
-  var opImg = document.getElementById("arenaOpImg"), opName = document.getElementById("arenaOpName"), opBar = document.getElementById("arenaOpBar");
-  var obl = document.getElementById("openBattleLine");
-  if (mb && mb.state === 2) {
-    var oppId2 = mb.tokenA === fighter.id ? mb.tokenB : mb.tokenA;
-    opImg.src = "images/" + oppId2 + ".webp";
-    opName.textContent = "Volta Gent " + tokenLabel(oppId2);
-    opBar.style.width = arenaState.myOppPower + "%";
-    if (obl) obl.textContent = "Your battle #" + arenaState.activeId + " is locked - commit block " + mb.commitBlock + ", current block " + arenaState.block + ".";
-  } else if (ob) {
-    opImg.src = "images/" + ob.tokenA + ".webp";
-    opName.textContent = "Volta Gent " + tokenLabel(ob.tokenA) + " (open battle)";
-    opBar.style.width = arenaState.openPower + "%";
-    if (obl) obl.textContent = "Current open battle #" + arenaState.openId + ": " + tokenLabel(ob.tokenA) + " staked 0.0005 BNB (creator " + shortAddr(ob.playerA) + "), waiting for a second holder to join.";
-  } else {
-    opImg.src = "images/volta-gent-3.png";
-    opName.textContent = "Waiting for opponent";
-    opBar.style.width = "0%";
-    if (obl) obl.textContent = "No open battle right now - hit \"Start Battle\" to create one and wait for another holder to join.";
-  }
-  document.getElementById("arenaOpHp").style.width = "100%";
-  /* Odds / status line */
-  var odds = document.getElementById("arenaOdds");
-  if (mb && mb.state === 2) {
-    var pMe = arenaState.power || 0, pOp = arenaState.myOppPower || 0;
-    odds.textContent = "Power " + pMe + " vs " + pOp + (pMe + pOp > 0 ? " - your win chance " + Math.round(pMe / (pMe + pOp) * 100) + "%" : "") + " - settled by the hash of commit block " + mb.commitBlock + " .";
-  } else if (ob && fighter && arenaState.power) {
-    odds.textContent = "Open battle power " + arenaState.openPower + " vs your power " + arenaState.power + " - your win chance if you join: " + Math.round(arenaState.power / (arenaState.power + arenaState.openPower) * 100) + "%.";
-  } else if (fighter && arenaState.power) {
-    odds.textContent = "Your power " + arenaState.power + " (" + (TIERZH[fighter.tier] || "") + "). Win chance = your power / total power of both sides.";
-  } else if (fighter && arenaState.power === 0) {
-    odds.textContent = "The token you selected has no data on the arena contract yet - it cannot battle for now.";
-  } else {
-    odds.textContent = "";
-  }
-  /* Battle log */
-  var lines = [];
-  if (ob) lines.push("Open battle #" + arenaState.openId + ": " + tokenLabel(ob.tokenA) + " staked 0.0005 BNB - waiting for an opponent to join.");
-  if (mb) {
-    if (mb.state === 1) lines.push("Your battle #" + arenaState.activeId + " is open - waiting for an opponent. If nobody joins, you can cancel and get a refund.");
-    else if (mb.state === 2) {
-      if (arenaState.block > mb.commitBlock + 256) lines.push("Battle #" + arenaState.activeId + " is locked, but the blockhash expired (more than 256 blocks) - only the expiry refund works now: 0.0005 BNB back to each side.");
-      else if (arenaState.block > mb.commitBlock) lines.push("Battle #" + arenaState.activeId + " is locked - you can settle it now; the winner is decided by the blockhash.");
-      else lines.push("Battle #" + arenaState.activeId + " is locked - it can be settled once the chain passes block " + mb.commitBlock + " (current block " + arenaState.block + ").");
-    }
-    else if (mb.state === 3) lines.push("Battle #" + arenaState.activeId + " settled - winner " + shortAddr(mb.winner) + " took 0.0009 BNB.");
-    else if (mb.state === 4) lines.push("Battle #" + arenaState.activeId + " cancelled - stake and energy refunded.");
-    else if (mb.state === 5) lines.push("Battle #" + arenaState.activeId + " refunded after expiry.");
-  }
-  if (!lines.length) lines.push("No battles in progress - total battles on-chain: " + arenaState.battleCount + ".");
-  var stamp = lines.join("|");
-  if (stamp !== arenaLogStamp) {
-    arenaLogStamp = stamp;
-    document.getElementById("arenalog").innerHTML = lines.map(function(s){ return "<div>" + s + "</div>"; }).join("");
-  }
-  var bcEl = document.getElementById("arenaBattleCount");
-  if (bcEl) bcEl.textContent = arenaState.battleCount;
-  var poolEl = document.getElementById("arenaPool");
-  if (poolEl) poolEl.textContent = arenaState.loaded ? fmtBnb(arenaState.poolWei) : "—";
-  /* Status message (don't overwrite fresh tx messages) */
-  if (!arenaBusy && Date.now() > arenaMsgUntil) {
-    var m = document.getElementById("arenamsg");
-    if (!walletAddr) m.textContent = ">_ The arena is open to Volta Gent holders only - connect your wallet and choose a fighter in \"My NFTs\".";
-    else if (!fighter) m.textContent = ">_ No fighter selected yet - click one of your tokens in \"My NFTs\".";
-    else if (arenaState.power === 0) m.textContent = ">_ Your selected token's data is not uploaded yet, so it cannot battle (wait for the upload, or pick a lower-numbered token).";
-    else if (arenaState.activeId > 0) m.textContent = ">_ Your " + tokenLabel(fighter.id) + " is fighting in battle #" + arenaState.activeId + " (" + (arenaState.myBattle ? BATTLE_STATE_ZH[arenaState.myBattle.state] : "loading") + ").";
-    else m.textContent = ">_ The arena is live - every number above comes straight from the on-chain VoltaArena contract (0x0734...49b3).";
-  }
-  refreshArenaGate();
-}
-function refreshArenaGate(){
-  var b = document.getElementById("arenaBtn");
-  if (!b) return;
-  var mb = arenaState.myBattle, ob = arenaState.openBattle;
-  var mine = walletAddr ? walletAddr.toLowerCase() : "";
-  var obIsMine = !!(ob && mine && ob.playerA.toLowerCase() === mine);
-  var joining = !!(ob && !obIsMine);
-  var canEnter = !!walletAddr && !!fighter && !arenaBusy && arenaState.power > 0 && arenaState.energy !== null && arenaState.energy >= 20 && arenaState.activeId === 0 && !obIsMine;
-  b.disabled = !canEnter;
-  b.textContent = arenaBusy ? "Processing..." : (joining ? "Join Battle - 0.0005 BNB" : "Start Battle - 0.0005 BNB");
-  var rb = document.getElementById("resolveBtn");
-  var canResolve = !!(mb && mb.state === 2 && arenaState.block > mb.commitBlock && arenaState.block <= mb.commitBlock + 256);
-  rb.style.display = canResolve ? "" : "none";
-  if (canResolve) rb.textContent = "Settle Battle #" + arenaState.activeId;
-  rb.disabled = arenaBusy;
-  var cb = document.getElementById("cancelBtn");
-  var canCancel = !!(mb && mb.state === 1 && mine && mb.playerA.toLowerCase() === mine);
-  cb.style.display = canCancel ? "" : "none";
-  if (canCancel) cb.textContent = "Cancel Open Battle #" + arenaState.activeId;
-  cb.disabled = arenaBusy;
-  var fb = document.getElementById("refundBtn");
-  var canRefund = !!(mb && mb.state === 2 && arenaState.block > mb.commitBlock + 256);
-  fb.style.display = canRefund ? "" : "none";
-  if (canRefund) fb.textContent = "Refund Expired Battle #" + arenaState.activeId;
-  fb.disabled = arenaBusy;
-  var cl = document.getElementById("claimBtn");
-  if (cl) {
-    var canClaim = !!walletAddr && !!fighter && !arenaBusy && arenaState.miningWei !== null && arenaState.miningWei >= 0.0001 && arenaState.energy !== null && arenaState.energy >= 10 && arenaState.poolWei >= arenaState.miningWei;
-    cl.disabled = !canClaim;
-    cl.textContent = (fighter && arenaState.miningWei !== null && arenaState.miningWei > 0) ? "Claim Mining - " + fmtBnb(arenaState.miningWei) + " BNB" : "Claim Mining";
-  }
-  var rc = document.getElementById("rechargeBtn");
-  if (rc) {
-    var canRecharge = !!walletAddr && !!fighter && !arenaBusy && arenaState.energy !== null && arenaState.energy <= 90;
-    rc.disabled = !canRecharge;
-  }
-}
-function arenaSetMsg(t){
-  var m = document.getElementById("arenamsg");
-  if (m) m.textContent = ">_ " + t;
-  arenaMsgUntil = Date.now() + 9000;
-}
-function energySetMsg(t){
-  var m = document.getElementById("energymsg");
-  if (m) m.textContent = ">_ " + t;
-}
-async function arenaSend(data, valueHex, pendingText, okText, alsoEnergy){
-  var provider = getProvider();
-  if (!provider) { arenaSetMsg("No wallet detected - please install OKX first."); return false; }
-  if (!walletAddr) { await connectWallet(); if (!walletAddr) { arenaSetMsg("Please connect your wallet first."); return false; } }
-  arenaBusy = true;
-  paintArena();
-  try {
-    arenaSetMsg(pendingText);
-    var tx = await provider.request({ method:"eth_sendTransaction", params:[{ from: walletAddr, to: ARENA, value: valueHex || "0x0", data: data }] });
-    arenaSetMsg("Submitted " + tx + " - waiting for on-chain confirmation...");
-    var done = false, ok = false;
-    for (var i = 0; i < 20 && !done; i++) {
-      await new Promise(function(r){ setTimeout(r, 2000); });
-      var rcpt = await rpcReceipt(tx);
-      if (rcpt) { ok = rcpt.status === "0x1"; done = true; }
-    }
-    if (ok) {
-      arenaSetMsg(okText + " tx " + tx);
-      if (alsoEnergy) energySetMsg(okText);
-    } else {
-      arenaSetMsg("Transaction not confirmed or failed: " + tx);
-    }
-    arenaBusy = false;
-    refreshArena();
-    refreshChain();
-    return ok;
-  } catch(e) {
-    arenaBusy = false;
-    paintArena();
-    if (e && e.code === 4001) arenaSetMsg("You cancelled the transaction in your wallet.");
-    else arenaSetMsg("Transaction failed" + (e && e.message ? ": " + String(e.message).slice(0, 80) : "."));
-    return false;
-  }
-}
-async function arenaEnter(){
-  if (arenaBusy) return;
-  if (!walletAddr) { arenaSetMsg("The arena is holders-only - please connect your wallet first."); return; }
-  if (!fighter) { arenaSetMsg("You have not picked a Volta Gent yet - choose one in \"My NFTs\" first."); return; }
-  if (arenaState.power === 0) { arenaSetMsg("Your token's data is not on the arena contract yet - it cannot battle for now."); return; }
-  if (arenaState.energy !== null && arenaState.energy < 20) { arenaSetMsg("Not enough energy (needs 20) - wait for regen or recharge first."); return; }
-  if (arenaState.activeId > 0) { arenaSetMsg("This token is already in battle #" + arenaState.activeId + " and cannot enter twice."); return; }
-  var ob = arenaState.openBattle;
-  if (ob && ob.playerA.toLowerCase() === walletAddr.toLowerCase()) { arenaSetMsg("This is your own open battle - you cannot fight yourself. Wait for another holder to join, or cancel it for a refund."); return; }
-  await arenaSend(ASEL.enter + padU256(fighter.id), STAKE_HEX,
-    "Confirm in your wallet: stake 0.0005 BNB + 20 energy...",
-    ob ? "Joined battle #" + arenaState.openId + "! Once the commit block passes, hit \"Settle Battle\"." : "Battle created! Waiting for another holder to join.");
-}
-async function arenaResolve(){
-  if (arenaBusy || !arenaState.myBattle) return;
-  await arenaSend(ASEL.resolve + padU256(arenaState.activeId), "0x0",
-    "Confirm in your wallet: settle battle #" + arenaState.activeId + "…",
-    "Battle #" + arenaState.activeId + " settled - the winner received 0.0009 BNB.");
-}
-async function arenaCancel(){
-  if (arenaBusy || !arenaState.myBattle) return;
-  await arenaSend(ASEL.cancel + padU256(arenaState.activeId), "0x0",
-    "Confirm in your wallet: cancel open battle #" + arenaState.activeId + "…",
-    "Open battle cancelled - 0.0005 BNB and 20 energy refunded.");
-}
-async function arenaRefund(){
-  if (arenaBusy || !arenaState.myBattle) return;
-  await arenaSend(ASEL.refund + padU256(arenaState.activeId), "0x0",
-    "Confirm in your wallet: refund expired battle #" + arenaState.activeId + "…",
-    "Expired battle refunded - 0.0005 BNB back to each side.");
-}
-async function arenaClaim(){
-  if (arenaBusy) return;
-  if (!walletAddr) { energySetMsg("Please connect your wallet first."); return; }
-  if (!fighter) { energySetMsg("First pick one of your tokens in \"My NFTs\"."); return; }
-  if (arenaState.miningWei === null || arenaState.miningWei < 0.0001) { energySetMsg("Accrued mining is below the 0.0001 BNB minimum claim - it accrues +0.00001 BNB per hour."); return; }
-  if (arenaState.energy !== null && arenaState.energy < 10) { energySetMsg("Not enough energy (claiming needs 10) - wait for regen or recharge."); return; }
-  if (arenaState.poolWei < arenaState.miningWei) { energySetMsg("The prize pool balance is too low right now - come back once it refills."); return; }
-  await arenaSend(ASEL.claim + padU256(fighter.id), "0x0",
-    "Confirm in your wallet: claim mining (costs 10 energy)...",
-    "Mining rewards claimed: " + fmtBnb(arenaState.miningWei) + " BNB.", true);
-}
-async function arenaRecharge(){
-  if (arenaBusy) return;
-  if (!walletAddr) { energySetMsg("Please connect your wallet first."); return; }
-  if (!fighter) { energySetMsg("First pick one of your tokens in \"My NFTs\"."); return; }
-  if (arenaState.energy !== null && arenaState.energy > 90) { energySetMsg("Energy is close to the cap (" + arenaState.energy + "/100) - a +10 recharge would overflow. Spend some energy first."); return; }
-  await arenaSend(ASEL.recharge + padU256(fighter.id) + padU256(1), RECHARGE_HEX,
-    "Confirm in your wallet: recharge +10 energy for 0.0001 BNB...",
-    "Recharge done: +10 energy (0.0001 BNB).", true);
-}
-refreshArena();
-setInterval(refreshArena, 20000);
+
 
 /* Wallet + copy */
 function getProvider() {
