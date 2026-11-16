@@ -54,7 +54,7 @@
 <li><b>No lockup</b> — unstake anytime. Unstaking auto-claims that token's accrued points first, and partial days are never lost: the accrual checkpoint only advances by the time already converted into points.</li>
 <li>VOLT Points are <b>not a token</b>: they are a stored balance inside this contract — non-transferable, no BNB involved, <b>no yield</b>. They unlock priority access and future rewards in the ecosystem.</li>
 <li>The owner can <b>never seize staked NFTs</b> — the contract deliberately has no function that moves staked tokens out.</li>
-<li><b>Deploy order:</b> deploy <b>VoltaGentV2</b> first (deploy.html), then deploy this staking contract, then wire the VoltaGentV2 address in Step 03 below.</li>
+<li><b>Deploy order:</b> deploy <b>Volta Gent</b> first (deploy.html), then deploy this staking contract, then wire the Volta Gent address in Step 03 below.</li>
 </ul>
 <p class="small">Warning: this contract is <b>unaudited</b>. Use only your own wallet in an OKX / MetaMask / Trust dApp browser. Never share your seed phrase or private key with anyone.</p></div>
 
@@ -65,19 +65,19 @@
 <p class="small">This page detects OKX first (<code>window.okxwallet</code>), then other wallets, and will ask to switch to / add the BNB Smart Chain network (56).</p></div>
 
 <div class="card"><h2><span class="stepno">02</span>Deploy VoltaStaking</h2>
-<p>Deploy the staking contract. The points rate (<b>10 VOLT Points per NFT per day</b>) is a constant in the code and cannot change. The only constructor parameter is the NFT contract address — you can leave it <b>empty</b> and wire it in Step 03 instead (recommended: deploy VoltaGentV2 first, then paste its address in Step 03).</p>
+<p>Deploy the staking contract. The points rate (<b>10 VOLT Points per NFT per day</b>) is a constant in the code and cannot change. The only constructor parameter is the NFT contract address — you can leave it <b>empty</b> and wire it in Step 03 instead (recommended: deploy the Volta Gent contract first, then paste its address in Step 03).</p>
 <label>Initial NFT contract address (optional — may be changed later in Step 03)</label>
-<input id="nftInitInput" placeholder="0x… VoltaGentV2 address (or leave empty)" value="">
+<input id="nftInitInput" placeholder="0x… Volta Gent address (or leave empty)" value="">
 <div class="warn">⚠️ Staking only works after the NFT contract is set: <code>stake()</code> reverts while no NFT contract is wired. The owner can set or update it anytime with <code>setNftContract</code> (Step 03).</div>
 <p><button id="deployBtn">Deploy VoltaStaking</button> <button id="copyBtn" class="alt">Copy Deploy Data (Manual)</button></p>
 <p class="status" id="deployStatus">Waiting for wallet connection.</p></div>
 
 <div class="card"><h2><span class="stepno">03</span>Set the NFT Contract</h2>
-<p><b>Deploy VoltaGentV2 first</b> (deploy.html), then paste its address here so the staking contract knows which NFTs to accept. Only the owner can call this.</p>
+<p><b>Deploy the Volta Gent contract first</b> (deploy.html), then paste its address here so the staking contract knows which NFTs to accept. Only the owner can call this.</p>
 <label>Staking contract address</label>
 <input id="stakeContract" placeholder="0x… VoltaStaking contract address">
-<label>VoltaGentV2 (NFT) contract address</label>
-<input id="nftInput" placeholder="0x… VoltaGentV2 address">
+<label>Volta Gent (NFT) contract address</label>
+<input id="nftInput" placeholder="0x… Volta Gent address">
 <p><button id="setNftBtn">Set NFT Contract</button></p>
 <p class="status" id="nftStatus"></p></div>
 
@@ -101,7 +101,7 @@
 <div id="logBox" style="background:#05081A;border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font:12px 'JetBrains Mono',monospace;line-height:1.6;color:#93A7CC;min-height:84px;white-space:pre-line;word-break:break-all"></div>
 </div>
 
-<p class="foot">VoltaStaking: stake Volta Gent (VLTG) NFTs, earn 10 VOLT Points per NFT per day — no lockup, points non-transferable, no BNB yield. After deployment: paste the VoltaGentV2 address into <code>CONTRACT</code> and this staking address into <code>STAKING_CONTRACT</code> in index.html, push the site, then announce staking.</p>
+<p class="foot">VoltaStaking: stake Volta Gent (VLTG) NFTs, earn 10 VOLT Points per NFT per day — no lockup, points non-transferable, no BNB yield. After deployment: paste the Volta Gent contract address into <code>CONTRACT</code> and this staking address into <code>STAKING_CONTRACT</code> in index.html, push the site, then announce staking.</p>
 
 </div>
 <script>
@@ -145,7 +145,7 @@ function buildSummary(){
     "Points Rate: 10 VOLT Points per NFT per day",
     "Total Staked: " + document.getElementById("stTotal").textContent,
     "BscScan: https://bscscan.com/address/" + c,
-    "Next step: paste the VoltaGentV2 address into CONTRACT and this staking address into STAKING_CONTRACT in index.html, push the site, then announce staking."
+    "Next step: paste the Volta Gent contract address into CONTRACT and this staking address into STAKING_CONTRACT in index.html, push the site, then announce staking."
   ];
   document.getElementById("summaryBox").value = lines.join("\n");
 }
@@ -204,7 +204,7 @@ document.getElementById("setNftBtn").onclick = async function(){
   var c = document.getElementById("stakeContract").value.trim();
   var n = document.getElementById("nftInput").value.trim();
   if (!validAddr(c)) { document.getElementById("nftStatus").textContent = "Invalid staking contract address."; return; }
-  if (!validAddr(n)) { document.getElementById("nftStatus").textContent = "Invalid NFT contract address — deploy VoltaGentV2 first (deploy.html) and paste its address."; return; }
+  if (!validAddr(n)) { document.getElementById("nftStatus").textContent = "Invalid NFT contract address — deploy the Volta Gent contract first (deploy.html) and paste its address."; return; }
   var data = "0x52f5ad77" + encodeAddressArg(n);
   try {
     var h = await p.request({method:"eth_sendTransaction", params:[{from: account, to: c, data: data}]});
@@ -240,5 +240,5 @@ document.getElementById("copySummaryBtn").onclick = function(){
   if (navigator.clipboard) navigator.clipboard.writeText(box.value).then(function(){ document.getElementById("summaryStatus").textContent = "Summary copied."; });
 };
 buildSummary();
-log("Panel ready. Deploy VoltaGentV2 first (deploy.html), then deploy VoltaStaking here.");
+log("Panel ready. Deploy the Volta Gent contract first (deploy.html), then deploy VoltaStaking here.");
 </script></body></html>
